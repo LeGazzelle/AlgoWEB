@@ -1,13 +1,14 @@
 //
 // Created by Gabriele Santi on 25/09/16.
 //
-
 #include <iostream>
+#include <stdlib.h>
 
 using namespace std;
 
-void main() {
+
+int main(void) {
     cout << "ALGOWeb 2015-16" << endl;
 
-    return;
+    return EXIT_SUCCESS;
 }
