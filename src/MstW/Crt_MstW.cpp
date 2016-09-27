@@ -4,33 +4,18 @@
 
 #include "Crt_MstW.hpp"
 
-class MSTWUtilities {
-public:
-    MSTWUtilities(void);
-    MSTWUtilities(UndirectedGraph g);
-    void setGraph(UndirectedGraph g);
-    double CRTAlgorithm(double eps);
-    ~MSTWUtilities();
-
-private:
-    UndirectedGraph graph;
-
-    double approxNumConnectedComps(double eps, int avgDeg);
-    double approxGraphAvgDegree();
-};
-
-
 //Default Constructor
 MSTWUtilities::MSTWUtilities(void) {
-    this->graph = nullptr;
+    //this->graph = nullptr;
+    this->maxWeight = 0;
 }
 
 //Constructor with given graph
-MSTWUtilities::MSTWUtilities(UndirectedGraph g) : graph(g) {}
+MSTWUtilities::MSTWUtilities(UndirectedGraph g, int maxWeight) : graph(g), maxWeight(maxWeight) {}
 
 //Destructor
 MSTWUtilities::~MSTWUtilities() {
-    ~(this->graph);
+    //~(this->graph);
 }
 
 /**
@@ -38,9 +23,11 @@ MSTWUtilities::~MSTWUtilities() {
  *
  * @param g undirected graph
  */
-void MSTWUtilities::setGraph(UndirectedGraph g)  {
-    ~(this->graph);
+void MSTWUtilities::setGraph(UndirectedGraph g, int maxWeight) {
+    //if (this->graph != nullptr)
+    //~(this->graph);
     this->graph = g;
+    this->maxWeight = maxWeight;
 }
 
 /**
@@ -52,7 +39,18 @@ void MSTWUtilities::setGraph(UndirectedGraph g)  {
  */
 double MSTWUtilities::CRTAlgorithm(double eps) {
     //TODO corpo base dell'algoritmo
-    return 0.0;
+    //if (this->graph == nullptr)
+    //return -1.0;
+
+    NumVertices n = boost::num_vertices(this->graph);
+    double c = 0.0;
+    double d = approxGraphAvgDegree();
+
+    for (int i = 1; i < this->maxWeight; i++) {
+        c += approxNumConnectedComps(eps, d);
+    }
+
+    return n - this->maxWeight + c;
 }
 
 /**
@@ -61,8 +59,10 @@ double MSTWUtilities::CRTAlgorithm(double eps) {
 
 double MSTWUtilities::approxNumConnectedComps(double eps, int avgDeg) {
     //TODO
+    return 1.0;
 }
 
 double MSTWUtilities::approxGraphAvgDegree() {
     //TODO con lemma 4
+    return 2.0;
 }
