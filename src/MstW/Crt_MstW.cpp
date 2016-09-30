@@ -6,7 +6,6 @@
 
 //Default Constructor
 MSTWUtilities::MSTWUtilities(void) {
-    //this->graph = nullptr;
     this->maxWeight = 0;
 }
 
@@ -14,9 +13,7 @@ MSTWUtilities::MSTWUtilities(void) {
 MSTWUtilities::MSTWUtilities(UndirectedGraph g, int maxWeight) : graph(g), maxWeight(maxWeight) {}
 
 //Destructor
-MSTWUtilities::~MSTWUtilities() {
-    //~(this->graph);
-}
+MSTWUtilities::~MSTWUtilities() {}
 
 /**
  * Set the graph the utilities will work on
@@ -24,8 +21,6 @@ MSTWUtilities::~MSTWUtilities() {
  * @param g undirected graph
  */
 void MSTWUtilities::setGraph(UndirectedGraph g, int maxWeight) {
-    //if (this->graph != nullptr)
-    //~(this->graph);
     this->graph = g;
     this->maxWeight = maxWeight;
 }
@@ -39,10 +34,10 @@ void MSTWUtilities::setGraph(UndirectedGraph g, int maxWeight) {
  */
 double MSTWUtilities::CRTAlgorithm(double eps) {
     //TODO corpo base dell'algoritmo
-    //if (this->graph == nullptr)
-    //return -1.0;
+    if (this->maxWeight == 0)
+        return -1.0;
 
-    NumVertices n = boost::num_vertices(this->graph);
+    NumVertices n = num_vertices(this->graph);
     double c = 0.0;
     double d = approxGraphAvgDegree();
 

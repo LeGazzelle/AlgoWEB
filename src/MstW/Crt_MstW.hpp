@@ -11,10 +11,12 @@
 using namespace boost;
 
 
-typedef property<edge_weight_t, int> Weight;
+typedef property<edge_weight_t, int, no_property> Weight;
 typedef adjacency_list < vecS, vecS, undirectedS,
 no_property, Weight > UndirectedGraph;
 typedef graph_traits<UndirectedGraph>::vertices_size_type NumVertices;
+typedef UndirectedGraph::edge_descriptor Edge;
+typedef UndirectedGraph::vertex_descriptor Vertex;
 
 class MSTWUtilities {
 public:

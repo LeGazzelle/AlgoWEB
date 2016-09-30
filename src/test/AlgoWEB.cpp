@@ -21,10 +21,12 @@ int main(void) {
     graph_traits<UndirectedGraph>::adjacency_iterator ai, a_end;
     property_map<UndirectedGraph, vertex_index_t>::type
             index_map = get(vertex_index, g);
+    property_map<UndirectedGraph, edge_weight_t>::type ciao = get(edge_weight, g);
 
     cout << "Tento di stampare gli indici dei nodi del grafo\n";
     for (boost::tie(i, end) = vertices(g); i != end; ++i) {
-        cout << get(index_map, *i) << endl;
+        cout << "index: " << get(index_map, *i) << endl;
+        //cout << "weight: " << get(ciao, *i) << endl;
     }
 
     MSTWUtilities bho(g, 3);
