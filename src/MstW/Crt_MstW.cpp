@@ -52,7 +52,7 @@ double MSTWUtilities::CRTAlgorithm(double eps) {
  * Private
  */
 
-double MSTWUtilities::approxNumConnectedComps(double eps, int avgDeg) {
+double MSTWUtilities::approxNumConnectedComps(double eps, double avgDeg) {
     //TODO
     return 1.0;
 }
