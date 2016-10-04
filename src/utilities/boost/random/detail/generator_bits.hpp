@@ -17,20 +17,20 @@
 #include <boost/limits.hpp>
 
 namespace boost {
-    namespace random {
-        namespace detail {
+namespace random {
+namespace detail {
 
 // This is a temporary measure that retains backwards
 // compatibility.
-            template<class URNG>
-            struct generator_bits {
-                static std::size_t value() {
-                    return std::numeric_limits<typename URNG::result_type>::digits;
-                }
-            };
+template<class URNG>
+struct generator_bits {
+    static std::size_t value() {
+        return std::numeric_limits<typename URNG::result_type>::digits;
+    }
+};
 
-        } // namespace detail
-    } // namespace random
+} // namespace detail
+} // namespace random
 } // namespace boost
 
 #endif // BOOST_RANDOM_DETAIL_GENERATOR_BITS_HPP

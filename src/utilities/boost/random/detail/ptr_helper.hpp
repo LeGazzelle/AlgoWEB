@@ -18,45 +18,42 @@
 
 
 namespace boost {
-    namespace random {
-        namespace detail {
+namespace random {
+namespace detail {
 
 // type_traits could help here, but I don't want to depend on type_traits.
-            template<class T>
-            struct ptr_helper {
-                typedef T value_type;
-                typedef T &reference_type;
-                typedef const T &rvalue_type;
+template<class T>
+struct ptr_helper
+{
+  typedef T value_type;
+  typedef T& reference_type;
+  typedef const T& rvalue_type;
+  static reference_type ref(T& r) { return r; }
+  static const T& ref(const T& r) { return r; }
+};
 
-                static reference_type ref(T &r) { return r; }
+template<class T>
+struct ptr_helper<T&>
+{
+  typedef T value_type;
+  typedef T& reference_type;
+  typedef T& rvalue_type;
+  static reference_type ref(T& r) { return r; }
+  static const T& ref(const T& r) { return r; }
+};
 
-                static const T &ref(const T &r) { return r; }
-            };
+template<class T>
+struct ptr_helper<T*>
+{
+  typedef T value_type;
+  typedef T& reference_type;
+  typedef T* rvalue_type;
+  static reference_type ref(T * p) { return *p; }
+  static const T& ref(const T * p) { return *p; }
+};
 
-            template<class T>
-            struct ptr_helper<T &> {
-                typedef T value_type;
-                typedef T &reference_type;
-                typedef T &rvalue_type;
-
-                static reference_type ref(T &r) { return r; }
-
-                static const T &ref(const T &r) { return r; }
-            };
-
-            template<class T>
-            struct ptr_helper<T *> {
-                typedef T value_type;
-                typedef T &reference_type;
-                typedef T *rvalue_type;
-
-                static reference_type ref(T *p) { return *p; }
-
-                static const T &ref(const T *p) { return *p; }
-            };
-
-        } // namespace detail
-    } // namespace random
+} // namespace detail
+} // namespace random
 } // namespace boost
 
 //

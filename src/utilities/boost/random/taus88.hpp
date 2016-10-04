@@ -19,7 +19,7 @@
 #include <boost/random/xor_combine.hpp>
 
 namespace boost {
-    namespace random {
+namespace random {
 
 /** 
  * The specialization taus88 was suggested in
@@ -30,15 +30,15 @@ namespace boost {
  *  Number 213, January 1996, Pages 203-213
  *  @endblockquote
  */
-        typedef xor_combine_engine<
-                xor_combine_engine<
-                        linear_feedback_shift_engine<uint32_t, 32, 31, 13, 12>, 0,
-                        linear_feedback_shift_engine<uint32_t, 32, 29, 2, 4>, 0>, 0,
-                linear_feedback_shift_engine<uint32_t, 32, 28, 3, 17>, 0> taus88;
+typedef xor_combine_engine<
+    xor_combine_engine<
+        linear_feedback_shift_engine<uint32_t, 32, 31, 13, 12>, 0,
+        linear_feedback_shift_engine<uint32_t, 32, 29, 2, 4>, 0>, 0,
+    linear_feedback_shift_engine<uint32_t, 32, 28, 3, 17>, 0> taus88;
 
-    } // namespace random
+} // namespace random
 
-    using random::taus88;
+using random::taus88;
 
 } // namespace boost
 

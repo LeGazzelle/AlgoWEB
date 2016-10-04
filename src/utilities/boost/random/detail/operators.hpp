@@ -17,7 +17,7 @@
 #include <boost/detail/workaround.hpp>
 
 #if BOOST_WORKAROUND(BOOST_MSVC, <= 1310)   \
- || BOOST_WORKAROUND(__SUNPRO_CC, BOOST_TESTED_AT(0x5100))
+    || BOOST_WORKAROUND(__SUNPRO_CC, BOOST_TESTED_AT(0x5100))
 
 #define BOOST_RANDOM_DETAIL_OSTREAM_OPERATOR(os, T, t)                  \
     template<class CharT, class Traits>                                 \
