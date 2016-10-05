@@ -1,8 +1,8 @@
 //
 // Created by Gabriele Santi on 25/09/16.
 //
-#include <iostream>
 #include "../MstW/Crt_MstW.hpp"
+#include "../Grandom/GraphGen.hpp"
 
 using namespace std;
 
@@ -56,7 +56,12 @@ int main(void) {
 
     double result = bho.CRTAlgorithm(0.5);
 
+
     cout << "result: " << result << endl;
+
+    GraphGen gg;
+
+    gg.generate(0, 0, 0);
 
     return 0; //EXIT_SUCCESS; seems to belong to stdlib.h
 }
