@@ -32,36 +32,44 @@ int main(void) {
      */
 
     size_t nV = 3;
-    UndirectedGraph g(nV);
+    //UndirectedGraph g(nV);
+    UndirectedGraph *g = new UndirectedGraph(nV);
 
-    add_edge(vertex(0, g), vertex(1, g), Weight(2), g);
-    add_edge(vertex(1, g), vertex(2, g), Weight(1), g);
-    add_edge(vertex(2, g), vertex(3, g), Weight(3), g);
+    add_edge(vertex(0, *g), vertex(1, *g), Weight(2), *g);
+    add_edge(vertex(1, *g), vertex(2, *g), Weight(1), *g);
+    add_edge(vertex(2, *g), vertex(3, *g), Weight(3), *g);
 
     VertexIterator i, end;
     NeighboursIterator ai, a_end;
     property_map<UndirectedGraph, vertex_index_t>::type
-            index_map = get(vertex_index, g);
-    property_map<UndirectedGraph, edge_weight_t>::type ciao = get(edge_weight, g);
+            index_map = get(vertex_index, *g);
 
     cout << "Tento di stampare gli indici dei nodi del grafo\n";
-    for (boost::tie(i, end) = vertices(g); i != end; ++i) {
+    for (boost::tie(i, end) = vertices(*g); i != end; ++i) {
         cout << "index: " << get(index_map, *i) << endl;
         //cout << "weight: " << get(ciao, *i) << endl;
     }
 
 
     //MSTWUtilities bho = new MSTWUtilities(g, 3); the old way
-    MSTWUtilities bho(g, 3);
+    MSTWUtilities bho(*g, 3);
 
     double result = bho.CRTAlgorithm(0.5);
-
 
     cout << "result: " << result << endl;
 
     GraphGen gg;
 
-    gg.generate(0, 0, 0);
+    UndirectedGraph g2 = gg.generate(20, 30, 100);
+
+    property_map<UndirectedGraph, edge_weight_t>::type
+            weight = get(edge_weight, g2);
+    EdgeIterator ei, eend;
+    for (boost::tie(ei, eend) = edges(g2); ei != eend; ++ei) {
+        cout << get(vertex_index, g2)[source(*ei, g2)] << " ----("
+             << get(weight, *ei) << ")---->"
+             << get(vertex_index, g2)[target(*ei, g2)] << '\n';
+    }
 
     return 0; //EXIT_SUCCESS; seems to belong to stdlib.h
 }

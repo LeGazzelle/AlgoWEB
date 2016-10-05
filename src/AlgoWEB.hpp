@@ -18,7 +18,7 @@ using namespace boost;
 
 typedef property<edge_weight_t, int, no_property> Weight;
 typedef adjacency_list<vecS, vecS, undirectedS,
-        no_property, Weight> UndirectedGraph;
+        no_property, Weight, disallow_parallel_edge_tag> UndirectedGraph;
 typedef graph_traits<UndirectedGraph>::vertices_size_type NumVertices;
 typedef UndirectedGraph::edge_descriptor Edge;
 typedef UndirectedGraph::vertex_descriptor Vertex;

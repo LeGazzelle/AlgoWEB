@@ -8,16 +8,18 @@
 #include <ctime>
 #include "../AlgoWEB.hpp"
 
+typedef std::pair<Edge, bool> Result;
+
 class GraphGen {
 public:
-    static UndirectedGraph generate(int, int, int);
+    static UndirectedGraph generate(unsigned long, unsigned long, int);
 
 private:
-    static void swap(int *, int *);
+    static void swap(unsigned long *, unsigned long *);
 
-    static void permute(int *, int);
+    static void permute(unsigned long *, unsigned long);
 
-    static void initArray(int *, int);
+    static void initArray(unsigned long *, unsigned long);
 };
 
 #endif //ALGOWEB_GRAPHGEN_HPP
