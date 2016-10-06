@@ -3,7 +3,7 @@
 //
 #include "../MstW/Crt_MstW.hpp"
 #include "../Grandom/GraphGen.hpp"
-#include "../FileIO/GraphMLUtils.hpp"
+#include "../FileIO/GraphIO.hpp"
 
 using namespace std;
 
@@ -74,22 +74,12 @@ int main(void) {
 
     print_adjacent_vertex(g2);
 
-    dynamic_properties dp;
-    dp.property("name", get(vertex_index, g2));
-    dp.property("weight", get(edge_weight, g2));
-    GraphMLUtils::writeGraphML(g2, "/home/leo/ciao.txt", dp);
+    GraphIO::writeGraph("/home/gabriel/tmp_dataset/test.txt", g2);
 
+    UndirectedGraph *g3 = new UndirectedGraph();
+    GraphIO::readGraph("/home/gabriel/tmp_dataset/test.txt", g3);
 
-    //TODO LA READ
-//    UndirectedGraph* g3 = new UndirectedGraph();
-//    dynamic_properties dp2;
-//    dp2.property("name", get(vertex_index, *g3));
-//    dp2.property("weight", get(edge_weight, *g3));
-//    std::ifstream inFile;
-//    inFile.open("/home/gabriel/tmp_dataset/ciao.txt", std::ifstream::in);
-//    read_graphml(inFile, g3, dp2);
-//    inFile.close();
-//    print_adjacent_vertex(g3);
+    print_adjacent_vertex(*g3);
 
     return 0; //EXIT_SUCCESS; seems to belong to stdlib.h
 }

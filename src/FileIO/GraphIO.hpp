@@ -8,9 +8,10 @@
 #include "../AlgoWEB.hpp"
 
 class GraphIO {
-    static void readGraph(std::string, UndirectedGraph *);
+public:
+    static bool readGraph(std::string, UndirectedGraph *);
 
-    static void writeGraph(std::string, UndirectedGraph);
+    static bool writeGraph(std::string, UndirectedGraph);
 };
 
 #endif //ALGOWEB_GRAPHIO_HPP

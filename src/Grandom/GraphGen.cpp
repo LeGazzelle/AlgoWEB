@@ -37,8 +37,7 @@ RandomGenerator *rg = new RandomGenerator();
  * v vertices and max(v-1,e) edges.  The graph can be weighted
  * (weight_flag == 1) or unweighted (weight_flag != 1). If
  * it is weighted, the weights are in the range 1 to max_wgt.
- * It is assumed that e <= v(v-1)/2. (In this program, this assured
- * because of the call to fix_imbalanced_graph.)
+ * It is assumed that e <= v(v-1)/2.
  *
  * To  generate  a  random  connected  graph,  we begin by
  * generating  a  random  spanning  tree.  To generate a random
@@ -96,9 +95,6 @@ UndirectedGraph GraphGen::generate(unsigned long v, unsigned long e, int maxWeig
         if (i == j)
             continue;
 
-//        if (i > j)
-//            swap(&i, &j);
-
         /**
          * res is a pair <Edge, bool> where bool is true iff no edge existed
          * between i and j, hence a correct insertion has been performed; false otherwise
@@ -115,72 +111,6 @@ UndirectedGraph GraphGen::generate(unsigned long v, unsigned long e, int maxWeig
 };
 
 
-//void random_connected_graph(int v,
-//                            int e,
-//                            int max_wgt,
-//                            int weight_flag,
-//                            char *out_file) {
-//    int i, j, count, index, *adj_matrix, *tree;
-//
-//    if ((adj_matrix = (int *) calloc(v * v, sizeof(int)))
-//        == NULL) {
-//        printf("Not enough room for this size graph\n");
-//        return;
-//    }
-//
-//    if ((tree = (int *) calloc(v, sizeof(int))) == NULL) {
-//        printf("Not enough room for this size graph\n");
-//        free(adj_matrix);
-//        return;
-//    }
-//
-//    printf("\n\tBeginning construction of graph.\n");
-//
-//    /*  Generate a random permutation in the array tree. */
-//    init_array(tree, v);
-//    permute(tree, v);
-//
-//    /*  Next generate a random spanning tree.
-//        The algorithm is:
-//
-//          Assume that vertices tree[ 0 ],...,tree[ i - 1 ] are in
-//          the tree.  Add an edge incident on tree[ i ]
-//          and a random vertex in the set {tree[ 0 ],...,tree[ i - 1 ]}.
-//     */
-//
-//    for (i = 1; i < v; i++) {
-//        j = ran(i);
-//        adj_matrix[tree[i] * v + tree[j]] =
-//        adj_matrix[tree[j] * v + tree[i]] =
-//                weight_flag ? 1 + ran(max_wgt) : 1;
-//    }
-//
-//    /* Add additional random edges until achieving at least desired number */
-//
-//    for (count = v - 1; count < e;) {
-//        i = ran(v);
-//        j = ran(v);
-//
-//        if (i == j)
-//            continue;
-//
-//        if (i > j)
-//            swap(&i, &j);
-//
-//        index = i * v + j;
-//        if (!adj_matrix[index]) {
-//            adj_matrix[index] = weight_flag ? 1 + ran(max_wgt) : 1;
-//            count++;
-//        }
-//    }
-//
-//    print_graph(v, count, out_file, adj_matrix, Undirected);
-//
-//    free(tree);
-//    free(adj_matrix);
-//}
-
-
 /* set a[ i ] = i, for i = 0,...,end - 1 */
 void GraphGen::initArray(unsigned long *a, unsigned long end) {
     unsigned long i;
@@ -193,7 +123,6 @@ void GraphGen::initArray(unsigned long *a, unsigned long end) {
 /* randomly permute a[ 0 ],...,a[ n - 1 ] */
 void GraphGen::permute(unsigned long *a, unsigned long n) {
     unsigned long i;
-    //size_t ul_size = sizeof(unsigned long);
 
     for (i = 0; i < n - 1; i++)
         swap(a + i + rg->rand((int) (n - i - 1)), a + i);
