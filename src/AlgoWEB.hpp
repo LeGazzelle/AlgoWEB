@@ -17,13 +17,16 @@ using namespace boost;
 
 
 typedef property<edge_weight_t, int, no_property> Weight;
-typedef adjacency_list<vecS, vecS, undirectedS,
-        no_property, Weight, disallow_parallel_edge_tag> UndirectedGraph;
+typedef property<disallow_parallel_edge_tag, no_property> noMultigraph;
+typedef adjacency_list<setS, vecS, undirectedS,
+        no_property, Weight, noMultigraph> UndirectedGraph;
+
 typedef graph_traits<UndirectedGraph>::vertices_size_type NumVertices;
 typedef UndirectedGraph::edge_descriptor Edge;
 typedef UndirectedGraph::vertex_descriptor Vertex;
 typedef graph_traits<UndirectedGraph>::vertex_iterator VertexIterator;
 typedef graph_traits<UndirectedGraph>::edge_iterator EdgeIterator;
 typedef graph_traits<UndirectedGraph>::adjacency_iterator NeighboursIterator;
+typedef property_map<UndirectedGraph, edge_weight_t>::type WeightMap;
 
 #endif //ALGOWEB_ALGOWEB_HPP

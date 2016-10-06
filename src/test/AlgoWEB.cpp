@@ -7,6 +7,13 @@
 using namespace std;
 
 
+template<typename UndirectedGraph>
+void print_weighted_graph(UndirectedGraph const);
+
+template<typename UndirectedGraph>
+void print_adjacent_vertex(UndirectedGraph const);
+
+
 int main(void) {
     cout << "AlgoWEB 2015-16" << endl;
 
@@ -40,7 +47,7 @@ int main(void) {
     add_edge(vertex(2, *g), vertex(3, *g), Weight(3), *g);
 
     VertexIterator i, end;
-    NeighboursIterator ai, a_end;
+    //NeighboursIterator ai, a_end;
     property_map<UndirectedGraph, vertex_index_t>::type
             index_map = get(vertex_index, *g);
 
@@ -60,10 +67,19 @@ int main(void) {
 
     GraphGen gg;
 
-    UndirectedGraph g2 = gg.generate(20, 30, 100);
+    UndirectedGraph g2 = gg.generate(10, 20, 10);
 
-    property_map<UndirectedGraph, edge_weight_t>::type
-            weight = get(edge_weight, g2);
+//    property_map<UndirectedGraph, edge_weight_t>::type
+//            weight = get(edge_weight, g2);
+//    EdgeIterator ei, eend;
+//    for (boost::tie(ei, eend) = edges(g2); ei != eend; ++ei) {
+//        cout << get(vertex_index, g2)[source(*ei, g2)] << " ----("
+//             << get(weight, *ei) << ")---->"
+//             << get(vertex_index, g2)[target(*ei, g2)] << '\n';
+//    }
+
+    //print_weighted_graph(g2);
+    WeightMap weight = get(edge_weight, g2);
     EdgeIterator ei, eend;
     for (boost::tie(ei, eend) = edges(g2); ei != eend; ++ei) {
         cout << get(vertex_index, g2)[source(*ei, g2)] << " ----("
@@ -71,5 +87,30 @@ int main(void) {
              << get(vertex_index, g2)[target(*ei, g2)] << '\n';
     }
 
+    print_adjacent_vertex(g2);
+
     return 0; //EXIT_SUCCESS; seems to belong to stdlib.h
+}
+
+template<typename UndirectedGraph>
+void print_weighted_graph(UndirectedGraph const g) {
+    WeightMap weight = get(edge_weight, g);
+    EdgeIterator ei, eend;
+    for (boost::tie(ei, eend) = edges(g); ei != eend; ++ei) {
+        cout << get(vertex_index, g)[source(*ei, g)] << " ----("
+             << get(weight, *ei) << ")---->"
+             << get(vertex_index, g)[target(*ei, g)] << '\n';
+    }
+}
+
+template<typename UndirectedGraph>
+void print_adjacent_vertex(UndirectedGraph const g) {
+    for (auto vertex = vertices(g); vertex.first != vertex.second; ++vertex.first) {
+        std::cout << *vertex.first << " is connected with ";
+        for (auto neighbour = adjacent_vertices(*vertex.first, g);
+             neighbour.first != neighbour.second; ++neighbour.first) {
+            std::cout << *neighbour.first << " ";
+        }
+        std::cout << std::endl;
+    }
 }
