@@ -77,7 +77,7 @@ int main(void) {
     dynamic_properties dp;
     dp.property("name", get(vertex_index, g2));
     dp.property("weight", get(edge_weight, g2));
-    GraphMLUtils::writeGraphML(g2, "/home/gabriel/tmp_dataset/ciao.txt", dp);
+    GraphMLUtils::writeGraphML(g2, "/home/leo/ciao.txt", dp);
 
 
     //TODO LA READ
