@@ -16,11 +16,11 @@ public:
     //GraphMLUtils(void);
 
     static int writeGraphML(UndirectedGraph g, std::string fileoutput_name, dynamic_properties dynamicProperties);
-    static int readGraphML(std::string fileinput_name, UndirectedGraph* g, dynamic_properties dynamicProperties);
+
+    static int readGraphML(std::string fileinput_name, UndirectedGraph *g, dynamic_properties dynamicProperties);
 
     //~GraphMLUtils();
 };
-
 
 
 #endif //ALGOWEB_GRAPHMLUTILS_H

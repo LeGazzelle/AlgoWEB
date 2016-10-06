@@ -16,19 +16,20 @@
 //GraphMLUtils::~GraphMLUtils() {}
 
 //Write an UndirectedGraph to a file in GraphML File Format
-int GraphMLUtils::writeGraphML(UndirectedGraph g, std::string fileoutput_name,dynamic_properties dp) {
+int GraphMLUtils::writeGraphML(UndirectedGraph g, std::string fileoutput_name, dynamic_properties dp) {
     std::ofstream outFile;
-    outFile.open(fileoutput_name,std::ofstream::out);
-    write_graphml(outFile, g, dp, false); //L'ultimo parametro indica se i vertici sono ordinati oppure no (guardare eventualmente nella doc "write_graphml.html")
+    outFile.open(fileoutput_name, std::ofstream::out);
+    write_graphml(outFile, g, dp,
+                  false); //L'ultimo parametro indica se i vertici sono ordinati oppure no (guardare eventualmente nella doc "write_graphml.html")
     outFile.flush();
     outFile.close();
     return 0;
 }
 
 //Read an UndirectedGraph (in GraphML File Format) from a file
-int GraphMLUtils::readGraphML(std::string fileinput_name, UndirectedGraph *g,dynamic_properties dynamicProperties) {
+int GraphMLUtils::readGraphML(std::string fileinput_name, UndirectedGraph *g, dynamic_properties dynamicProperties) {
 //    std::ifstream inFile;
-//    inFile.open(fileinput_name,std::ifstream::in);
+//    inFile.open(fileinput_name, std::ifstream::in);
 //    read_graphml(inFile, g, dynamicProperties);
 //    inFile.close();
     return 0;

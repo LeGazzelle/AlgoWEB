@@ -71,28 +71,31 @@ int main(void) {
     UndirectedGraph g2 = gg.generate(10, 20, 10);
 
     //print_weighted_graph(g2);
-    WeightMap weight = get(edge_weight, g2);
-    EdgeIterator ei, eend;
-    for (boost::tie(ei, eend) = edges(g2); ei != eend; ++ei) {
-        cout << get(vertex_index, g2)[source(*ei, g2)] << " ----("
-             << get(weight, *ei) << ")---->"
-             << get(vertex_index, g2)[target(*ei, g2)] << '\n';
-    }
 
     print_adjacent_vertex(g2);
 
     dynamic_properties dp;
     dp.property("name", get(vertex_index, g2));
     dp.property("weight", get(edge_weight, g2));
-    //GraphMLUtils* test= new GraphMLUtils();
-    GraphMLUtils::writeGraphML(g2,"../../dataset/example1.txt",dp);
+    GraphMLUtils::writeGraphML(g2, "/home/gabriel/tmp_dataset/ciao.txt", dp);
 
+
+    //TODO LA READ
+//    UndirectedGraph* g3 = new UndirectedGraph();
+//    dynamic_properties dp2;
+//    dp2.property("name", get(vertex_index, *g3));
+//    dp2.property("weight", get(edge_weight, *g3));
+//    std::ifstream inFile;
+//    inFile.open("/home/gabriel/tmp_dataset/ciao.txt", std::ifstream::in);
+//    read_graphml(inFile, g3, dp2);
+//    inFile.close();
+//    print_adjacent_vertex(g3);
 
     return 0; //EXIT_SUCCESS; seems to belong to stdlib.h
 }
 
 template<typename UndirectedGraph>
-void print_weighted_graph(UndirectedGraph const g) {
+void print_weighted_graph(UndirectedGraph g) {
     WeightMap weight = get(edge_weight, g);
     EdgeIterator ei, eend;
     for (boost::tie(ei, eend) = edges(g); ei != eend; ++ei) {
@@ -103,13 +106,16 @@ void print_weighted_graph(UndirectedGraph const g) {
 }
 
 template<typename UndirectedGraph>
-void print_adjacent_vertex(UndirectedGraph const g) {
+void print_adjacent_vertex(UndirectedGraph g) {
+    WeightMap weight = get(edge_weight, g);
+    cout << "Graph Print: (between parentesis the weights on the edges)" << endl;
     for (auto vertex = vertices(g); vertex.first != vertex.second; ++vertex.first) {
         cout << *vertex.first << " is connected with ";
         for (auto neighbour = adjacent_vertices(*vertex.first, g);
              neighbour.first != neighbour.second; ++neighbour.first) {
-            cout << *neighbour.first << " ";
+            Result res = edge(*vertex.first, *neighbour.first, g);
+            cout << *neighbour.first << "(" << get(weight, res.first) << ") ";
         }
-        cout << std::endl;
+        cout << endl;
     }
 }
