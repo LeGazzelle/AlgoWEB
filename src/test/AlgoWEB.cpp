@@ -3,6 +3,7 @@
 //
 #include "../MstW/Crt_MstW.hpp"
 #include "../Grandom/GraphGen.hpp"
+#include "../FileIO/GraphMLUtils.hpp"
 
 using namespace std;
 
@@ -69,15 +70,6 @@ int main(void) {
 
     UndirectedGraph g2 = gg.generate(10, 20, 10);
 
-//    property_map<UndirectedGraph, edge_weight_t>::type
-//            weight = get(edge_weight, g2);
-//    EdgeIterator ei, eend;
-//    for (boost::tie(ei, eend) = edges(g2); ei != eend; ++ei) {
-//        cout << get(vertex_index, g2)[source(*ei, g2)] << " ----("
-//             << get(weight, *ei) << ")---->"
-//             << get(vertex_index, g2)[target(*ei, g2)] << '\n';
-//    }
-
     //print_weighted_graph(g2);
     WeightMap weight = get(edge_weight, g2);
     EdgeIterator ei, eend;
@@ -88,6 +80,13 @@ int main(void) {
     }
 
     print_adjacent_vertex(g2);
+
+    dynamic_properties dp;
+    dp.property("name", get(vertex_index, g2));
+    dp.property("weight", get(edge_weight, g2));
+    //GraphMLUtils* test= new GraphMLUtils();
+    GraphMLUtils::writeGraphML(g2,"../../dataset/example1.txt",dp);
+
 
     return 0; //EXIT_SUCCESS; seems to belong to stdlib.h
 }
@@ -106,11 +105,11 @@ void print_weighted_graph(UndirectedGraph const g) {
 template<typename UndirectedGraph>
 void print_adjacent_vertex(UndirectedGraph const g) {
     for (auto vertex = vertices(g); vertex.first != vertex.second; ++vertex.first) {
-        std::cout << *vertex.first << " is connected with ";
+        cout << *vertex.first << " is connected with ";
         for (auto neighbour = adjacent_vertices(*vertex.first, g);
              neighbour.first != neighbour.second; ++neighbour.first) {
-            std::cout << *neighbour.first << " ";
+            cout << *neighbour.first << " ";
         }
-        std::cout << std::endl;
+        cout << std::endl;
     }
 }
