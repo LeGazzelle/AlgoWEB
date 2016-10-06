@@ -3,6 +3,7 @@
 //
 #include "../MstW/Crt_MstW.hpp"
 #include "../Grandom/GraphGen.hpp"
+#include "../FileIO/GraphMLUtils.hpp"
 
 using namespace std;
 
@@ -70,6 +71,13 @@ int main(void) {
              << get(weight, *ei) << ")---->"
              << get(vertex_index, g2)[target(*ei, g2)] << '\n';
     }
+
+    dynamic_properties dp;
+    dp.property("name", get(vertex_index, g2));
+    dp.property("weight", get(edge_weight, g2));
+    GraphMLUtils* test= new GraphMLUtils();
+    test->writeGraphML(g2,"/home/leo/Scrivania/example1.txt",dp);
+
 
     return 0; //EXIT_SUCCESS; seems to belong to stdlib.h
 }

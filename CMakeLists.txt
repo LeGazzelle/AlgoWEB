@@ -6,7 +6,7 @@ set(LIBS_DIR "src/utilities")
 include_directories(${LIBS_DIR})
 #link_directories(${STATIC_LIBS_DIR})
 
-set(SOURCE_FILES src/MstW/Crt_MstW.cpp src/test/AlgoWEB.cpp src/Grandom/GraphGen.cpp src/Grandom/GraphGen.hpp src/AlgoWEB.hpp)
+set(SOURCE_FILES src/MstW/Crt_MstW.cpp src/test/AlgoWEB.cpp src/Grandom/GraphGen.cpp src/Grandom/GraphGen.hpp src/AlgoWEB.hpp src/FileIO/GraphMLUtils.cpp src/FileIO/GraphMLUtils.hpp)
 add_executable(AlgoWEB ${SOURCE_FILES})
 
 #set(STATIC_LIB_FILES src/utilities/static/libboost_random.a)

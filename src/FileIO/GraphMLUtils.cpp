@@ -2,7 +2,8 @@
 // Created by leo on 05/10/16.
 //
 
-#include "GraphMLUtils.h"
+#include "GraphMLUtils.hpp"
+
 
 //Default Constructor
 GraphMLUtils::GraphMLUtils(void) {
@@ -11,32 +12,24 @@ GraphMLUtils::GraphMLUtils(void) {
 //    this->dp = nullptr;
 }
 
-//Constructor with given graph
-GraphMLUtils::GraphMLUtils(UndirectedGraph* g, string fileoutput_name,dynamic_properties* dp) {
-    this->graph=*g;
-    this->file_name=fileoutput_name;
-    this->dp=*dp;
-
-}
-
 //Destructor
 GraphMLUtils::~GraphMLUtils() {}
 
 //Write an UndirectedGraph to a file in GraphML File Format
-int GraphMLUtils::writeGraphML() {
+int GraphMLUtils::writeGraphML(UndirectedGraph g, string fileoutput_name,dynamic_properties dp) {
     ofstream outFile;
-    outFile.open(file_name,ofstream::out);
-    boost::write_graphml(outFile, this->graph, this->dp, false); //L'ultimo parametro indica se i vertici sono ordinati oppure no (write_graphml.html)
+    outFile.open(fileoutput_name,ofstream::out);
+    write_graphml(outFile, g, dp, false); //L'ultimo parametro indica se i vertici sono ordinati oppure no (guardare eventualmente nella doc "write_graphml.html")
     outFile.flush();
     outFile.close();
     return 0;
 }
 
 //Read an UndirectedGraph (in GraphML File Format) from a file
-int GraphMLUtils::readGraphML(string fileinput_name, UndirectedGraph *g,dynamic_properties* dynamicProperties) {
+int GraphMLUtils::readGraphML(string fileinput_name, UndirectedGraph *g,dynamic_properties dynamicProperties) {
     ifstream inFile;
     inFile.open(fileinput_name,ifstream::in);
-    boost::read_graphml(inFile,g,*dynamicProperties);
+    read_graphml(inFile,g,dynamicProperties);
     inFile.close();
     return 0;
 }
@@ -59,4 +52,15 @@ dp.property("name", get(vertex_index, g));
 dp.property("weight", get(edge_weight, g));
 
 write_graphml(std::cout, g, dp, true);
+
+
+    dynamic_properties dp;
+    dp.property("name", get(vertex_index, g));
+    dp.property("weight", get(edge_weight, g));
+    string s="/home/leo/Scrivania/example1.txt";
+    GraphMLUtils* test= new GraphMLUtils(g,s,dp);
+    test->writeGraphML();
+
+    cout << "Dovrei aver creato il file\n";
+
  * */
