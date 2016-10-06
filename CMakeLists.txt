@@ -6,7 +6,7 @@ set(STATIC_LIBS_DIR "src/utilities/static")
 include_directories(${LIBS_DIR})
 link_directories(${STATIC_LIBS_DIR})
 
-set(SOURCE_FILES src/MstW/Crt_MstW.cpp src/test/AlgoWEB.cpp src/Grandom/GraphGen.cpp src/Grandom/GraphGen.hpp src/AlgoWEB.hpp src/FileIO/GraphMLUtils.cpp src/FileIO/GraphMLUtils.hpp)
+set(SOURCE_FILES src/MstW/Crt_MstW.cpp src/test/AlgoWEB.cpp src/Grandom/GraphGen.cpp src/Grandom/GraphGen.hpp src/AlgoWEB.hpp src/FileIO/GraphMLUtils.cpp src/FileIO/GraphMLUtils.hpp src/FileIO/GraphIO.cpp src/FileIO/GraphIO.hpp)
 add_executable(AlgoWEB ${SOURCE_FILES})
 
 #STATIC LIBRARIES, BUILD FOR X86_64
