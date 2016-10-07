@@ -7,6 +7,8 @@
 
 #include "../AlgoWEB.hpp"
 
+extern bool __VERB;
+
 class GraphIO {
 public:
     static bool readGraph(std::string, UndirectedGraph *);

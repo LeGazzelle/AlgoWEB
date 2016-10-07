@@ -6,8 +6,12 @@ set(STATIC_LIBS_DIR "src/utilities/static")
 include_directories(${LIBS_DIR})
 link_directories(${STATIC_LIBS_DIR})
 
-set(SOURCE_FILES src/MstW/Crt_MstW.cpp src/test/AlgoWEB.cpp src/Grandom/GraphGen.cpp src/Grandom/GraphGen.hpp src/AlgoWEB.hpp src/FileIO/GraphIO.cpp src/FileIO/GraphIO.hpp)
-add_executable(AlgoWEB ${SOURCE_FILES})
+set(SOURCE_FILES src/MstW/Crt_MstW.cpp src/Grandom/GraphGen.cpp src/Grandom/GraphGen.hpp src/AlgoWEB.hpp src/FileIO/GraphIO.cpp src/FileIO/GraphIO.hpp)
+set(ALGO_WEB_SOURCE_FILES src/test/AlgoWEB.cpp ${SOURCE_FILES})
+set(GRANDOM_SOURCE_FILES src/test/grandom.cpp src/test/grandom.hpp ${SOURCE_FILES})
+add_executable(AlgoWEB ${ALGO_WEB_SOURCE_FILES})
+add_executable(Grandom ${GRANDOM_SOURCE_FILES})
+
 
 #STATIC LIBRARIES, BUILD FOR X86_64
 set(STATIC_LIB_GRAPH src/utilities/static/libboost_graph.a)
@@ -17,7 +21,5 @@ add_library(boost_regex STATIC ${STATIC_LIB_REGEX})
 
 set_target_properties(boost_graph PROPERTIES LINKER_LANGUAGE CXX)
 set_target_properties(boost_regex PROPERTIES LINKER_LANGUAGE CXX)
-add_dependencies(AlgoWEB boost_graph)
-add_dependencies(AlgoWEB boost_regex)
-target_link_libraries(AlgoWEB boost_graph)
-target_link_libraries(AlgoWEB boost_regex)
+add_dependencies(AlgoWEB boost_graph boost_regex)
+target_link_libraries(AlgoWEB boost_graph boost_regex)

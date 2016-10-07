@@ -16,6 +16,8 @@
 
 using namespace boost;
 
+static bool __VERB;
+
 
 typedef property<edge_weight_t, int, no_property> Weight;
 typedef property<disallow_parallel_edge_tag, no_property> noMultigraph;
