@@ -60,6 +60,20 @@ int main(int argc, char *argv[]) {
         __VERB = false;
     }
 
+    //Other sanitary checks
+    if (e < v - 1) {
+        std::cerr << "Cannot produce a connected graph with " << v
+                  << " vertices with just " << e << " edges!\n";
+        return -1;
+    }
+
+    if (e > (v * (v - 1)) / 2) {
+        std::wcerr << e << " edges are too much for a graph with just " << v
+                   << " vertices (we are not dealing with multigraphs "
+                           "here); setting 'e' to the maximum " << (v * (v - 1)) / 2 << std::endl;
+        e = (v * (v - 1)) / 2;
+    }
+
     //Random, weighted, connected, undirected graph generation
     GraphGen gg;
     UndirectedGraph g = gg.generate(v, e, w);
