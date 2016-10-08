@@ -5,6 +5,7 @@
 #define ALGOWEB_CRT_MSTW_HPP
 
 #include "../AlgoWEB.hpp"
+#include "boost/graph/random.hpp"
 
 class MSTWUtilities {
 public:
@@ -21,12 +22,16 @@ public:
 private:
     UndirectedGraph graph;
     int maxWeight;
+    //management
+    boost::random::mt19937 generator;
 
     double approxNumConnectedComps(double eps, double avgDeg);
 
-    double approxGraphAvgDegree();
+    unsigned long approxGraphAvgDegree(double eps);
 
     unsigned long computeNumVertices(unsigned long n, double eps);
+
+    unsigned long computeNumVerticesLemma4(unsigned long n, double eps);
 };
 
 #endif //ALGOWEB_CRT_MSTW_HPP
