@@ -12,7 +12,7 @@ typedef std::pair<Edge, bool> Result;
 
 class GraphGen {
 public:
-    static UndirectedGraph generate(unsigned long, unsigned long, int);
+    static UndirectedGraph generate(unsigned long, unsigned long, unsigned int, unsigned int);
 
 private:
     static void swap(unsigned long *, unsigned long *);

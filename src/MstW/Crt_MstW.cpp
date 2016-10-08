@@ -33,7 +33,6 @@ void MSTWUtilities::setGraph(UndirectedGraph g, int maxWeight) {
  * @return the approximation of the weight of the MST of the given graph
  */
 double MSTWUtilities::CRTAlgorithm(double eps) {
-    //TODO corpo base dell'algoritmo
     if (this->maxWeight == 0)
         return -1.0;
 

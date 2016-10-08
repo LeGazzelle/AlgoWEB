@@ -62,6 +62,7 @@ enum OptionIndex {
     EDGES,
     MAX_WEIGHT,
     TARGET_DIR,
+    SEED,
     VERBOSE,
     HELP
 };
@@ -74,6 +75,8 @@ const option::Descriptor usage[] = {
         {MAX_WEIGHT, 0, "w", "max-weight", Arg::Numeric, "  -w <num>, \t--max-weight=<num>  \tCompulsory argument; maximum integer weight for the edges."},
         {TARGET_DIR, 0, "d", "target-dir", Arg::String,  "  -d <path>, \t--target-dir=<path>  \tDefault value is \"./\"; where to save the .cwg file."
                                                                  "A correct string is formed by path+filename, e.g. /path/to/dir/graph"},
+        {SEED,       0, "s", "seed",       Arg::Numeric, "  -s <num>, \t--seed=<num> \tIf specified, the seed to the random generator (Mersenne Twister);"
+                                                                 " otherwise, wall clock is taken into account."},
         {VERBOSE,    0, "v", "verbose",    Arg::None,    "  -v, \t--verbose \tVerbose output."},
         {HELP,       0, "h", "help",       Arg::None,    "  -h, \t--help  \tPrint usage and exit."},
         {UNKNOWN,    0, "",  "",           Arg::None,

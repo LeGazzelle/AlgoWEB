@@ -15,7 +15,7 @@ int main(int argc, char *argv[]) {
 
     //arguments
     unsigned long v, e;
-    int w;
+    unsigned int w, s;
     std::string fileName;
 
     if (parse.error())
@@ -41,17 +41,24 @@ int main(int argc, char *argv[]) {
     }
 
     if (options[MAX_WEIGHT]) {
-        w = std::stoi(options[MAX_WEIGHT].arg);
+        w = (unsigned int) std::stoi(options[MAX_WEIGHT].arg);
     } else {
         std::cerr << "Missing compulsory argument: maximum weight\n";
         return -1;
     }
 
+    //Facultative arguments
     if (options[TARGET_DIR]) {
         fileName = options[TARGET_DIR].arg;
         fileName += ".cwg";
     } else {
         fileName = "./out_rand_graph.cwg";
+    }
+
+    if (options[SEED]) {
+        s = (unsigned int) std::stoi(options[SEED].arg);
+    } else {
+        s = 0;
     }
 
     if (options[VERBOSE]) {
@@ -75,8 +82,7 @@ int main(int argc, char *argv[]) {
     }
 
     //Random, weighted, connected, undirected graph generation
-    GraphGen gg;
-    UndirectedGraph g = gg.generate(v, e, w);
+    UndirectedGraph g = GraphGen::generate(v, e, w, s);
 
     //save file
     GraphIO::writeGraph(fileName, g);

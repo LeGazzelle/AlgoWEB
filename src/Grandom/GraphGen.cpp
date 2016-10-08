@@ -9,8 +9,12 @@ public:
     RandomGenerator() {}
 
     void init(int max) {
-        //FIXME debug uncomment below (default seed)
-        //generator.seed((const uint32_t &) std::time(0));
+        generator.seed((const uint32_t &) std::time(0));
+        this->dist = boost::random::uniform_int_distribution<>(1, max);
+    }
+
+    void init(int max, unsigned int seed) {
+        generator.seed(seed);
         this->dist = boost::random::uniform_int_distribution<>(1, max);
     }
 
@@ -57,12 +61,15 @@ RandomGenerator *rg = new RandomGenerator();
  * @param maxWeight max integer weight for the edges
  * @return a random, connected, weighted undirected graph
  */
-UndirectedGraph GraphGen::generate(unsigned long v, unsigned long e, int maxWeight) {
+UndirectedGraph GraphGen::generate(unsigned long v, unsigned long e, unsigned int maxWeight, unsigned int seed) {
     unsigned long tree[v], i, j, count;
     Result res;
 
     //Initialize random generator
-    rg->init(maxWeight);
+    if (seed)
+        rg->init(maxWeight, seed);
+    else
+        rg->init(maxWeight);
 
     UndirectedGraph *g = new UndirectedGraph(v);
 
