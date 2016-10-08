@@ -25,6 +25,8 @@ private:
     double approxNumConnectedComps(double eps, double avgDeg);
 
     double approxGraphAvgDegree();
+
+    unsigned long computeNumVertices(unsigned long n, double eps);
 };
 
 #endif //ALGOWEB_CRT_MSTW_HPP

@@ -2,6 +2,7 @@
 // Created by Gabriele Santi on 25/09/16.
 //
 
+#include <queue>
 #include "Crt_MstW.hpp"
 
 //Default Constructor
@@ -52,11 +53,24 @@ double MSTWUtilities::CRTAlgorithm(double eps) {
  */
 
 double MSTWUtilities::approxNumConnectedComps(double eps, double avgDeg) {
-    //TODO
+    unsigned long i, r = computeNumVertices(num_vertices(this->graph), eps);
+    std::queue<Vertex> candidates;
+
+    for (i = 0; i < r; i++) {
+        //candidates.push();
+    }
+
     return 1.0;
 }
 
 double MSTWUtilities::approxGraphAvgDegree() {
     //TODO con lemma 4
     return 2.0;
+}
+
+unsigned long MSTWUtilities::computeNumVertices(unsigned long n, double eps) {
+    double den = eps * eps;
+    den += 1 / n;
+
+    return (unsigned long) floor(1 / den);
 }
