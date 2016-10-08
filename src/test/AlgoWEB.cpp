@@ -74,10 +74,10 @@ int main(void) {
 
     print_adjacent_vertex(g2);
 
-    GraphIO::writeGraph("/home/gabriel/tmp_dataset/test.txt", g2);
+    GraphIO::writeGraph("/home/leo/Scrivania/test.txt", g2);
 
     UndirectedGraph *g3 = new UndirectedGraph();
-    GraphIO::readGraph("/home/gabriel/tmp_dataset/test.txt", g3);
+    GraphIO::readGraph("/home/leo/Scrivania/test.txt", g3);
 
     print_adjacent_vertex(*g3);
 
