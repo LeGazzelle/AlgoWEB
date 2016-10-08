@@ -5,6 +5,7 @@
 #define ALGOWEB_CRT_MSTW_HPP
 
 #include "../AlgoWEB.hpp"
+#include "../BFS/BFS.hpp"
 #include "boost/graph/random.hpp"
 
 class MSTWUtilities {
@@ -25,7 +26,7 @@ private:
     //management
     boost::random::mt19937 generator;
 
-    double approxNumConnectedComps(double eps, double avgDeg);
+    double approxNumConnectedComps(double eps, unsigned long avgDeg);
 
     unsigned long approxGraphAvgDegree(double eps);
 

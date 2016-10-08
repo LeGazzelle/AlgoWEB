@@ -8,12 +8,15 @@
 class Coin {
 private:
     static boost::random::mt19937 generator;
-    const static boost::random::uniform_int_distribution<> coin = boost::random::uniform_int_distribution<>(0, 1);
-    static bool init = false;
+    static boost::random::uniform_int_distribution<> coin;// = boost::random::uniform_int_distribution<>(0, 1);
+    //static bool init = false;
 
 public:
     static int flip() {
+        static bool init = false;
+
         if (!init) {
+            coin = boost::random::uniform_int_distribution<>(0, 1);
             generator.seed((const uint32_t &) std::time(0));
             init = true;
         }
@@ -21,6 +24,9 @@ public:
         return coin(generator);
     }
 };
+
+boost::random::mt19937 Coin::generator;
+boost::random::uniform_int_distribution<> Coin::coin;
 
 //Default Constructor
 MSTWUtilities::MSTWUtilities(void) {
@@ -72,12 +78,12 @@ double MSTWUtilities::CRTAlgorithm(double eps) {
  * Private
  */
 
-double MSTWUtilities::approxNumConnectedComps(double eps, double avgDeg) {
+double MSTWUtilities::approxNumConnectedComps(double eps, unsigned long avgDeg) {
     unsigned long i, r = computeNumVertices(num_vertices(this->graph), eps);
     Vertex u;
     double Beta, beta[r];
     std::queue<Vertex> candidates;
-    BFS bfs;
+    BFS *bfs;
     bool flipAgain;
     int flips = 0;
     double threshold = 4 * this->maxWeight;
@@ -99,13 +105,13 @@ double MSTWUtilities::approxNumConnectedComps(double eps, double avgDeg) {
 
         while (flipAgain) {
             flips++;
-            if (Coin::flip() && bfs.getVisitedVertices() < threshold && bfs.isGreaterThanDstar) {
-                bfs.nextStep();
+            if (Coin::flip() && bfs->getVisitedVertices() < threshold && bfs->isGreaterThanDstar()) {
+                bfs->nextStep();
 
-                if (bfs.isCompleted()) {
+                if (bfs->isCompleted()) {
                     flipAgain = false;
-                    if (bfs.getVisitedEdges())
-                        beta[i] = (bfs.getUDeg() * pow(2, flips)) / bfs.getVisitedEdges();
+                    if (bfs->getVisitedEdges())
+                        beta[i] = (bfs->getUDeg() * pow(2, flips)) / bfs->getVisitedEdges();
                     else
                         beta[i] = 2;
                 }

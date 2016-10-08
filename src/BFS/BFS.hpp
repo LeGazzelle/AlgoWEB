@@ -1,5 +1,5 @@
 //
-// Created by leo on 08/10/16.
+// Created by Leonardo De Laurentiis on 08/10/16.
 //
 
 #ifndef ALGOWEB_BFS_H
@@ -11,35 +11,23 @@
 class BFS {
 public:
 
-    BFS(UndirectedGraph g, Vertex u,unsigned int Dstr);
+    BFS(UndirectedGraph g, Vertex u, unsigned long Dstr);
+
     void nextStep();
+
     void firstStep();
 
     ~BFS();
 
     int getVisitedVertices() const;
 
-    void setVisitedVertices(int visitedNodes);
-
     int getVisitedEdges() const;
 
-    void setVisitedEdges(int visitedEdges);
+    bool isCompleted() const;
 
-    bool isIsCompleted() const;
-
-    void setIsCompleted(bool isCompleted);
-
-    bool isIsGreaterThanDstar() const;
-
-    void setIsGreaterThanDstar(bool isGreaterThanDstar);
+    bool isGreaterThanDstar() const;
 
     int getUDeg() const;
-
-    void setUDeg(int uDeg);
-
-    int getI() const;
-
-    void setI(int i);
 
 private:
 
@@ -47,11 +35,11 @@ private:
     Vertex vertexU;
     int visitedVertices;
     int visitedEdges;
-    bool isCompleted;
-    bool isGreaterThanDstar;
+    bool completed;
+    bool greaterThanDstar;
     int uDeg;
     int i;
-    unsigned int Dstar;
+    unsigned long Dstar;
 };
 
 #endif //ALGOWEB_BFS_H
