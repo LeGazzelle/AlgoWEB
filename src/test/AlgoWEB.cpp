@@ -68,7 +68,7 @@ int main(void) {
 
     GraphGen gg;
 
-    UndirectedGraph g2 = gg.generate(10, 20, 10);
+    UndirectedGraph g2 = gg.generate(10, 20, 10,0);
 
     //print_weighted_graph(g2);
 
