@@ -6,6 +6,8 @@
 #define ALGOWEB_BFS_H
 
 
+#include <queue>
+#include <vector>
 #include "../AlgoWEB.hpp"
 
 class BFS {
@@ -19,27 +21,37 @@ public:
 
     ~BFS();
 
-    int getVisitedVertices() const;
+    unsigned long getVisitedVertices() const;
 
-    int getVisitedEdges() const;
+    unsigned long getVisitedEdges() const;
 
     bool isCompleted() const;
 
     bool isGreaterThanDstar() const;
 
-    int getUDeg() const;
+    unsigned long getUDeg() const;
+
+    void setI(int i);
 
 private:
-
     UndirectedGraph graph;
     Vertex vertexU;
-    int visitedVertices;
-    int visitedEdges;
+    unsigned long visitedVertices;
+    unsigned long visitedEdges;
     bool completed;
     bool greaterThanDstar;
-    int uDeg;
+    unsigned long uDeg;
     int i;
     unsigned long Dstar;
+    //data structures for BFS
+    std::queue<Vertex> *toBeVisited;
+    EdgesMatrix visitedEdgesMatrix; //initialized to false
+
+    void edgesMatrixInit(NumVertices n);
+
+    void setVisitedEdge(unsigned long source, unsigned long target);
+
+    void setVisitedVertex();
 };
 
 #endif //ALGOWEB_BFS_H

@@ -68,7 +68,7 @@ double MSTWUtilities::CRTAlgorithm(double eps) {
     unsigned long d = approxGraphAvgDegree(eps);
 
     for (int i = 1; i < this->maxWeight; i++) {
-        c += approxNumConnectedComps(eps, d);
+        c += approxNumConnectedComps(eps, d, i);
     }
 
     return n - this->maxWeight + c;
@@ -78,8 +78,8 @@ double MSTWUtilities::CRTAlgorithm(double eps) {
  * Private
  */
 
-double MSTWUtilities::approxNumConnectedComps(double eps, unsigned long avgDeg) {
-    unsigned long i, r = computeNumVertices(num_vertices(this->graph), eps);
+double MSTWUtilities::approxNumConnectedComps(double eps, unsigned long avgDeg, int i) {
+    unsigned long j, r = computeNumVertices(num_vertices(this->graph), eps);
     Vertex u;
     double Beta, beta[r];
     std::queue<Vertex> candidates;
@@ -89,18 +89,20 @@ double MSTWUtilities::approxNumConnectedComps(double eps, unsigned long avgDeg) 
     double threshold = 4 * this->maxWeight;
     threshold /= eps;
 
-    for (i = 0; i < r; i++) {
+    for (j = 0; j < r; j++) {
         candidates.push(random_vertex(this->graph, this->generator));
     }
 
-    i = 0;
+    j = 0;
 
     while (!candidates.empty()) {
         u = candidates.front();
         candidates.pop();
 
-        beta[i] = 0.0;
+        beta[j] = 0.0;
         bfs = new BFS(this->graph, u, avgDeg);
+        bfs->setI(i);
+        bfs->firstStep();
         flipAgain = true;
 
         while (flipAgain) {
@@ -111,17 +113,17 @@ double MSTWUtilities::approxNumConnectedComps(double eps, unsigned long avgDeg) 
                 if (bfs->isCompleted()) {
                     flipAgain = false;
                     if (bfs->getVisitedEdges())
-                        beta[i] = (bfs->getUDeg() * pow(2, flips)) / bfs->getVisitedEdges();
+                        beta[j] = (bfs->getUDeg() * std::pow(2, flips)) / bfs->getVisitedEdges();
                     else
-                        beta[i] = 2;
+                        beta[j] = 2;
                 }
             }
         }
     }
 
     Beta = 0;
-    for (i = 0; i < r; i++) {
-        Beta += beta[i];
+    for (j = 0; j < r; j++) {
+        Beta += beta[j];
     }
 
     return (num_vertices(this->graph) * Beta) / (2 * r);
@@ -147,13 +149,13 @@ unsigned long MSTWUtilities::computeNumVertices(unsigned long n, double eps) {
     double den = eps * eps;
     den += 1 / n;
 
-    return (unsigned long) floor(1 / den);
+    return (unsigned long) std::floor(1 / den);
 }
 
 unsigned long MSTWUtilities::computeNumVerticesLemma4(unsigned long n, double eps) {
-    double sqrtn = sqrt(n);
+    double sqrtn = std::sqrt(n);
     double den = eps + 1 / sqrtn;
 
 
-    return (unsigned long) floor(sqrtn / den);
+    return (unsigned long) std::floor(sqrtn / den);
 }

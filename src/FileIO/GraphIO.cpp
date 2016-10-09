@@ -4,13 +4,14 @@
 
 #include "GraphIO.hpp"
 
-bool GraphIO::readGraph(std::string fileName, UndirectedGraph *g) {
+bool GraphIO::readGraph(std::string fileName, UndirectedGraph *g, int *maxWeight) {
     std::ifstream inFile(fileName);
     std::string edge, tmp;
     std::string::size_type pt;
     unsigned long u, v;
     int w;
 
+    *maxWeight = 0;
 
     if (inFile.is_open()) {
         while (getline(inFile, edge)) {
@@ -20,6 +21,9 @@ bool GraphIO::readGraph(std::string fileName, UndirectedGraph *g) {
             v = std::stoul(tmp, &pt);
             pt++;
             w = std::stoi(tmp.substr(pt));
+
+            if (w > *maxWeight)
+                *maxWeight = w;
 
             std::cout << "adding edge (" << u << "," << v << ") with weight " << w << std::endl;
 

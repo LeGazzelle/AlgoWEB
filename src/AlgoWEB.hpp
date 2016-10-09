@@ -10,7 +10,6 @@
 #include <boost/config.hpp>
 #include <boost/graph/adjacency_list.hpp>
 #include <boost/graph/graph_traits.hpp>
-#include "boost/graph/graphviz.hpp"
 #include <boost/random/mersenne_twister.hpp>
 #include <boost/random/uniform_int_distribution.hpp>
 
@@ -31,5 +30,7 @@ typedef graph_traits<UndirectedGraph>::vertex_iterator VertexIterator;
 typedef graph_traits<UndirectedGraph>::edge_iterator EdgeIterator;
 typedef graph_traits<UndirectedGraph>::adjacency_iterator NeighboursIterator;
 typedef property_map<UndirectedGraph, edge_weight_t>::type WeightMap;
+typedef property_map<UndirectedGraph, vertex_index_t>::type VertexMap;
+typedef std::vector<std::vector<bool>> EdgesMatrix;
 
 #endif //ALGOWEB_ALGOWEB_HPP
