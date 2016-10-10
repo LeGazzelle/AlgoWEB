@@ -29,14 +29,21 @@ boost::random::mt19937 Coin::generator;
 boost::random::uniform_int_distribution<> Coin::coin;
 
 //Default Constructor
-MSTWCompare::MSTWCompare(void) {
-    this->maxWeight = 0;
-    this->generator.seed((const uint32_t &) std::time(0));
-}
+//MSTWCompare::MSTWCompare(void) {
+//    this->maxWeight = 0;
+//    this->generator.seed((const uint32_t &) std::time(0));
+//}
 
 //Constructor with given graph
 MSTWCompare::MSTWCompare(UndirectedGraph g, int maxWeight) : graph(g), maxWeight(maxWeight) {
     this->generator.seed((const uint32_t &) std::time(0));
+    this->g_i = *(new UndirectedGraph());
+    WeightMap weights = get(edge_weight, this->graph);
+
+    EdgeIterator ei, eiend;
+    for (boost::tie(ei, eiend) = edges(this->graph); ei != eiend; ++ei) {
+        this->orderedEdges.push(WeightedEdge(*ei, weights[*ei]));
+    }
 }
 
 //Destructor
@@ -47,10 +54,10 @@ MSTWCompare::~MSTWCompare() {}
  *
  * @param g undirected graph
  */
-void MSTWCompare::setGraph(UndirectedGraph g, int maxWeight) {
-    this->graph = g;
-    this->maxWeight = maxWeight;
-}
+//void MSTWCompare::setGraph(UndirectedGraph g, int maxWeight) {
+//    this->graph = g;
+//    this->maxWeight = maxWeight;
+//}
 
 /**
  * The base algorithm developed by Chazelle, Rubinfeld and Trevisan
@@ -79,7 +86,9 @@ double MSTWCompare::CRTAlgorithm(double eps) {
  */
 
 double MSTWCompare::approxNumConnectedComps(double eps, unsigned long avgDeg, int i) {
-    unsigned long j, r = computeNumVertices(num_vertices(this->graph), eps);
+    this->extractGraph(i);
+
+    unsigned long j, r = computeNumVertices(num_vertices(this->g_i), eps);
     Vertex u;
     double Beta, beta[r];
     std::queue<Vertex> candidates;
@@ -90,7 +99,7 @@ double MSTWCompare::approxNumConnectedComps(double eps, unsigned long avgDeg, in
     threshold /= eps;
 
     for (j = 0; j < r; j++) {
-        candidates.push(random_vertex(this->graph, this->generator));
+        candidates.push(random_vertex(this->g_i, this->generator));
     }
 
     j = 0;
@@ -100,7 +109,7 @@ double MSTWCompare::approxNumConnectedComps(double eps, unsigned long avgDeg, in
         candidates.pop();
 
         beta[j] = 0.0;
-        bfs = new BFS(this->graph, u, avgDeg);
+        bfs = new BFS(this->g_i, u, avgDeg);
         bfs->setI(i);
         bfs->firstStep();
         flipAgain = true;
@@ -158,6 +167,20 @@ unsigned long MSTWCompare::computeNumVerticesLemma4(unsigned long n, double eps)
 
 
     return (unsigned long) std::floor(sqrtn / den);
+}
+
+//bool MSTWCompare::compareEdge(Edge a, Edge b) {
+//    return boost::get(edge_weight_t(), this->graph, a) < boost::get(edge_weight_t(), this->graph, b);
+//}
+
+void MSTWCompare::extractGraph(int i) {
+    WeightedEdge minimum = this->orderedEdges.top();
+
+    while (minimum.weight <= i) {
+        add_edge(source(minimum.edge, this->graph), target(minimum.edge, this->graph), this->g_i);
+        this->orderedEdges.pop();
+        minimum = this->orderedEdges.top();
+    }
 }
 
 double MSTWCompare::KruskalAlgorithm() {

@@ -7,18 +7,21 @@
 #include <ctime>
 #include "../AlgoWEB.hpp"
 #include "../BFS/BFS.hpp"
+#include "WeightedEdge.hpp"
 #include <boost/graph/random.hpp>
 #include <boost/graph/kruskal_min_spanning_tree.hpp>
 #include <boost/graph/prim_minimum_spanning_tree.hpp>
 
 
+
+
 class MSTWCompare {
 public:
-    MSTWCompare(void);
+    //MSTWCompare(void);
 
     MSTWCompare(UndirectedGraph g, int maxWeight);
 
-    void setGraph(UndirectedGraph g, int maxWeight);
+    //void setGraph(UndirectedGraph g, int maxWeight);
 
     double CRTAlgorithm(double eps);
 
@@ -33,6 +36,10 @@ private:
     int maxWeight;
     //management
     boost::random::mt19937 generator;
+    UndirectedGraph g_i;
+    //bool compareEdge(Edge a, Edge b);
+    std::priority_queue<WeightedEdge, std::vector<WeightedEdge>, WeightedEdgeComparator> orderedEdges;
+    //std::priority_queue<Edge, std::vector<Edge>, decltype(&MSTWCompare::compareEdge)> orderedEdges;
 
     double approxNumConnectedComps(double eps, unsigned long avgDeg, int i);
 
@@ -41,6 +48,8 @@ private:
     unsigned long computeNumVertices(unsigned long n, double eps);
 
     unsigned long computeNumVerticesLemma4(unsigned long n, double eps);
+
+    void extractGraph(int i);
 };
 
 #endif //ALGOWEB_CRT_MSTW_HPP
