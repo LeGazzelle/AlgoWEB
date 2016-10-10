@@ -7,19 +7,26 @@
 #include <ctime>
 #include "../AlgoWEB.hpp"
 #include "../BFS/BFS.hpp"
-#include "boost/graph/random.hpp"
+#include <boost/graph/random.hpp>
+#include <boost/graph/kruskal_min_spanning_tree.hpp>
+#include <boost/graph/prim_minimum_spanning_tree.hpp>
 
-class MSTWUtilities {
+
+class MSTWCompare {
 public:
-    MSTWUtilities(void);
+    MSTWCompare(void);
 
-    MSTWUtilities(UndirectedGraph g, int maxWeight);
+    MSTWCompare(UndirectedGraph g, int maxWeight);
 
     void setGraph(UndirectedGraph g, int maxWeight);
 
     double CRTAlgorithm(double eps);
 
-    ~MSTWUtilities();
+    double KruskalAlgorithm();
+
+    double PrimAlgorithm();
+
+    ~MSTWCompare();
 
 private:
     UndirectedGraph graph;

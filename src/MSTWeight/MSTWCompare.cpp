@@ -3,7 +3,7 @@
 //
 
 #include <queue>
-#include "Crt_MstW.hpp"
+#include "MSTWCompare.hpp"
 
 class Coin {
 private:
@@ -29,25 +29,25 @@ boost::random::mt19937 Coin::generator;
 boost::random::uniform_int_distribution<> Coin::coin;
 
 //Default Constructor
-MSTWUtilities::MSTWUtilities(void) {
+MSTWCompare::MSTWCompare(void) {
     this->maxWeight = 0;
     this->generator.seed((const uint32_t &) std::time(0));
 }
 
 //Constructor with given graph
-MSTWUtilities::MSTWUtilities(UndirectedGraph g, int maxWeight) : graph(g), maxWeight(maxWeight) {
+MSTWCompare::MSTWCompare(UndirectedGraph g, int maxWeight) : graph(g), maxWeight(maxWeight) {
     this->generator.seed((const uint32_t &) std::time(0));
 }
 
 //Destructor
-MSTWUtilities::~MSTWUtilities() {}
+MSTWCompare::~MSTWCompare() {}
 
 /**
  * Set the graph the utilities will work on
  *
  * @param g undirected graph
  */
-void MSTWUtilities::setGraph(UndirectedGraph g, int maxWeight) {
+void MSTWCompare::setGraph(UndirectedGraph g, int maxWeight) {
     this->graph = g;
     this->maxWeight = maxWeight;
 }
@@ -59,7 +59,7 @@ void MSTWUtilities::setGraph(UndirectedGraph g, int maxWeight) {
  * @param eps the maximum tolerated relative error
  * @return the approximation of the weight of the MST of the given graph
  */
-double MSTWUtilities::CRTAlgorithm(double eps) {
+double MSTWCompare::CRTAlgorithm(double eps) {
     if (this->maxWeight == 0)
         return -1.0;
 
@@ -78,7 +78,7 @@ double MSTWUtilities::CRTAlgorithm(double eps) {
  * Private
  */
 
-double MSTWUtilities::approxNumConnectedComps(double eps, unsigned long avgDeg, int i) {
+double MSTWCompare::approxNumConnectedComps(double eps, unsigned long avgDeg, int i) {
     unsigned long j, r = computeNumVertices(num_vertices(this->graph), eps);
     Vertex u;
     double Beta, beta[r];
@@ -129,7 +129,7 @@ double MSTWUtilities::approxNumConnectedComps(double eps, unsigned long avgDeg, 
     return (num_vertices(this->graph) * Beta) / (2 * r);
 }
 
-unsigned long MSTWUtilities::approxGraphAvgDegree(double eps) {
+unsigned long MSTWCompare::approxGraphAvgDegree(double eps) {
     unsigned long maxDegree = 0;
     unsigned long c = computeNumVerticesLemma4(num_vertices(this->graph), eps);
     unsigned int i;
@@ -145,17 +145,47 @@ unsigned long MSTWUtilities::approxGraphAvgDegree(double eps) {
     return maxDegree;
 }
 
-unsigned long MSTWUtilities::computeNumVertices(unsigned long n, double eps) {
+unsigned long MSTWCompare::computeNumVertices(unsigned long n, double eps) {
     double den = eps * eps;
     den += 1 / n;
 
     return (unsigned long) std::floor(1 / den);
 }
 
-unsigned long MSTWUtilities::computeNumVerticesLemma4(unsigned long n, double eps) {
+unsigned long MSTWCompare::computeNumVerticesLemma4(unsigned long n, double eps) {
     double sqrtn = std::sqrt(n);
     double den = eps + 1 / sqrtn;
 
 
     return (unsigned long) std::floor(sqrtn / den);
+}
+
+double MSTWCompare::KruskalAlgorithm() {
+    std::vector<Edge> spanning_tree;
+    WeightMap weight = get(edge_weight, this->graph);
+    double MSTWeight = 0.0;
+
+    kruskal_minimum_spanning_tree(this->graph, std::back_inserter(spanning_tree));
+
+    for (std::vector<Edge>::iterator ei = spanning_tree.begin(); ei != spanning_tree.end(); ++ei) {
+        MSTWeight += weight[*ei];
+    }
+
+    return MSTWeight;
+}
+
+double MSTWCompare::PrimAlgorithm() {
+    std::vector<Vertex> spanning_tree(num_vertices(this->graph));
+    WeightMap weight = get(edge_weight, this->graph);
+    double MSTWeight = 0.0;
+
+    prim_minimum_spanning_tree(this->graph, &spanning_tree[0]);
+
+    for (Vertex vi = 0; vi != spanning_tree.size(); ++vi) {
+        if (spanning_tree[vi] != vi) {
+            MSTWeight += weight[edge(vi, spanning_tree[vi], this->graph).first];
+        }
+    }
+
+    return MSTWeight;
 }

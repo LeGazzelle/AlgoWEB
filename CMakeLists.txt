@@ -6,7 +6,7 @@ set(STATIC_LIBS_DIR "src/utilities/static")
 include_directories(${LIBS_DIR})
 link_directories(${STATIC_LIBS_DIR})
 
-set(SOURCE_FILES src/MstW/Crt_MstW.cpp src/Grandom/GraphGen.cpp src/Grandom/GraphGen.hpp src/AlgoWEB.hpp src/FileIO/GraphIO.cpp src/FileIO/GraphIO.hpp)
+set(SOURCE_FILES src/MSTWeight/MSTWCompare.cpp src/Grandom/GraphGen.cpp src/Grandom/GraphGen.hpp src/AlgoWEB.hpp src/FileIO/GraphIO.cpp src/FileIO/GraphIO.hpp)
 set(ALGO_WEB_SOURCE_FILES src/test/AlgoWEB.cpp ${SOURCE_FILES} src/BFS/BFS.cpp src/BFS/BFS.hpp)
 set(GRANDOM_SOURCE_FILES src/test/grandom.cpp src/test/grandom.hpp ${SOURCE_FILES})
 add_executable(AlgoWEB ${ALGO_WEB_SOURCE_FILES})

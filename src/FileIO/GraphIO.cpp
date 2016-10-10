@@ -25,7 +25,8 @@ bool GraphIO::readGraph(std::string fileName, UndirectedGraph *g, int *maxWeight
             if (w > *maxWeight)
                 *maxWeight = w;
 
-            std::cout << "adding edge (" << u << "," << v << ") with weight " << w << std::endl;
+            if (__VERB)
+                std::cout << "adding edge (" << u << "," << v << ") with weight " << w << std::endl;
 
             add_edge(vertex(u, *g), vertex(v, *g), Weight(w), *g);
         }

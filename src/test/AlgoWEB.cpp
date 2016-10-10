@@ -1,7 +1,7 @@
 //
 // Created by Gabriele Santi on 25/09/16.
 //
-#include "../MstW/Crt_MstW.hpp"
+#include "../MSTWeight/MSTWCompare.hpp"
 #include "../Grandom/GraphGen.hpp"
 #include "../FileIO/GraphIO.hpp"
 
@@ -59,8 +59,8 @@ int main(void) {
 //    }
 //
 //
-//    //MSTWUtilities bho = new MSTWUtilities(g, 3); the old way
-//    MSTWUtilities bho(*g, 3);
+//    //MSTWCompare bho = new MSTWCompare(g, 3); the old way
+//    MSTWCompare bho(*g, 3);
 //
 //    double result = bho.CRTAlgorithm(0.5);
 //
@@ -83,13 +83,17 @@ int main(void) {
 
     UndirectedGraph *g = new UndirectedGraph();
     int maxWeight;
-    GraphIO::readGraph("/home/gabriel/tmp_dataset/test.cwg", g, &maxWeight);
+    GraphIO::readGraph("/home/gabriel/tmp_dataset/test_little.cwg", g, &maxWeight);
 
-    MSTWUtilities *algo = new MSTWUtilities(*g, maxWeight);
+    MSTWCompare *algo = new MSTWCompare(*g, maxWeight);
 
-    double ans = algo->CRTAlgorithm(0.35);
+    //double crt_ans = algo->CRTAlgorithm(0.35);
+    double krk_ans = algo->KruskalAlgorithm();
+    double prm_ans = algo->PrimAlgorithm();
 
-    cout << "Risultato: " << ans << endl;
+    cout << "Risultato Kruskal:\t" << krk_ans << endl;
+    cout << "Risultato Prim:\t" << prm_ans << endl;
+    //cout << "Risultato CRT:\t" << crt_ans << endl;
 
     return 0; //EXIT_SUCCESS; seems to belong to stdlib.h
 }

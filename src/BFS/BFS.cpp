@@ -47,8 +47,9 @@ void BFS::nextStep() {
     for (boost::tie(ai, ai_end) = adjacent_vertices(source, this->graph); ai != ai_end; ++ai) {
         target = get(vMap, *ai);
 
-        if (get(weight, edge(source, target, this->graph)) <= this->i
-            && !this->visitedEdgesMatrix[source][target]) {
+        //FIXME
+        if (/*get(weight, edge(source, target, this->graph)) <= this->i
+            &&*/ !this->visitedEdgesMatrix[source][target]) {
 
             this->toBeVisited->push(target);
             setVisitedEdge(source, target);
@@ -85,7 +86,9 @@ void BFS::firstStep() {
     if (k) {
         for (boost::tie(ai, ai_end) = adjacent_vertices(source, this->graph); ai != ai_end; ++ai) {
             target = get(vMap, *ai);
-            if (get(weight, edge(source, target, this->graph)) <= this->i) {
+
+            //FIXME
+            if (/*get(weight, edge(source, target, this->graph)) <= */this->i) {
                 this->toBeVisited->push(target);
                 setVisitedEdge(source, target);
             }
