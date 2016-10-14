@@ -38,9 +38,9 @@ bool GraphIO::readGraph(std::string fileName, UndirectedGraph *g, int *maxWeight
     }
 }
 
-bool GraphIO::writeGraph(std::string fileName, UndirectedGraph g) {
+bool GraphIO::writeGraph(std::string fileName, const UndirectedGraph g) {
     std::ofstream outFile(fileName, std::ios::out);
-    WeightMap weight = get(edge_weight, g);
+    ConstWeightMap weight= get(edge_weight, g);
     EdgeIterator ei, eend;
 
     if (outFile.is_open()) {

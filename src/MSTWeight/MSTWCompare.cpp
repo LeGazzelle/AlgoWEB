@@ -37,12 +37,12 @@ boost::random::uniform_int_distribution<> Coin::coin;
 //Constructor with given graph
 MSTWCompare::MSTWCompare(UndirectedGraph g, int maxWeight) : graph(g), maxWeight(maxWeight) {
     this->generator.seed((const uint32_t &) std::time(0));
-    this->g_i = *(new UndirectedGraph());
+    //FIXME: this->g_i = this->graph.create_subgraph();
     WeightMap weights = get(edge_weight, this->graph);
 
     EdgeIterator ei, eiend;
     for (boost::tie(ei, eiend) = edges(this->graph); ei != eiend; ++ei) {
-        this->orderedEdges.push(WeightedEdge(*ei, weights[*ei]));
+        this->orderedEdges.push(WeightedEdge(source(*ei, this->graph), target(*ei, this->graph), weights[*ei]));
     }
 }
 
@@ -86,7 +86,11 @@ double MSTWCompare::CRTAlgorithm(double eps) {
  */
 
 double MSTWCompare::approxNumConnectedComps(double eps, unsigned long avgDeg, int i) {
+#if 0
     this->extractGraph(i);
+
+    if (!num_vertices(this->g_i))
+        return 0.0;
 
     unsigned long j, r = computeNumVertices(num_vertices(this->g_i), eps);
     Vertex u;
@@ -136,6 +140,9 @@ double MSTWCompare::approxNumConnectedComps(double eps, unsigned long avgDeg, in
     }
 
     return (num_vertices(this->graph) * Beta) / (2 * r);
+#else
+    return 0;
+#endif
 }
 
 unsigned long MSTWCompare::approxGraphAvgDegree(double eps) {
@@ -155,18 +162,22 @@ unsigned long MSTWCompare::approxGraphAvgDegree(double eps) {
 }
 
 unsigned long MSTWCompare::computeNumVertices(unsigned long n, double eps) {
+    unsigned long y;
     double den = eps * eps;
     den += 1 / n;
+    y = (unsigned long) std::floor(1 / den);
 
-    return (unsigned long) std::floor(1 / den);
+    return y == 0 ? 1 : y;
 }
 
 unsigned long MSTWCompare::computeNumVerticesLemma4(unsigned long n, double eps) {
+    unsigned long y;
+
     double sqrtn = std::sqrt(n);
     double den = eps + 1 / sqrtn;
+    y = (unsigned long) std::floor(sqrtn / den);
 
-
-    return (unsigned long) std::floor(sqrtn / den);
+    return y == 0 ? 1 : y;
 }
 
 //bool MSTWCompare::compareEdge(Edge a, Edge b) {
@@ -174,13 +185,15 @@ unsigned long MSTWCompare::computeNumVerticesLemma4(unsigned long n, double eps)
 //}
 
 void MSTWCompare::extractGraph(int i) {
+#if 0
     WeightedEdge minimum = this->orderedEdges.top();
 
     while (minimum.weight <= i) {
-        add_edge(source(minimum.edge, this->graph), target(minimum.edge, this->graph), this->g_i);
+        add_edge(minimum.source, minimum.target, this->g_i);
         this->orderedEdges.pop();
         minimum = this->orderedEdges.top();
     }
+#endif
 }
 
 double MSTWCompare::KruskalAlgorithm() {

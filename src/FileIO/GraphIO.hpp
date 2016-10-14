@@ -14,7 +14,7 @@ class GraphIO {
 public:
     static bool readGraph(std::string, UndirectedGraph *, int *);
 
-    static bool writeGraph(std::string, UndirectedGraph);
+    static bool writeGraph(std::string, const UndirectedGraph);
 };
 
 #endif //ALGOWEB_GRAPHIO_HPP

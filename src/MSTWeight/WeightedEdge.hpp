@@ -6,25 +6,19 @@
 
 class WeightedEdge {
 public:
-    Edge edge;
-    //Vertex source;
-    //Vertex target;
+    //Edge edge;
+    Vertex source;
+    Vertex target;
     int weight;
 
-    WeightedEdge(Edge e, int w) : edge(e), weight(w) {}
+    WeightedEdge(Vertex s, Vertex t, int w) : source(s), target (t), weight(w) {}
 };
 
-class WeightedEdgeComparator
-{
-  bool reverse;
+class WeightedEdgeComparator {
 public:
-  WeightedEdgeComparator(const bool& revparam=false)
-    {reverse=revparam;}
-  bool operator() (const WeightedEdge& lhs, const WeightedEdge&rhs) const
-  {
-    if (reverse)
+    WeightedEdgeComparator() {}
+
+    bool operator()(const WeightedEdge &lhs, const WeightedEdge &rhs) const {
         return lhs.weight >= rhs.weight;
-    else
-        return lhs.weight < rhs.weight;
-  }
+    }
 };

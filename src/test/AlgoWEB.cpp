@@ -7,6 +7,18 @@
 
 using namespace std;
 
+typedef property<edge_weight_t, int, no_property> Peso;
+typedef property<edge_index_t, unsigned long, Peso> PropEdge;
+typedef subgraph< adjacency_list<setS, vecS, undirectedS,
+    property<vertex_index_t, unsigned long>, PropEdge, property<disallow_parallel_edge_tag, no_property> > > Graph;
+typedef graph_traits<Graph>::vertex_descriptor V;
+typedef graph_traits<Graph>::edge_descriptor E;
+typedef graph_traits<Graph>::edge_iterator edge_iter;
+typedef graph_traits<Graph>::vertex_iterator vertex_iter;
+
+typedef property_map<Graph, edge_weight_t>::type MappaPesi;
+
+
 
 template<typename UndirectedGraph>
 void print_weighted_graph(UndirectedGraph const);
@@ -91,6 +103,80 @@ int main(void) {
     double krk_ans = algo->KruskalAlgorithm();
     double prm_ans = algo->PrimAlgorithm();
 
+
+    //DEBUG test
+
+    Graph gg;
+    V v0 = vertex(0, gg);
+    V v1 = vertex(1, gg);
+    add_edge(v0, v1, PropEdge(AUTO_INDEX, 10), gg);
+    add_edge(1, 2, PropEdge(AUTO_INDEX, 20), gg);
+    add_edge(3, 4, PropEdge(AUTO_INDEX, 30), gg);
+
+    Graph sub = gg.create_subgraph();
+    add_vertex(3, sub);
+    add_vertex(4, sub);
+
+    pair<vertex_iter, vertex_iter> vip;
+
+    cout << "Vertices in g  = [ ";
+    vip = vertices(gg);
+    for(vertex_iter vi = vip.first; vi != vip.second; ++vi) {
+        cout << *vi << " ";
+    }
+    cout << "]" << endl;
+
+    cout << "Vertices (local) in g' = [ ";
+    vip = vertices(sub);
+    for(vertex_iter vi = vip.first; vi != vip.second; ++vi) {
+        cout << *vi << " ";
+    }
+    cout << "]" << endl;
+
+    cout << "Vertices (global) in g' = [ ";
+    vip = vertices(sub);
+    for(vertex_iter vi = vip.first; vi != vip.second; ++vi) {
+        cout << sub.local_to_global(*vi) << " ";
+    }
+    cout << "]" << endl;
+
+    pair<edge_iter, edge_iter> eip;
+
+    cout << "Edges in g  =" << endl;
+    MappaPesi mp = get(edge_weight, gg);
+    eip = edges(gg);
+    for(edge_iter ei = eip.first; ei != eip.second; ++ei) {
+        cout << source(*ei, gg) << " --(" << mp[*ei] << ")--> " << target(*ei, gg) << endl;
+    }
+    cout << "------------------" << endl;
+
+    cout << "Edges (local) in g' =" << endl;
+    mp = get(edge_weight, sub);
+    eip = edges(sub);
+    for(edge_iter ei = eip.first; ei != eip.second; ++ei) {
+        cout << source(*ei, sub) << " --(" << mp[*ei] << ")--> " << target(*ei, sub) << endl;
+    }
+    cout << "------------------" << endl;
+
+    cout << "Edges (global) in g' =" << endl;
+    eip = edges(sub);
+    for(edge_iter ei = eip.first; ei != eip.second; ++ei) {
+        cout << sub.local_to_global(source(*ei, sub))  << " --(" << mp[*ei] << ")--> " << sub.local_to_global(target(*ei, sub)) << endl;
+    }
+    cout << "------------------" << endl;
+
+    cout << "Edges indexes in g =" << endl;
+    property_map<Graph, edge_index_t>::type eindex_map = get(edge_index, gg);
+    eip = edges(gg);
+    for(edge_iter ei = eip.first; ei != eip.second; ++ei) {
+        cout << "edge index: "  << get(eindex_map, *ei) << endl;
+    }
+    cout << "------------------" << endl;
+
+
+
+    //DEBUG end
+
     cout << "Risultato Kruskal:\t" << krk_ans << endl;
     cout << "Risultato Prim:\t" << prm_ans << endl;
     //cout << "Risultato CRT:\t" << crt_ans << endl;
@@ -110,14 +196,14 @@ void print_weighted_graph(UndirectedGraph g) {
 }
 
 template<typename UndirectedGraph>
-void print_adjacent_vertex(UndirectedGraph g) {
+void print_adjacent_vertex(const UndirectedGraph g) {
     WeightMap weight = get(edge_weight, g);
     cout << "Graph Print: (between parentesis the weights on the edges)" << endl;
-    for (auto vertex = vertices(g); vertex.first != vertex.second; ++vertex.first) {
-        cout << *vertex.first << " is connected with ";
-        for (auto neighbour = adjacent_vertices(*vertex.first, g);
+    for (auto vertices = vertices(g); vertices.first != vertices.second; ++vertices.first) {
+        cout << *vertices.first << " is connected with ";
+        for (auto neighbour = adjacent_vertices(*vertices.first, g);
              neighbour.first != neighbour.second; ++neighbour.first) {
-            Result res = edge(*vertex.first, *neighbour.first, g);
+            Result res = edge(*vertices.first, *neighbour.first, g);
             cout << *neighbour.first << "(" << get(weight, res.first) << ") ";
         }
         cout << endl;

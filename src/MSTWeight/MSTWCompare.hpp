@@ -36,7 +36,7 @@ private:
     int maxWeight;
     //management
     boost::random::mt19937 generator;
-    UndirectedGraph g_i;
+    //FIXME UndirectedSubGraph g_i;
     //bool compareEdge(Edge a, Edge b);
     std::priority_queue<WeightedEdge, std::vector<WeightedEdge>, WeightedEdgeComparator> orderedEdges;
     //std::priority_queue<Edge, std::vector<Edge>, decltype(&MSTWCompare::compareEdge)> orderedEdges;
