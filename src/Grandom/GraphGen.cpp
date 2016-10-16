@@ -84,11 +84,11 @@ UndirectedGraph GraphGen::generate(unsigned long v, unsigned long e, unsigned in
          the tree.  Add an edge incident on tree[ i ]
          and a random vertex in the set {tree[ 0 ],...,tree[ i - 1 ]}.
     */
-    add_edge(vertex(tree[1], *g), vertex(tree[0], *g), Weight(rg->rand()), *g);
+    add_edge(vertex(tree[1], *g), vertex(tree[0], *g), EdgeWeight(AUTO_INDEX, rg->rand()), *g);
 
     for (i = 2; i < v; i++) {
         j = (unsigned long) rg->rand((int) i - 1);
-        add_edge(vertex(tree[i], *g), vertex(tree[j], *g), Weight(rg->rand()), *g);
+        add_edge(vertex(tree[i], *g), vertex(tree[j], *g), EdgeWeight(AUTO_INDEX, rg->rand()), *g);
     }
 
     /* Add additional random edges until achieving at least desired number */
@@ -106,7 +106,7 @@ UndirectedGraph GraphGen::generate(unsigned long v, unsigned long e, unsigned in
          * res is a pair <Edge, bool> where bool is true iff no edge existed
          * between i and j, hence a correct insertion has been performed; false otherwise
          */
-        res = add_edge(vertex(i, *g), vertex(j, *g), Weight(rg->rand()), *g);
+        res = add_edge(vertex(i, *g), vertex(j, *g), EdgeWeight(AUTO_INDEX, rg->rand()), *g);
 
         if (res.second)
             count++;

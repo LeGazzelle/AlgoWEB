@@ -12,6 +12,7 @@ public:
     int weight;
 
     WeightedEdge(Vertex s, Vertex t, int w) : source(s), target (t), weight(w) {}
+    //WeightedEdge(Edge e, int w) : edge(e), weight(w) {}
 };
 
 class WeightedEdgeComparator {
@@ -19,6 +20,6 @@ public:
     WeightedEdgeComparator() {}
 
     bool operator()(const WeightedEdge &lhs, const WeightedEdge &rhs) const {
-        return lhs.weight >= rhs.weight;
+        return lhs.weight > rhs.weight;
     }
 };

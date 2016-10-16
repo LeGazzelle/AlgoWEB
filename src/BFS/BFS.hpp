@@ -31,7 +31,6 @@ public:
 
     unsigned long getUDeg() const;
 
-    void setI(int i);
 
 private:
     UndirectedGraph graph;
@@ -41,7 +40,6 @@ private:
     bool completed;
     bool greaterThanDstar;
     unsigned long uDeg;
-    int i;
     unsigned long Dstar;
     //data structures for BFS
     std::queue<Vertex> *toBeVisited;

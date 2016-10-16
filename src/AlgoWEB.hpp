@@ -19,24 +19,69 @@ using namespace boost;
 static bool __VERB;
 
 #define AUTO_INDEX 0UL
+#define NULL_VERTEX ((long long) -1)
 
 
-//typedef adjacency_list_traits<setS, vecS, undirectedS> Traits;
 typedef property<edge_weight_t, int, no_property> Weight;
+typedef property<edge_index_t, unsigned long, Weight> EdgeWeight;
 typedef property<disallow_parallel_edge_tag, no_property> noMultigraph;
-typedef adjacency_list<setS, vecS, undirectedS,
-        property<vertex_index_t, unsigned long>, Weight, noMultigraph> UndirectedGraph;
-typedef subgraph<UndirectedGraph> UndirectedSubGraph;
+typedef subgraph<adjacency_list<setS, vecS, undirectedS,
+        property<vertex_index_t, unsigned long>, EdgeWeight, noMultigraph> > UndirectedGraph;
 
-typedef UndirectedGraph::vertices_size_type NumVertices;
-typedef UndirectedGraph::edge_descriptor Edge;
-typedef UndirectedGraph::vertex_descriptor Vertex;
-typedef graph_traits<UndirectedGraph>::vertex_iterator VertexIterator;
+typedef graph_traits<UndirectedGraph>::vertices_size_type NumVertices;
+typedef graph_traits<UndirectedGraph>::vertex_descriptor Vertex;
+typedef graph_traits<UndirectedGraph>::edge_descriptor Edge;
 typedef graph_traits<UndirectedGraph>::edge_iterator EdgeIterator;
+typedef graph_traits<UndirectedGraph>::vertex_iterator VertexIterator;
 typedef graph_traits<UndirectedGraph>::adjacency_iterator NeighboursIterator;
 typedef property_map<UndirectedGraph, edge_weight_t>::type WeightMap;
 typedef property_map<UndirectedGraph, edge_weight_t>::const_type ConstWeightMap;
 typedef property_map<UndirectedGraph, vertex_index_t>::type VertexMap;
 typedef std::vector<std::vector<bool>> EdgesMatrix;
+
+//DEBUG
+template<typename UndirectedGraph>
+void print_adjacent_vertex(const UndirectedGraph g) {
+    ConstWeightMap weight = get(edge_weight, g);
+    std::cout << "Graph Print: (between parentesis the weights on the edges)" << std::endl;
+    for (std::pair<VertexIterator, VertexIterator> vertices = boost::vertices(g);
+         vertices.first != vertices.second; ++vertices.first) {
+        std::cout << *vertices.first << " is connected with ";
+        for (std::pair<NeighboursIterator, NeighboursIterator> neighbour = adjacent_vertices(*vertices.first, g);
+             neighbour.first != neighbour.second; ++neighbour.first) {
+            std::pair<Edge, bool> res = edge(*vertices.first, *neighbour.first, g);
+            std::cout << *neighbour.first << "(" << get(weight, res.first) << ") ";
+        }
+        std::cout << std::endl;
+    }
+    std::cout << "#vertices: " << num_vertices(g) << ", #edges: " << num_edges(g) << std::endl;
+}
+
+template<typename UndirectedGraph>
+void print_madonna_merda(UndirectedGraph sub) {
+    std::pair<VertexIterator, VertexIterator> vip;
+    std::pair<EdgeIterator, EdgeIterator> eip;
+
+    std::cout << "Vertices (local) in g' = [ ";
+    vip = vertices(sub);
+    for (VertexIterator vi = vip.first; vi != vip.second; ++vi) {
+        std::cout << *vi << " ";
+    }
+    std::cout << "]" << std::endl;
+
+    std::cout << "Vertices (global) in g' = [ ";
+    vip = vertices(sub);
+    for (VertexIterator vi = vip.first; vi != vip.second; ++vi) {
+        std::cout << sub.local_to_global(*vi) << " ";
+    }
+    std::cout << "]" << std::endl;
+
+    std::cout << "Edges (local) g' = [ " << std::endl;
+    eip = edges(sub);
+    for (EdgeIterator ei = eip.first; ei != eip.second; ++ei) {
+        std::cout << source(*ei, sub) << "--->" << target(*ei, sub) << std::endl;
+    }
+    std::cout << "]" << std::endl;
+}
 
 #endif //ALGOWEB_ALGOWEB_HPP

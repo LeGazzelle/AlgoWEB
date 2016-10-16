@@ -13,15 +13,9 @@
 #include <boost/graph/prim_minimum_spanning_tree.hpp>
 
 
-
-
 class MSTWCompare {
 public:
-    //MSTWCompare(void);
-
     MSTWCompare(UndirectedGraph g, int maxWeight);
-
-    //void setGraph(UndirectedGraph g, int maxWeight);
 
     double CRTAlgorithm(double eps);
 
@@ -31,15 +25,16 @@ public:
 
     ~MSTWCompare();
 
+    //DEBUG
+    UndirectedGraph computeG_i(int i);
+
 private:
     UndirectedGraph graph;
     int maxWeight;
     //management
     boost::random::mt19937 generator;
-    //FIXME UndirectedSubGraph g_i;
-    //bool compareEdge(Edge a, Edge b);
+    UndirectedGraph g_i;
     std::priority_queue<WeightedEdge, std::vector<WeightedEdge>, WeightedEdgeComparator> orderedEdges;
-    //std::priority_queue<Edge, std::vector<Edge>, decltype(&MSTWCompare::compareEdge)> orderedEdges;
 
     double approxNumConnectedComps(double eps, unsigned long avgDeg, int i);
 

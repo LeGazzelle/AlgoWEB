@@ -28,6 +28,29 @@ public:
 boost::random::mt19937 Coin::generator;
 boost::random::uniform_int_distribution<> Coin::coin;
 
+
+class VertexConverter {
+private:
+    long long next;
+    long long *vertices;
+
+public:
+    VertexConverter(long long dim) {
+        this->next = 0;
+        this->vertices = new long long[dim];
+
+        for (long long i = 0LL; i < dim; i++)
+            this->vertices[i] = NULL_VERTEX;
+    }
+
+    long long getVertexIndex(long long globalIndex) {
+        if (this->vertices[globalIndex] < 0LL)
+            this->vertices[globalIndex] = this->next++;
+
+        return vertices[globalIndex];
+    }
+};
+
 //Default Constructor
 //MSTWCompare::MSTWCompare(void) {
 //    this->maxWeight = 0;
@@ -37,13 +60,26 @@ boost::random::uniform_int_distribution<> Coin::coin;
 //Constructor with given graph
 MSTWCompare::MSTWCompare(UndirectedGraph g, int maxWeight) : graph(g), maxWeight(maxWeight) {
     this->generator.seed((const uint32_t &) std::time(0));
-    //FIXME: this->g_i = this->graph.create_subgraph();
+    this->g_i = this->graph.create_subgraph();
     WeightMap weights = get(edge_weight, this->graph);
+
+    //DEBUg
+    Vertex s, t;
+    print_adjacent_vertex(this->graph);
 
     EdgeIterator ei, eiend;
     for (boost::tie(ei, eiend) = edges(this->graph); ei != eiend; ++ei) {
         this->orderedEdges.push(WeightedEdge(source(*ei, this->graph), target(*ei, this->graph), weights[*ei]));
+        //DEBUG
+        s = source(*ei, this->graph);
+        t = target(*ei, this->graph);
+        add_vertex(s, this->g_i);
+        add_vertex(t, this->g_i);
+        //this->orderedEdges.push(WeightedEdge(*ei, weights[*ei]));
     }
+
+    //debug
+    print_madonna_merda(this->g_i);
 }
 
 //Destructor
@@ -86,7 +122,6 @@ double MSTWCompare::CRTAlgorithm(double eps) {
  */
 
 double MSTWCompare::approxNumConnectedComps(double eps, unsigned long avgDeg, int i) {
-#if 0
     this->extractGraph(i);
 
     if (!num_vertices(this->g_i))
@@ -114,7 +149,6 @@ double MSTWCompare::approxNumConnectedComps(double eps, unsigned long avgDeg, in
 
         beta[j] = 0.0;
         bfs = new BFS(this->g_i, u, avgDeg);
-        bfs->setI(i);
         bfs->firstStep();
         flipAgain = true;
 
@@ -140,9 +174,6 @@ double MSTWCompare::approxNumConnectedComps(double eps, unsigned long avgDeg, in
     }
 
     return (num_vertices(this->graph) * Beta) / (2 * r);
-#else
-    return 0;
-#endif
 }
 
 unsigned long MSTWCompare::approxGraphAvgDegree(double eps) {
@@ -185,15 +216,14 @@ unsigned long MSTWCompare::computeNumVerticesLemma4(unsigned long n, double eps)
 //}
 
 void MSTWCompare::extractGraph(int i) {
-#if 0
     WeightedEdge minimum = this->orderedEdges.top();
 
     while (minimum.weight <= i) {
-        add_edge(minimum.source, minimum.target, this->g_i);
+        add_vertex(minimum.source, this->g_i);
+        add_vertex(minimum.target, this->g_i);
         this->orderedEdges.pop();
         minimum = this->orderedEdges.top();
     }
-#endif
 }
 
 double MSTWCompare::KruskalAlgorithm() {
@@ -224,4 +254,11 @@ double MSTWCompare::PrimAlgorithm() {
     }
 
     return MSTWeight;
+}
+
+//DEBUG
+UndirectedGraph MSTWCompare::computeG_i(int i) {
+    this->extractGraph(i);
+
+    return this->g_i;
 }
