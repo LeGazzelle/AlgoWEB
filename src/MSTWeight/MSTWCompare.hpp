@@ -12,6 +12,18 @@
 #include <boost/graph/kruskal_min_spanning_tree.hpp>
 #include <boost/graph/prim_minimum_spanning_tree.hpp>
 
+class VertexConverter {
+private:
+    long long next;
+    long long *vertices;
+
+public:
+    VertexConverter();
+
+    void init(unsigned long dim);
+
+    long long getVertexIndex(long long globalIndex);
+};
 
 class MSTWCompare {
 public:
@@ -26,7 +38,7 @@ public:
     ~MSTWCompare();
 
     //DEBUG
-    UndirectedGraph computeG_i(int i);
+    //UndirectedGraph computeG_i(int i);
 
 private:
     UndirectedGraph graph;
@@ -35,6 +47,7 @@ private:
     boost::random::mt19937 generator;
     UndirectedGraph g_i;
     std::priority_queue<WeightedEdge, std::vector<WeightedEdge>, WeightedEdgeComparator> orderedEdges;
+    VertexConverter vc;
 
     double approxNumConnectedComps(double eps, unsigned long avgDeg, int i);
 

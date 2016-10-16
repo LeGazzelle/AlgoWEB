@@ -93,19 +93,22 @@ int main(void) {
 //
 //    print_adjacent_vertex(*g3);
 
-    UndirectedGraph *g = new UndirectedGraph();
+    UndirectedGraph G_i, *g = new UndirectedGraph();
     int maxWeight;
     GraphIO::readGraph("/home/gabriel/tmp_dataset/test_little.cwg", g, &maxWeight);
 
     MSTWCompare *algo = new MSTWCompare(*g, maxWeight);
 
-    //double crt_ans = algo->CRTAlgorithm(0.35);
+    double crt_ans = algo->CRTAlgorithm(0.35);
     double krk_ans = algo->KruskalAlgorithm();
     double prm_ans = algo->PrimAlgorithm();
 
-    UndirectedGraph G_3 = algo->computeG_i(3);
-
-    print_adjacent_vertex(G_3);
+//    for (int j = 1; j <= maxWeight; j++) {
+//        G_i = algo->computeG_i(j);
+//
+//        cout << "G_i per i = " << j << endl;
+//        print_adjacent_vertex(G_i);
+//    }
 
     //DEBUG test
 
@@ -218,7 +221,7 @@ int main(void) {
 
     cout << "Risultato Kruskal:\t" << krk_ans << endl;
     cout << "Risultato Prim:\t" << prm_ans << endl;
-    //cout << "Risultato CRT:\t" << crt_ans << endl;
+    cout << "Risultato CRT:\t" << crt_ans << endl;
 
     return 0; //EXIT_SUCCESS; seems to belong to stdlib.h
 }

@@ -23,14 +23,16 @@ static bool __VERB;
 
 
 typedef property<edge_weight_t, int, no_property> Weight;
-typedef property<edge_index_t, unsigned long, Weight> EdgeWeight;
+//typedef property<edge_index_t, unsigned long, Weight> EdgeWeight;
 typedef property<disallow_parallel_edge_tag, no_property> noMultigraph;
-typedef subgraph<adjacency_list<setS, vecS, undirectedS,
-        property<vertex_index_t, unsigned long>, EdgeWeight, noMultigraph> > UndirectedGraph;
+//typedef subgraph<adjacency_list<setS, vecS, undirectedS,
+//        property<vertex_index_t, unsigned long>, EdgeWeight, noMultigraph> > UndirectedGraph;
+typedef adjacency_list<setS, vecS, undirectedS,
+        property<vertex_index_t, long long>, Weight, noMultigraph> UndirectedGraph;
 
 typedef graph_traits<UndirectedGraph>::vertices_size_type NumVertices;
-typedef graph_traits<UndirectedGraph>::vertex_descriptor Vertex;
-typedef graph_traits<UndirectedGraph>::edge_descriptor Edge;
+typedef UndirectedGraph::vertex_descriptor Vertex;
+typedef UndirectedGraph::edge_descriptor Edge;
 typedef graph_traits<UndirectedGraph>::edge_iterator EdgeIterator;
 typedef graph_traits<UndirectedGraph>::vertex_iterator VertexIterator;
 typedef graph_traits<UndirectedGraph>::adjacency_iterator NeighboursIterator;
