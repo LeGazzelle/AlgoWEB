@@ -8,8 +8,7 @@
 class Coin {
 private:
     static boost::random::mt19937 generator;
-    static boost::random::uniform_int_distribution<> coin;// = boost::random::uniform_int_distribution<>(0, 1);
-    //static bool init = false;
+    static boost::random::uniform_int_distribution<> coin;
 
 public:
     static int flip() {
@@ -32,7 +31,6 @@ boost::random::uniform_int_distribution<> Coin::coin;
 VertexConverter::VertexConverter() {}
 
 void VertexConverter::init(unsigned long dim) {
-    //this->next = 0;
     this->vertices = new long long[dim];
 
     for (long long i = 0LL; i < dim; i++)
@@ -47,9 +45,7 @@ long long VertexConverter::getVertexIndex(long long globalIndex) {
 }
 
 
-RandomVertexExtractor::RandomVertexExtractor() {}
-
-void RandomVertexExtractor::init(unsigned long dim) {
+RandomVertexExtractor::RandomVertexExtractor(unsigned long dim) {
     this->vindexes = new Vertex[dim];
     this->size = dim;
 
@@ -58,7 +54,7 @@ void RandomVertexExtractor::init(unsigned long dim) {
 }
 
 Vertex RandomVertexExtractor::extractRandomVertex() {
-    return *std::rotate(this->vindexes, this->vindexes+1, this->vindexes+this->size);
+    return *std::rotate(this->vindexes, this->vindexes + 1, this->vindexes + this->size);
 }
 
 void RandomVertexExtractor::prepare() {
@@ -66,21 +62,15 @@ void RandomVertexExtractor::prepare() {
 }
 
 void RandomVertexExtractor::scramble() {
-    std::random_shuffle(this->vindexes, this->vindexes+this->size);
+    std::random_shuffle(this->vindexes, this->vindexes + this->size);
 }
-
-//Default Constructor
-//MSTWCompare::MSTWCompare(void) {
-//    this->maxWeight = 0;
-//    this->generator.seed((const uint32_t &) std::time(0));
-//}
 
 //Constructor with given graph
 MSTWCompare::MSTWCompare(UndirectedGraph g, int maxWeight) : graph(g), maxWeight(maxWeight) {
     this->generator.seed((const uint32_t &) std::time(0));
     this->g_i = *new UndirectedGraph();
-    this->vc.init(num_vertices(g));
-    this->rve.init(num_vertices(g));
+    this->num_vert_G = num_vertices(g);
+    this->vc.init(num_vert_G);
     WeightMap weights = get(edge_weight, this->graph);
 
     EdgeIterator ei, eiend;
@@ -112,7 +102,6 @@ double MSTWCompare::CRTAlgorithm(double eps) {
     if (this->maxWeight == 0)
         return -1.0;
 
-    NumVertices n = num_vertices(this->graph);
     double c = 0.0;
     unsigned long d = approxGraphAvgDegree(eps);
 
@@ -120,7 +109,7 @@ double MSTWCompare::CRTAlgorithm(double eps) {
         c += approxNumConnectedComps(eps, d, i);
     }
 
-    return n - this->maxWeight + c;
+    return this->num_vert_G - this->maxWeight + c;
 }
 
 /**
@@ -129,32 +118,25 @@ double MSTWCompare::CRTAlgorithm(double eps) {
 
 double MSTWCompare::approxNumConnectedComps(double eps, unsigned long avgDeg, int i) {
     this->extractGraph(i);
-    this->rve.prepare();
+    unsigned long n_i = num_vertices(this->g_i);
 
-    if (!num_vertices(this->g_i))
+    if (!n_i)
         return 0.0;
 
-    unsigned long j, r = computeNumVertices(num_vertices(this->g_i), eps);
+    RandomVertexExtractor *rve = new RandomVertexExtractor(n_i);
+    rve->prepare();
+    unsigned long j, r = computeNumVertices(n_i, eps);
     Vertex u;
     double Beta = 0.0;
-    //std::queue<Vertex> candidates;
-    //Vertex candidate;
     BFS *bfs;
     bool flipAgain;
-    int flips = 0;
+    int flips;
     double threshold = 4 * this->maxWeight;
     threshold /= eps;
 
-//    for (j = 0; j < r; j++) {
-//        candidates.push(random_vertex(this->g_i, this->generator));
-//    }
-
-
-//    while (!candidates.empty()) {
     for (j = 0; j < r; j++) {
-//        u = candidates.front();
-//        candidates.pop();
-        u = this->rve.extractRandomVertex();
+        u = rve->extractRandomVertex();
+        flips = 0;
 
         bfs = new BFS(this->g_i, u, avgDeg);
         bfs->firstStep();
@@ -164,7 +146,7 @@ double MSTWCompare::approxNumConnectedComps(double eps, unsigned long avgDeg, in
             flips++;
             flipAgain = Coin::flip() && bfs->getVisitedVertices() < threshold && !bfs->isGreaterThanDstar();
             if (flipAgain) {
-                bfs->nextStep();
+                bfs->nextStep(0);
 
                 if (bfs->isCompleted()) {
                     flipAgain = false;
@@ -179,25 +161,20 @@ double MSTWCompare::approxNumConnectedComps(double eps, unsigned long avgDeg, in
         delete bfs;
     }
 
-//    for (j = 0; j < r; j++) {
-//        Beta += beta[j];
-//    }
 
-    return (num_vertices(this->graph) * Beta) / (2 * r);
+    return (this->num_vert_G * Beta) / (2 * r);
 }
-
-//std::queue<Vertex> MSTWCompare::getRandomCandidates() {
-//
-//}
 
 unsigned long MSTWCompare::approxGraphAvgDegree(double eps) {
     unsigned long maxDegree = 0;
-    unsigned long c = computeNumVerticesLemma4(num_vertices(this->graph), eps);
+    unsigned long c = computeNumVerticesLemma4(this->num_vert_G, eps);
+    RandomVertexExtractor *rve = new RandomVertexExtractor(this->num_vert_G);
+    rve->prepare();
     unsigned int i;
     Vertex v;
 
     for (i = 0; i < c; i++) {
-        v = random_vertex(this->graph, this->generator);
+        v = rve->extractRandomVertex();
 
         if (boost::degree(v, this->graph) > maxDegree)
             maxDegree = boost::degree(v, this->graph);
@@ -224,10 +201,6 @@ unsigned long MSTWCompare::computeNumVerticesLemma4(unsigned long n, double eps)
 
     return y == 0 ? 1 : y;
 }
-
-//bool MSTWCompare::compareEdge(Edge a, Edge b) {
-//    return boost::get(edge_weight_t(), this->graph, a) < boost::get(edge_weight_t(), this->graph, b);
-//}
 
 void MSTWCompare::extractGraph(int i) {
     WeightedEdge minimum = this->orderedEdges.top();
@@ -257,7 +230,7 @@ double MSTWCompare::KruskalAlgorithm() {
 }
 
 double MSTWCompare::PrimAlgorithm() {
-    std::vector<Vertex> spanning_tree(num_vertices(this->graph));
+    std::vector<Vertex> spanning_tree(this->num_vert_G);
     WeightMap weight = get(edge_weight, this->graph);
     double MSTWeight = 0.0;
 
@@ -271,10 +244,3 @@ double MSTWCompare::PrimAlgorithm() {
 
     return MSTWeight;
 }
-
-//DEBUG
-//UndirectedGraph MSTWCompare::computeG_i(int i) {
-//    this->extractGraph(i);
-//
-//    return this->g_i;
-//}

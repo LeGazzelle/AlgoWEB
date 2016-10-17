@@ -33,11 +33,11 @@ void BFS::edgesMatrixInit(const NumVertices n) {
     }
 }
 
-void BFS::nextStep() {
+void BFS::nextStep(unsigned long pBFS) {
     NeighboursIterator ai, ai_end;
     Vertex source, target;
     bool pause = false;
-    unsigned long pauseBFS = 2 * this->visitedEdges;
+    unsigned long pauseBFS = pBFS ? pBFS : (2 * this->visitedEdges);
     VertexMap vMap = get(vertex_index, this->graph);
     source = this->toBeVisited->front();
     this->greaterThanDstar = boost::degree(source, this->graph) > this->Dstar;
@@ -68,7 +68,7 @@ void BFS::nextStep() {
         return;
     }
 
-    nextStep();
+    nextStep(pauseBFS);
 }
 
 void BFS::firstStep() {
@@ -89,7 +89,7 @@ void BFS::firstStep() {
 
     this->uDeg = k;
     this->visitedVertices = 1; //just u in this first step
-    if (num_vertices(this->graph) == this->visitedVertices) this->completed = true; //BFS Completed
+    //if (num_vertices(this->graph) == this->visitedVertices) this->completed = true; //BFS Completed
     if (k > this->Dstar) greaterThanDstar = true;
 
 }

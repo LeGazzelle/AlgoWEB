@@ -33,10 +33,12 @@ private:
     unsigned long size;
 
     void scramble();
+
 public:
-    RandomVertexExtractor ();
-    void init (unsigned long dim);
+    RandomVertexExtractor(unsigned long dim);
+
     Vertex extractRandomVertex();
+
     void prepare();
 };
 
@@ -52,18 +54,15 @@ public:
 
     ~MSTWCompare();
 
-    //DEBUG
-    //UndirectedGraph computeG_i(int i);
-
 private:
     UndirectedGraph graph;
     int maxWeight;
     //management
     boost::random::mt19937 generator;
     UndirectedGraph g_i;
+    NumVertices num_vert_G;
     std::priority_queue<WeightedEdge, std::vector<WeightedEdge>, WeightedEdgeComparator> orderedEdges;
     VertexConverter vc;
-    RandomVertexExtractor rve;
 
     double approxNumConnectedComps(double eps, unsigned long avgDeg, int i);
 
@@ -74,8 +73,6 @@ private:
     unsigned long computeNumVerticesLemma4(unsigned long n, double eps);
 
     void extractGraph(int i);
-
-    //std::queue<Vertex> getRandomCandidates();
 };
 
 #endif //ALGOWEB_CRT_MSTW_HPP

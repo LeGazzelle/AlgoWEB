@@ -97,9 +97,9 @@ int main(void) {
 
     MSTWCompare *algo = new MSTWCompare(*g, maxWeight);
 
-//    clock_t crt_begin = clock();
-//    double crt_ans = algo->CRTAlgorithm(0.35);
-//    clock_t crt_end = clock();
+    clock_t crt_begin = clock();
+    double crt_ans = algo->CRTAlgorithm(0.35);
+    clock_t crt_end = clock();
 
     clock_t krk_begin = clock();
     double krk_ans = algo->KruskalAlgorithm();
@@ -109,7 +109,7 @@ int main(void) {
     double prm_ans = algo->PrimAlgorithm();
     clock_t prm_end = clock();
 
-//    double elapsed_crt = double(crt_end - crt_begin) / CLOCKS_PER_SEC;
+    double elapsed_crt = double(crt_end - crt_begin) / CLOCKS_PER_SEC;
     double elapsed_krk = double(krk_end - krk_begin) / CLOCKS_PER_SEC;
     double elapsed_prm = double(prm_end - prm_begin) / CLOCKS_PER_SEC;
 
@@ -128,8 +128,8 @@ int main(void) {
     cout << "Tempo: " << elapsed_krk << endl << "--------------------\n";
     cout << "Risultato Prim:\t" << prm_ans << endl;
     cout << "Tempo: " << elapsed_prm << endl << "--------------------\n";
-//    cout << "Risultato CRT:\t" << crt_ans << endl;
-//    cout << "Tempo: " << elapsed_crt << endl << "--------------------\n";
+    cout << "Risultato CRT:\t" << crt_ans << endl;
+    cout << "Tempo: " << elapsed_crt << endl << "--------------------\n";
 
     return 0; //EXIT_SUCCESS; seems to belong to stdlib.h
 }
