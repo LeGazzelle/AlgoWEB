@@ -19,7 +19,6 @@ using namespace boost;
 
 static bool __VERB;
 
-#define AUTO_INDEX 0UL
 #define NULL_VERTEX ((long long) -1)
 
 

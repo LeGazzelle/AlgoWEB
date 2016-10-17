@@ -28,10 +28,11 @@ public:
 boost::random::mt19937 Coin::generator;
 boost::random::uniform_int_distribution<> Coin::coin;
 
+
 VertexConverter::VertexConverter() {}
 
 void VertexConverter::init(unsigned long dim) {
-    this->next = 0;
+    //this->next = 0;
     this->vertices = new long long[dim];
 
     for (long long i = 0LL; i < dim; i++)
@@ -45,6 +46,29 @@ long long VertexConverter::getVertexIndex(long long globalIndex) {
     return vertices[globalIndex];
 }
 
+
+RandomVertexExtractor::RandomVertexExtractor() {}
+
+void RandomVertexExtractor::init(unsigned long dim) {
+    this->vindexes = new Vertex[dim];
+    this->size = dim;
+
+    for (long long i = 0; i < dim; i++)
+        this->vindexes[i] = (Vertex) i;
+}
+
+Vertex RandomVertexExtractor::extractRandomVertex() {
+    return *std::rotate(this->vindexes, this->vindexes+1, this->vindexes+this->size);
+}
+
+void RandomVertexExtractor::prepare() {
+    this->scramble();
+}
+
+void RandomVertexExtractor::scramble() {
+    std::random_shuffle(this->vindexes, this->vindexes+this->size);
+}
+
 //Default Constructor
 //MSTWCompare::MSTWCompare(void) {
 //    this->maxWeight = 0;
@@ -56,6 +80,7 @@ MSTWCompare::MSTWCompare(UndirectedGraph g, int maxWeight) : graph(g), maxWeight
     this->generator.seed((const uint32_t &) std::time(0));
     this->g_i = *new UndirectedGraph();
     this->vc.init(num_vertices(g));
+    this->rve.init(num_vertices(g));
     WeightMap weights = get(edge_weight, this->graph);
 
     EdgeIterator ei, eiend;
@@ -104,32 +129,33 @@ double MSTWCompare::CRTAlgorithm(double eps) {
 
 double MSTWCompare::approxNumConnectedComps(double eps, unsigned long avgDeg, int i) {
     this->extractGraph(i);
+    this->rve.prepare();
 
     if (!num_vertices(this->g_i))
         return 0.0;
 
     unsigned long j, r = computeNumVertices(num_vertices(this->g_i), eps);
     Vertex u;
-    double Beta, beta[r];
-    std::queue<Vertex> candidates;
+    double Beta = 0.0;
+    //std::queue<Vertex> candidates;
+    //Vertex candidate;
     BFS *bfs;
     bool flipAgain;
     int flips = 0;
     double threshold = 4 * this->maxWeight;
     threshold /= eps;
 
-    candidates = getRandomCandidates();
 //    for (j = 0; j < r; j++) {
 //        candidates.push(random_vertex(this->g_i, this->generator));
 //    }
 
-    j = 0;
 
-    while (!candidates.empty()) {
-        u = candidates.front();
-        candidates.pop();
+//    while (!candidates.empty()) {
+    for (j = 0; j < r; j++) {
+//        u = candidates.front();
+//        candidates.pop();
+        u = this->rve.extractRandomVertex();
 
-        beta[j] = 0.0;
         bfs = new BFS(this->g_i, u, avgDeg);
         bfs->firstStep();
         flipAgain = true;
@@ -143,23 +169,26 @@ double MSTWCompare::approxNumConnectedComps(double eps, unsigned long avgDeg, in
                 if (bfs->isCompleted()) {
                     flipAgain = false;
                     if (bfs->getVisitedEdges())
-                        beta[j] = (bfs->getUDeg() * std::pow(2, flips)) / bfs->getVisitedEdges();
+                        Beta += (bfs->getUDeg() * std::pow(2, flips)) / bfs->getVisitedEdges();
                     else
-                        beta[j] = 2;
+                        Beta += 2;
                 }
             }
         }
+
+        delete bfs;
     }
 
-    Beta = 0;
-    for (j = 0; j < r; j++) {
-        Beta += beta[j];
-    }
+//    for (j = 0; j < r; j++) {
+//        Beta += beta[j];
+//    }
 
     return (num_vertices(this->graph) * Beta) / (2 * r);
 }
 
-std::queue<Vertex> MSTWCompare::getRandomCandidates() {}
+//std::queue<Vertex> MSTWCompare::getRandomCandidates() {
+//
+//}
 
 unsigned long MSTWCompare::approxGraphAvgDegree(double eps) {
     unsigned long maxDegree = 0;

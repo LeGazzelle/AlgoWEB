@@ -18,16 +18,6 @@ using namespace std;
 //
 //typedef property_map<Graph, edge_weight_t>::type MappaPesi;
 
-void f() {
-  using namespace std;
-  clock_t begin = clock();
-
-  //code_to_time();
-
-  clock_t end = clock();
-  double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC;
-}
-
 template<typename UndirectedGraph>
 void print_weighted_graph(UndirectedGraph const);
 
@@ -107,9 +97,9 @@ int main(void) {
 
     MSTWCompare *algo = new MSTWCompare(*g, maxWeight);
 
-    clock_t crt_begin = clock();
-    double crt_ans = algo->CRTAlgorithm(0.35);
-    clock_t crt_end = clock();
+//    clock_t crt_begin = clock();
+//    double crt_ans = algo->CRTAlgorithm(0.35);
+//    clock_t crt_end = clock();
 
     clock_t krk_begin = clock();
     double krk_ans = algo->KruskalAlgorithm();
@@ -119,9 +109,11 @@ int main(void) {
     double prm_ans = algo->PrimAlgorithm();
     clock_t prm_end = clock();
 
-    double elapsed_crt = double(crt_end - crt_begin) / CLOCKS_PER_SEC;
+//    double elapsed_crt = double(crt_end - crt_begin) / CLOCKS_PER_SEC;
     double elapsed_krk = double(krk_end - krk_begin) / CLOCKS_PER_SEC;
     double elapsed_prm = double(prm_end - prm_begin) / CLOCKS_PER_SEC;
+
+    //DEBUG test
 
 //    for (int j = 1; j <= maxWeight; j++) {
 //        G_i = algo->computeG_i(j);
@@ -130,121 +122,14 @@ int main(void) {
 //        print_adjacent_vertex(G_i);
 //    }
 
-    //DEBUG test
-
-//    UndirectedGraph gg;
-//    Vertex v0 = vertex(0, gg);
-//    Vertex v1 = vertex(1, gg);
-//    add_edge(v0, v1, EdgeWeight(AUTO_INDEX, 25), gg);
-//    add_edge(v1, v0, EdgeWeight(AUTO_INDEX, 35), gg);
-//    add_edge(1, 2, EdgeWeight(AUTO_INDEX, 20), gg);
-//    add_edge(3, 4, EdgeWeight(AUTO_INDEX, 30), gg);
-//
-//    UndirectedGraph sub = gg.create_subgraph();
-//
-//    WeightMap weights = get(edge_weight, gg);
-//    std::priority_queue<WeightedEdge, std::vector<WeightedEdge>, WeightedEdgeComparator> orderedEdges;
-//    EdgeIterator ei1, eiend;
-//    for (boost::tie(ei1, eiend) = edges(gg); ei1 != eiend; ++ei1) {
-//        orderedEdges.push(WeightedEdge(source(*ei1, gg), target(*ei1, gg), weights[*ei1]));
-//    }
-//
-//    WeightedEdge minimum = orderedEdges.top();
-//
-//    Vertex *s, *t;
-//
-//    for (int h = 0; h < 2; h++) {
-//        s = &minimum.source;
-//        t = &minimum.target;
-//        add_vertex(*s, sub);
-//        add_vertex(*t, sub);
-//        orderedEdges.pop();
-//        minimum = orderedEdges.top();
-//    }
-//
-//    pair<VertexIterator, VertexIterator> vip;
-//
-//    cout << "Vertices in g  = [ ";
-//    vip = vertices(gg);
-//    for(VertexIterator vi = vip.first; vi != vip.second; ++vi) {
-//        cout << *vi << " ";
-//    }
-//    cout << "]" << endl;
-//
-//    cout << "Vertices (local) in g' = [ ";
-//    vip = vertices(sub);
-//    for(VertexIterator vi = vip.first; vi != vip.second; ++vi) {
-//        cout << *vi << " ";
-//    }
-//    cout << "]" << endl;
-//
-//    cout << "Vertices (global) in g' = [ ";
-//    vip = vertices(sub);
-//    for(VertexIterator vi = vip.first; vi != vip.second; ++vi) {
-//        cout << sub.local_to_global(*vi) << " ";
-//    }
-//    cout << "]" << endl;
-//
-//    pair<EdgeIterator, EdgeIterator> eip;
-//
-//    cout << "Edges in g  =" << endl;
-//    WeightMap mp = get(edge_weight, gg);
-//    eip = edges(gg);
-//    for(EdgeIterator ei = eip.first; ei != eip.second; ++ei) {
-//        cout << source(*ei, gg) << " --(" << mp[*ei] << ")--> " << target(*ei, gg) << endl;
-//    }
-//    cout << "------------------" << endl;
-//
-//    cout << "Edges (local) in g' =" << endl;
-//    mp = get(edge_weight, sub);
-//    eip = edges(sub);
-//    for(EdgeIterator ei = eip.first; ei != eip.second; ++ei) {
-//        cout << source(*ei, sub) << " --(" << mp[*ei] << ")--> " << target(*ei, sub) << endl;
-//    }
-//    cout << "------------------" << endl;
-//
-//    cout << "Edges (global) in g' =" << endl;
-//    eip = edges(sub);
-//    for(EdgeIterator ei = eip.first; ei != eip.second; ++ei) {
-//        cout << sub.local_to_global(source(*ei, sub))  << " --(" << mp[*ei] << ")--> " << sub.local_to_global(target(*ei, sub)) << endl;
-//    }
-//    cout << "------------------" << endl;
-//
-//    cout << "Edges indexes in g =" << endl;
-//    property_map<UndirectedGraph, edge_index_t>::type eindex_map = get(edge_index, gg);
-//    eip = edges(gg);
-//    for(EdgeIterator ei = eip.first; ei != eip.second; ++ei) {
-//        cout << "edge index: "  << get(eindex_map, *ei) << endl;
-//    }
-//    cout << "------------------" << endl;
-
-
-//    const unsigned long N = 20;
-//    VertexConverter *vc = new VertexConverter(N);
-//    cout << vc->getVertexIndex(9) << endl; //0
-//    cout << vc->getVertexIndex(4) << endl; //1
-//    cout << vc->getVertexIndex(5) << endl; //2
-//    cout << vc->getVertexIndex(8) << endl; //3
-//    cout << vc->getVertexIndex(9) << endl; //0
-//    cout << vc->getVertexIndex(4) << endl; //1
-//    cout << vc->getVertexIndex(5) << endl; //2
-//    cout << vc->getVertexIndex(8) << endl; //3
-//
-//    cout << vc->getDegubVertexIndex(3) << endl; //8
-//    cout << vc->getDegubVertexIndex(2) << endl; //5
-//    cout << vc->getDegubVertexIndex(1) << endl; //4
-//    cout << vc->getDegubVertexIndex(0) << endl; //9
-//    cout << vc->getDegubVertexIndex(10) << endl; //-1
-
-
     //DEBUG end
 
     cout << "Risultato Kruskal:\t" << krk_ans << endl;
     cout << "Tempo: " << elapsed_krk << endl << "--------------------\n";
     cout << "Risultato Prim:\t" << prm_ans << endl;
     cout << "Tempo: " << elapsed_prm << endl << "--------------------\n";
-    cout << "Risultato CRT:\t" << crt_ans << endl;
-    cout << "Tempo: " << elapsed_crt << endl << "--------------------\n";
+//    cout << "Risultato CRT:\t" << crt_ans << endl;
+//    cout << "Tempo: " << elapsed_crt << endl << "--------------------\n";
 
     return 0; //EXIT_SUCCESS; seems to belong to stdlib.h
 }

@@ -5,6 +5,8 @@
 #define ALGOWEB_CRT_MSTW_HPP
 
 #include <ctime>
+#include <algorithm>
+
 #include "../AlgoWEB.hpp"
 #include "../BFS/BFS.hpp"
 #include "WeightedEdge.hpp"
@@ -23,6 +25,19 @@ public:
     void init(unsigned long dim);
 
     long long getVertexIndex(long long globalIndex);
+};
+
+class RandomVertexExtractor {
+private:
+    Vertex *vindexes;
+    unsigned long size;
+
+    void scramble();
+public:
+    RandomVertexExtractor ();
+    void init (unsigned long dim);
+    Vertex extractRandomVertex();
+    void prepare();
 };
 
 class MSTWCompare {
@@ -48,6 +63,7 @@ private:
     UndirectedGraph g_i;
     std::priority_queue<WeightedEdge, std::vector<WeightedEdge>, WeightedEdgeComparator> orderedEdges;
     VertexConverter vc;
+    RandomVertexExtractor rve;
 
     double approxNumConnectedComps(double eps, unsigned long avgDeg, int i);
 
@@ -59,7 +75,7 @@ private:
 
     void extractGraph(int i);
 
-    std::queue<Vertex> getRandomCandidates();
+    //std::queue<Vertex> getRandomCandidates();
 };
 
 #endif //ALGOWEB_CRT_MSTW_HPP
