@@ -151,7 +151,7 @@ double MSTWCompare::approxNumConnectedComps(double eps, unsigned long avgDeg, in
                 if (bfs->isCompleted()) {
                     flipAgain = false;
                     if (bfs->getVisitedEdges())
-                        Beta += (bfs->getUDeg() * std::pow(2, flips)) / bfs->getVisitedEdges();
+                        Beta += (bfs->getUDeg() * std::pow(2, flips-1)) / bfs->getVisitedEdges();
                     else
                         Beta += 2;
                 }
@@ -162,13 +162,13 @@ double MSTWCompare::approxNumConnectedComps(double eps, unsigned long avgDeg, in
     }
 
 
-    return (this->num_vert_G * Beta) / (2 * r);
+    return (this->num_vert_G * Beta) / r;
 }
 
 unsigned long MSTWCompare::approxGraphAvgDegree(double eps) {
     unsigned long maxDegree = 0;
     unsigned long c = computeNumVerticesLemma4(this->num_vert_G, eps);
-    RandomVertexExtractor *rve = new RandomVertexExtractor(this->num_vert_G);
+    RandomVertexExtractor *rve = new RandomVertexExtractor(this->num_vert_G); //mischia tutti i nodi per darne solo una parte... inefficiente
     rve->prepare();
     unsigned int i;
     Vertex v;
@@ -186,8 +186,8 @@ unsigned long MSTWCompare::approxGraphAvgDegree(double eps) {
 unsigned long MSTWCompare::computeNumVertices(unsigned long n, double eps) {
     unsigned long y;
     double den = eps * eps;
-    den += 1 / n;
-    y = (unsigned long) std::floor(1 / den);
+    den = 1 + n*den;
+    y = (unsigned long) std::floor(n / den);
 
     return y == 0 ? 1 : y;
 }
