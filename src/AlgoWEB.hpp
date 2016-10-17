@@ -6,6 +6,7 @@
 #define ALGOWEB_ALGOWEB_HPP
 
 #include <iostream>
+#include <ctime>
 
 #include <boost/config.hpp>
 #include <boost/graph/adjacency_list.hpp>

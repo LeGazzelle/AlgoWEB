@@ -18,7 +18,15 @@ using namespace std;
 //
 //typedef property_map<Graph, edge_weight_t>::type MappaPesi;
 
+void f() {
+  using namespace std;
+  clock_t begin = clock();
 
+  //code_to_time();
+
+  clock_t end = clock();
+  double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC;
+}
 
 template<typename UndirectedGraph>
 void print_weighted_graph(UndirectedGraph const);
@@ -95,13 +103,25 @@ int main(void) {
 
     UndirectedGraph G_i, *g = new UndirectedGraph();
     int maxWeight;
-    GraphIO::readGraph("/home/gabriel/tmp_dataset/test_little.cwg", g, &maxWeight);
+    GraphIO::readGraph("/home/gabriel/tmp_dataset/test_medium_big.cwg", g, &maxWeight);
 
     MSTWCompare *algo = new MSTWCompare(*g, maxWeight);
 
+    clock_t crt_begin = clock();
     double crt_ans = algo->CRTAlgorithm(0.35);
+    clock_t crt_end = clock();
+
+    clock_t krk_begin = clock();
     double krk_ans = algo->KruskalAlgorithm();
+    clock_t krk_end = clock();
+
+    clock_t prm_begin = clock();
     double prm_ans = algo->PrimAlgorithm();
+    clock_t prm_end = clock();
+
+    double elapsed_crt = double(crt_end - crt_begin) / CLOCKS_PER_SEC;
+    double elapsed_krk = double(krk_end - krk_begin) / CLOCKS_PER_SEC;
+    double elapsed_prm = double(prm_end - prm_begin) / CLOCKS_PER_SEC;
 
 //    for (int j = 1; j <= maxWeight; j++) {
 //        G_i = algo->computeG_i(j);
@@ -220,8 +240,11 @@ int main(void) {
     //DEBUG end
 
     cout << "Risultato Kruskal:\t" << krk_ans << endl;
+    cout << "Tempo: " << elapsed_krk << endl << "--------------------\n";
     cout << "Risultato Prim:\t" << prm_ans << endl;
+    cout << "Tempo: " << elapsed_prm << endl << "--------------------\n";
     cout << "Risultato CRT:\t" << crt_ans << endl;
+    cout << "Tempo: " << elapsed_crt << endl << "--------------------\n";
 
     return 0; //EXIT_SUCCESS; seems to belong to stdlib.h
 }

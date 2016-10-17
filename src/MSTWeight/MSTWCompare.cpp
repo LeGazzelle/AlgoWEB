@@ -135,7 +135,8 @@ double MSTWCompare::approxNumConnectedComps(double eps, unsigned long avgDeg, in
 
         while (flipAgain) {
             flips++;
-            if (Coin::flip() && bfs->getVisitedVertices() < threshold && bfs->isGreaterThanDstar()) {
+            flipAgain = Coin::flip() && bfs->getVisitedVertices() < threshold && !bfs->isGreaterThanDstar();
+            if (flipAgain) {
                 bfs->nextStep();
 
                 if (bfs->isCompleted()) {
