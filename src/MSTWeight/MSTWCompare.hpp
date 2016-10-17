@@ -58,6 +58,8 @@ private:
     unsigned long computeNumVerticesLemma4(unsigned long n, double eps);
 
     void extractGraph(int i);
+
+    std::queue<Vertex> getRandomCandidates();
 };
 
 #endif //ALGOWEB_CRT_MSTW_HPP

@@ -60,31 +60,4 @@ void print_adjacent_vertex(const UndirectedGraph g) {
     std::cout << "#vertices: " << num_vertices(g) << ", #edges: " << num_edges(g) << std::endl;
 }
 
-template<typename UndirectedGraph>
-void print_madonna_merda(UndirectedGraph sub) {
-    std::pair<VertexIterator, VertexIterator> vip;
-    std::pair<EdgeIterator, EdgeIterator> eip;
-
-    std::cout << "Vertices (local) in g' = [ ";
-    vip = vertices(sub);
-    for (VertexIterator vi = vip.first; vi != vip.second; ++vi) {
-        std::cout << *vi << " ";
-    }
-    std::cout << "]" << std::endl;
-
-    std::cout << "Vertices (global) in g' = [ ";
-    vip = vertices(sub);
-    for (VertexIterator vi = vip.first; vi != vip.second; ++vi) {
-        std::cout << sub.local_to_global(*vi) << " ";
-    }
-    std::cout << "]" << std::endl;
-
-    std::cout << "Edges (local) g' = [ " << std::endl;
-    eip = edges(sub);
-    for (EdgeIterator ei = eip.first; ei != eip.second; ++ei) {
-        std::cout << source(*ei, sub) << "--->" << target(*ei, sub) << std::endl;
-    }
-    std::cout << "]" << std::endl;
-}
-
 #endif //ALGOWEB_ALGOWEB_HPP

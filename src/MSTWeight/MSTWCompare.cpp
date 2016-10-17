@@ -118,9 +118,10 @@ double MSTWCompare::approxNumConnectedComps(double eps, unsigned long avgDeg, in
     double threshold = 4 * this->maxWeight;
     threshold /= eps;
 
-    for (j = 0; j < r; j++) {
-        candidates.push(random_vertex(this->g_i, this->generator));
-    }
+    candidates = getRandomCandidates();
+//    for (j = 0; j < r; j++) {
+//        candidates.push(random_vertex(this->g_i, this->generator));
+//    }
 
     j = 0;
 
@@ -157,6 +158,8 @@ double MSTWCompare::approxNumConnectedComps(double eps, unsigned long avgDeg, in
 
     return (num_vertices(this->graph) * Beta) / (2 * r);
 }
+
+std::queue<Vertex> MSTWCompare::getRandomCandidates() {}
 
 unsigned long MSTWCompare::approxGraphAvgDegree(double eps) {
     unsigned long maxDegree = 0;
