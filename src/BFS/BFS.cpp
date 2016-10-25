@@ -74,16 +74,16 @@ void BFS::nextStep(unsigned long pBFS) {
 void BFS::firstStep() {
     NeighboursIterator ai, ai_end;
     unsigned long k = boost::degree(this->vertexU, this->graph);
-    Vertex source, target;
+    Vertex /*source, */target;
     VertexMap vMap = get(vertex_index, this->graph);
-    source = get(vertex_index, this->graph, this->vertexU);
+    //source = get(vertex_index, this->graph, this->vertexU);
 
     if (k) {
-        for (boost::tie(ai, ai_end) = adjacent_vertices(source, this->graph); ai != ai_end; ++ai) {
+        for (boost::tie(ai, ai_end) = adjacent_vertices(this->vertexU, this->graph); ai != ai_end; ++ai) {
             target = get(vMap, *ai);
 
             this->toBeVisited->push(target);
-            setVisitedEdge(source, target);
+            setVisitedEdge(this->vertexU, target);
         }
     }
 

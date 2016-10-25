@@ -2,7 +2,6 @@
 // Created by Gabriele Santi on 25/09/16.
 //
 #include "../MSTWeight/MSTWCompare.hpp"
-#include "../Grandom/GraphGen.hpp"
 #include "../FileIO/GraphIO.hpp"
 
 using namespace std;
@@ -97,21 +96,61 @@ int main(void) {
 
     MSTWCompare *algo = new MSTWCompare(*g, maxWeight);
 
-    clock_t crt_begin = clock();
-    double crt_ans = algo->CRTAlgorithm(0.35);
-    clock_t crt_end = clock();
-
+    /*******/
+#if 1
     clock_t krk_begin = clock();
     double krk_ans = algo->KruskalAlgorithm();
     clock_t krk_end = clock();
 
+    double elapsed_krk = double(krk_end - krk_begin) / CLOCKS_PER_SEC;
+
+    cout << "Risultato Kruskal:\t" << krk_ans << endl;
+    cout << "Tempo: " << elapsed_krk << endl << "--------------------\n";
+#endif
+    /*******/
+
+    /*******/
+#if 1
     clock_t prm_begin = clock();
     double prm_ans = algo->PrimAlgorithm();
     clock_t prm_end = clock();
 
-    double elapsed_crt = double(crt_end - crt_begin) / CLOCKS_PER_SEC;
-    double elapsed_krk = double(krk_end - krk_begin) / CLOCKS_PER_SEC;
     double elapsed_prm = double(prm_end - prm_begin) / CLOCKS_PER_SEC;
+
+    cout << "Risultato Prim:\t" << prm_ans << endl;
+    cout << "Tempo: " << elapsed_prm << endl << "--------------------\n";
+#endif
+    /*******/
+
+    /*******/
+#if 1
+    double elapsed_preparation_lcrt = algo->prepareLightRun();
+    clock_t lcrt_begin = clock();
+    double lcrt_ans = algo->LightCRTAlgorithm(0.35);
+    clock_t lcrt_end = clock();
+
+    double elapsed_calculus_lcrt = double(lcrt_end - lcrt_begin) / CLOCKS_PER_SEC;
+    elapsed_preparation_lcrt /= CLOCKS_PER_SEC;
+
+    cout << "Risultato Light CRT:\t" << lcrt_ans << endl;
+    cout << "Tempo per la preparazione: " << elapsed_preparation_lcrt << endl << "--------------------\n";
+    cout << "Tempo per il calcolo: " << elapsed_calculus_lcrt << endl << "--------------------\n";
+#endif
+    /*******/
+
+    /*******/
+#if 1
+    clock_t crt_begin = clock();
+    double crt_ans = algo->CRTAlgorithm(0.35);
+    clock_t crt_end = clock();
+
+    double elapsed_crt = double(crt_end - crt_begin) / CLOCKS_PER_SEC;
+
+    cout << "Risultato CRT:\t" << crt_ans << endl;
+    cout << "Tempo: " << elapsed_crt << endl << "--------------------\n";
+#endif
+    /*******/
+
 
     //DEBUG test
 
@@ -124,12 +163,6 @@ int main(void) {
 
     //DEBUG end
 
-    cout << "Risultato Kruskal:\t" << krk_ans << endl;
-    cout << "Tempo: " << elapsed_krk << endl << "--------------------\n";
-    cout << "Risultato Prim:\t" << prm_ans << endl;
-    cout << "Tempo: " << elapsed_prm << endl << "--------------------\n";
-    cout << "Risultato CRT:\t" << crt_ans << endl;
-    cout << "Tempo: " << elapsed_crt << endl << "--------------------\n";
 
     return 0; //EXIT_SUCCESS; seems to belong to stdlib.h
 }

@@ -4,10 +4,10 @@
 #ifndef ALGOWEB_CRT_MSTW_HPP
 #define ALGOWEB_CRT_MSTW_HPP
 
-#include <ctime>
 #include <algorithm>
 
 #include "../AlgoWEB.hpp"
+#include "../utilities/randomsequence.hpp"
 #include "../BFS/BFS.hpp"
 #include "WeightedEdge.hpp"
 #include <boost/graph/random.hpp>
@@ -48,6 +48,10 @@ public:
 
     double CRTAlgorithm(double eps);
 
+    double prepareLightRun();
+
+    double LightCRTAlgorithm(double eps);
+
     double KruskalAlgorithm();
 
     double PrimAlgorithm();
@@ -63,16 +67,26 @@ private:
     NumVertices num_vert_G;
     std::priority_queue<WeightedEdge, std::vector<WeightedEdge>, WeightedEdgeComparator> orderedEdges;
     VertexConverter vc;
+    //management for light runs
+    std::vector<UndirectedGraph> subgraphs;
+    std::vector<FisherYatesSequence> fys;
+    std::priority_queue<WeightedEdge, std::vector<WeightedEdge>, WeightedEdgeComparator> copyOfOrderedEdges;
 
     double approxNumConnectedComps(double eps, unsigned long avgDeg, int i);
 
     unsigned long approxGraphAvgDegree(double eps);
+
+    double lightApproxNumConnectedComps(double eps, unsigned long avgDeg, int i);
+
+    unsigned long lightApproxGraphAvgDegree(double eps);
 
     unsigned long computeNumVertices(unsigned long n, double eps);
 
     unsigned long computeNumVerticesLemma4(unsigned long n, double eps);
 
     void extractGraph(int i);
+
+    UndirectedGraph lightExtractGraph(int i);
 };
 
 #endif //ALGOWEB_CRT_MSTW_HPP

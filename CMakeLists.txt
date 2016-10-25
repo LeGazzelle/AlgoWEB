@@ -7,7 +7,7 @@ include_directories(${LIBS_DIR})
 link_directories(${STATIC_LIBS_DIR})
 
 set(SOURCE_FILES src/Grandom/GraphGen.cpp src/Grandom/GraphGen.hpp src/AlgoWEB.hpp src/FileIO/GraphIO.cpp src/FileIO/GraphIO.hpp)
-set(ALGO_WEB_SOURCE_FILES src/test/AlgoWEB.cpp ${SOURCE_FILES} src/BFS/BFS.cpp src/BFS/BFS.hpp src/MSTWeight/WeightedEdge.hpp src/MSTWeight/MSTWCompare.cpp)
+set(ALGO_WEB_SOURCE_FILES src/test/AlgoWEB.cpp ${SOURCE_FILES} src/BFS/BFS.cpp src/BFS/BFS.hpp src/MSTWeight/WeightedEdge.hpp src/MSTWeight/MSTWCompare.cpp src/utilities/randomsequence.hpp)
 set(GRANDOM_SOURCE_FILES src/test/grandom.cpp src/test/grandom.hpp ${SOURCE_FILES})
 add_executable(AlgoWEB ${ALGO_WEB_SOURCE_FILES})
 add_executable(Grandom ${GRANDOM_SOURCE_FILES})
