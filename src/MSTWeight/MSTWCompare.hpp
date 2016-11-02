@@ -56,6 +56,8 @@ public:
 
     double PrimAlgorithm();
 
+    long double getAverageDegree();
+
     ~MSTWCompare();
 
 private:

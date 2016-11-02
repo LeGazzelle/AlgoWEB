@@ -1,21 +1,11 @@
 //
 // Created by Gabriele Santi on 25/09/16.
 //
+//#include <chrono>
 #include "../MSTWeight/MSTWCompare.hpp"
 #include "../FileIO/GraphIO.hpp"
 
 using namespace std;
-
-//typedef property<edge_weight_t, int, no_property> Peso;
-//typedef property<edge_index_t, unsigned long, Peso> PropEdge;
-//typedef subgraph< adjacency_list<setS, vecS, undirectedS,
-//    property<vertex_index_t, unsigned long>, PropEdge, property<disallow_parallel_edge_tag, no_property> > > Graph;
-//typedef graph_traits<Graph>::vertex_descriptor V;
-//typedef graph_traits<Graph>::edge_descriptor E;
-//typedef graph_traits<Graph>::edge_iterator edge_iter;
-//typedef graph_traits<Graph>::vertex_iterator vertex_iter;
-//
-//typedef property_map<Graph, edge_weight_t>::type MappaPesi;
 
 template<typename UndirectedGraph>
 void print_weighted_graph(UndirectedGraph const);
@@ -90,11 +80,13 @@ int main(void) {
 //
 //    print_adjacent_vertex(*g3);
 
-    UndirectedGraph G_i, *g = new UndirectedGraph();
+    UndirectedGraph *g = new UndirectedGraph();
     int maxWeight;
     GraphIO::readGraph("/home/gabriel/tmp_dataset/test_medium_big.cwg", g, &maxWeight);
 
     MSTWCompare *algo = new MSTWCompare(*g, maxWeight);
+
+    cout << "Average degree d = " << algo->getAverageDegree() << endl;
 
     /*******/
 #if 1
@@ -126,14 +118,15 @@ int main(void) {
 #if 1
     double elapsed_preparation_lcrt = algo->prepareLightRun();
     clock_t lcrt_begin = clock();
-    double lcrt_ans = algo->LightCRTAlgorithm(0.35);
+    double lcrt_ans = algo->LightCRTAlgorithm(0.25);
     clock_t lcrt_end = clock();
 
     double elapsed_calculus_lcrt = double(lcrt_end - lcrt_begin) / CLOCKS_PER_SEC;
     elapsed_preparation_lcrt /= CLOCKS_PER_SEC;
 
+
     cout << "Risultato Light CRT:\t" << lcrt_ans << endl;
-    cout << "Tempo per la preparazione: " << elapsed_preparation_lcrt << endl << "--------------------\n";
+    cout << "Tempo per la preparazione: " << elapsed_preparation_lcrt << endl << "-------\n";
     cout << "Tempo per il calcolo: " << elapsed_calculus_lcrt << endl << "--------------------\n";
 #endif
     /*******/
@@ -141,13 +134,16 @@ int main(void) {
     /*******/
 #if 1
     clock_t crt_begin = clock();
-    double crt_ans = algo->CRTAlgorithm(0.35);
+    //auto crt_begin_hr = chrono::high_resolution_clock::now();
+    double crt_ans = algo->CRTAlgorithm(0.25);
+    //auto crt_end_hr = chrono::high_resolution_clock::now();
     clock_t crt_end = clock();
 
+    //auto elapsed_crt_hr = chrono::duration_cast<chrono::nanoseconds>(crt_end_hr - crt_begin_hr).count() / 1000000000.0;
     double elapsed_crt = double(crt_end - crt_begin) / CLOCKS_PER_SEC;
 
     cout << "Risultato CRT:\t" << crt_ans << endl;
-    cout << "Tempo: " << elapsed_crt << endl << "--------------------\n";
+    cout << "Tempo: " << elapsed_crt << /*" oppure " << elapsed_crt_hr << */endl << "--------------------\n";
 #endif
     /*******/
 

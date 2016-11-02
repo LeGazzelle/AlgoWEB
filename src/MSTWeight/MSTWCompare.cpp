@@ -169,6 +169,23 @@ double MSTWCompare::CRTAlgorithm(double eps) {
     return this->num_vert_G - this->maxWeight + c;
 }
 
+long double MSTWCompare::getAverageDegree() {
+    if (this->num_vert_G == 1)
+        return 0.0;
+
+    VertexIterator vi, vi_end;
+    boost::tie(vi, vi_end) = vertices(this->graph);
+    long double degreeAvg = degree(*vi, this->graph);
+    vi++;
+
+    while (vi != vi_end) {
+        degreeAvg = (degreeAvg + degree(*vi, this->graph)) / 2.0;
+        vi++;
+    }
+
+    return degreeAvg;
+}
+
 /**
  * Private
  */

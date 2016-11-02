@@ -17,6 +17,7 @@ BFS::BFS(UndirectedGraph g, Vertex u, unsigned long Dstr) {
     this->Dstar = Dstr;
     this->edgesMatrixInit(num_vertices(g));
     this->toBeVisited = new std::queue<Vertex>();
+    this->pause = false;
 }
 
 void BFS::edgesMatrixInit(const NumVertices n) {
@@ -36,13 +37,17 @@ void BFS::edgesMatrixInit(const NumVertices n) {
 void BFS::nextStep(unsigned long pBFS) {
     NeighboursIterator ai, ai_end;
     Vertex source, target;
-    bool pause = false;
     unsigned long pauseBFS = pBFS ? pBFS : (2 * this->visitedEdges);
     VertexMap vMap = get(vertex_index, this->graph);
     source = this->toBeVisited->front();
     this->greaterThanDstar = boost::degree(source, this->graph) > this->Dstar;
+    boost::tie(ai, ai_end) = adjacent_vertices(source, this->graph);
+    if (this->pause) {
+        ai = this->ni;
+        this->pause = false;
+    }
 
-    for (boost::tie(ai, ai_end) = adjacent_vertices(source, this->graph); ai != ai_end; ++ai) {
+    for (; ai != ai_end; ++ai) {
         target = get(vMap, *ai);
 
         if (!this->visitedEdgesMatrix[source][target]) {
@@ -50,18 +55,15 @@ void BFS::nextStep(unsigned long pBFS) {
             this->toBeVisited->push(target);
             setVisitedEdge(source, target);
 
-            if (this->visitedEdges == pauseBFS) {
-                pause = true;
-                break;
+            if (this->visitedEdges == pauseBFS && ai != ai_end) {
+                this->pause = true;
+                this->ni = ++ai;
+                return;
             }
         }
     }
 
-    if (pause) {
-        return;
-    } else {
-        setVisitedVertex();
-    }
+    setVisitedVertex();
 
     if (this->toBeVisited->empty()) {
         this->completed = true; //BFS Completed

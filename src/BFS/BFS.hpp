@@ -44,6 +44,8 @@ private:
     //data structures for BFS
     std::queue<Vertex> *toBeVisited;
     EdgesMatrix visitedEdgesMatrix; //initialized to false
+    bool pause;
+    NeighboursIterator ni;
 
     void edgesMatrixInit(NumVertices n);
 

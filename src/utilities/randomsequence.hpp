@@ -6,8 +6,9 @@
 #define ALGOWEB_RANDOMSEQUENCE_HPP
 
 //#include <random>
-#include <cstdlib>
+//#include <cstdlib>
 #include <iostream>
+#include <random>
 
 /**
  * From an idea of Jeff Preshing of 31/12/12.
@@ -44,8 +45,8 @@ private:
     long long max;
     long long *numbers;
     //std::random_device rd;
-    //std::mt19937 gen;
-    //std::uniform_int_distribution<long long> dis;
+    std::mt19937 gen;
+    std::uniform_int_distribution<long long> dis;
 
     void swap(long long what, long long with) {
         long long tmp = this->numbers[what];
@@ -59,17 +60,24 @@ public:
 
     FisherYatesSequence(long long size) : upLimit(size - 1), max(size - 1) {
         this->numbers = new long long[size];
+        std::random_device rd;
 
-        std::srand(std::time(0));
+        //std::srand(std::time(0));
+        this->gen = std::mt19937(rd());
+        this->dis = std::uniform_int_distribution<long long>(0, size - 1);
         for (long long k = 0; k < size; k++)
             this->numbers[k] = k;
+    }
+
+    void seed(long long seed) {
+        this->max = seed;
     }
 
     Vertex next() {
         Vertex ans;
 
         if (max) {
-            this->swap(this->max, std::rand() % this->max);
+            this->swap(this->max, this->dis(this->gen));
             ans = (Vertex) this->numbers[this->max];
             this->max--;
             if (!this->max)
