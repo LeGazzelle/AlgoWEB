@@ -45,7 +45,7 @@ long long VertexConverter::getVertexIndex(long long globalIndex) {
 }
 //TODO EFFICENTARE IL RANDOM VERTEX EXTRACTOR CON GLI ARTICOLI TROVATI IN RETE SU GENERAZIONE O(1)
 
-RandomVertexExtractor::RandomVertexExtractor(unsigned long dim) {
+/*RandomVertexExtractor::RandomVertexExtractor(unsigned long dim) {
     this->vindexes = new Vertex[dim];
     this->size = dim;
 
@@ -63,7 +63,7 @@ void RandomVertexExtractor::prepare() {
 
 void RandomVertexExtractor::scramble() {
     std::random_shuffle(this->vindexes, this->vindexes + this->size);
-}
+}*/
 
 //Constructor with given graph
 MSTWCompare::MSTWCompare(UndirectedGraph g, int maxWeight) : graph(g), maxWeight(maxWeight) {
@@ -139,11 +139,11 @@ double MSTWCompare::LightCRTAlgorithm(double eps) {
         return -1.0;
 
     double c = 0.0;
-    unsigned long d = lightApproxGraphAvgDegree(eps);
+    unsigned long d = lightApproxGraphAvgDegree(eps); //O(1/eps)
 
-    for (int i = 1; i < this->maxWeight; i++) {
+    for (int i = 1; i < this->maxWeight; i++) { //O(w)
         c += lightApproxNumConnectedComps(eps, d, i);
-    }
+}
 
     return this->num_vert_G - this->maxWeight + c;
 }
@@ -197,8 +197,7 @@ double MSTWCompare::approxNumConnectedComps(double eps, unsigned long avgDeg, in
     if (!n_i)
         return 0.0;
 
-    RandomVertexExtractor *rve = new RandomVertexExtractor(n_i);
-    rve->prepare();
+    FisherYatesSequence *fys = new FisherYatesSequence((long long int) n_i);
     unsigned long j, r = computeNumVertices(n_i, eps);
     Vertex u;
     double Beta = 0.0;
@@ -209,7 +208,7 @@ double MSTWCompare::approxNumConnectedComps(double eps, unsigned long avgDeg, in
     threshold /= eps;
 
     for (j = 0; j < r; j++) {
-        u = rve->extractRandomVertex();
+        u = fys->next();
         flips = 0;
 
         bfs = new BFS(this->g_i, u, avgDeg);
@@ -238,22 +237,24 @@ double MSTWCompare::approxNumConnectedComps(double eps, unsigned long avgDeg, in
 
     return (this->num_vert_G * Beta) / r;
 }
-
+//TODO check that hypothesis for theorem 6 are met
 unsigned long MSTWCompare::approxGraphAvgDegree(double eps) {
     unsigned long maxDegree = 0;
     unsigned long c = computeNumVerticesLemma4(this->num_vert_G, eps);
-    RandomVertexExtractor *rve = new RandomVertexExtractor(this->num_vert_G); //mischia tutti i nodi per darne solo una parte... inefficiente
-    rve->prepare();
+    //RandomVertexExtractor *rve = new RandomVertexExtractor(this->num_vert_G); //mischia tutti i nodi per darne solo una parte... inefficiente
+    //rve->prepare();
+    FisherYatesSequence *fys = new FisherYatesSequence((long long int) this->num_vert_G);
     unsigned int i;
     Vertex v;
 
     for (i = 0; i < c; i++) {
-        v = rve->extractRandomVertex();
+        v = fys->next();
 
         if (boost::degree(v, this->graph) > maxDegree)
             maxDegree = boost::degree(v, this->graph);
     }
 
+    delete fys;
     return maxDegree;
 }
 
@@ -266,7 +267,7 @@ double MSTWCompare::lightApproxNumConnectedComps(double eps, unsigned long avgDe
 
     //RandomVertexExtractor *rve = new RandomVertexExtractor(n_i);
     //rve->prepare();
-    unsigned long j, r = computeNumVertices(n_i, eps);
+    unsigned long j, r = computeNumVertices(n_i, eps); //O(1/eps^2)
     Vertex u;
     double Beta = 0.0;
     BFS *bfs;
@@ -276,10 +277,10 @@ double MSTWCompare::lightApproxNumConnectedComps(double eps, unsigned long avgDe
     threshold /= eps;
 
     for (j = 0; j < r; j++) {
-        u = this->fys[n_i].next();
+        u = this->fys[n_i].next(); //O(1)
         flips = 0;
 
-        bfs = new BFS(this->subgraphs[i], u, avgDeg);
+        bfs = new BFS(this->subgraphs[i], u, avgDeg); //O(n^2) ???
         bfs->firstStep();
         flipAgain = true;
 
@@ -315,7 +316,7 @@ unsigned long MSTWCompare::lightApproxGraphAvgDegree(double eps) {
     Vertex v;
 
     for (i = 0; i < c; i++) {
-        v = this->fys[this->num_vert_G].next();
+        v = this->fys[this->num_vert_G].next(); // O(1)
 
         if (boost::degree(v, this->graph) > maxDegree)
             maxDegree = boost::degree(v, this->graph);

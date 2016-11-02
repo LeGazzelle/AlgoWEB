@@ -27,7 +27,7 @@ public:
     long long getVertexIndex(long long globalIndex);
 };
 
-class RandomVertexExtractor {
+/*class RandomVertexExtractor {
 private:
     Vertex *vindexes;
     unsigned long size;
@@ -40,7 +40,7 @@ public:
     Vertex extractRandomVertex();
 
     void prepare();
-};
+};*/
 
 class MSTWCompare {
 public:

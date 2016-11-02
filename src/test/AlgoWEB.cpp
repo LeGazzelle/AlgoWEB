@@ -13,6 +13,8 @@ void print_weighted_graph(UndirectedGraph const);
 template<typename UndirectedGraph>
 void print_adjacent_vertex(UndirectedGraph const);
 
+const double EPSILON = 0.4999;
+
 
 int main(void) {
     cout << "AlgoWEB 2015-16" << endl;
@@ -81,6 +83,7 @@ int main(void) {
 //    print_adjacent_vertex(*g3);
 
     UndirectedGraph *g = new UndirectedGraph();
+    UndirectedGraph *g2 = new UndirectedGraph();
     int maxWeight;
     GraphIO::readGraph("/home/gabriel/tmp_dataset/test_medium_big.cwg", g, &maxWeight);
 
@@ -118,7 +121,7 @@ int main(void) {
 #if 1
     double elapsed_preparation_lcrt = algo->prepareLightRun();
     clock_t lcrt_begin = clock();
-    double lcrt_ans = algo->LightCRTAlgorithm(0.25);
+    double lcrt_ans = algo->LightCRTAlgorithm(EPSILON);
     clock_t lcrt_end = clock();
 
     double elapsed_calculus_lcrt = double(lcrt_end - lcrt_begin) / CLOCKS_PER_SEC;
@@ -133,9 +136,11 @@ int main(void) {
 
     /*******/
 #if 1
+    GraphIO::readGraph("/home/gabriel/tmp_dataset/test_medium_big.cwg", g2, &maxWeight);
+    MSTWCompare *algo2 = new MSTWCompare(*g2, maxWeight);
     clock_t crt_begin = clock();
     //auto crt_begin_hr = chrono::high_resolution_clock::now();
-    double crt_ans = algo->CRTAlgorithm(0.25);
+    double crt_ans = algo2->CRTAlgorithm(EPSILON);
     //auto crt_end_hr = chrono::high_resolution_clock::now();
     clock_t crt_end = clock();
 
@@ -146,18 +151,6 @@ int main(void) {
     cout << "Tempo: " << elapsed_crt << /*" oppure " << elapsed_crt_hr << */endl << "--------------------\n";
 #endif
     /*******/
-
-
-    //DEBUG test
-
-//    for (int j = 1; j <= maxWeight; j++) {
-//        G_i = algo->computeG_i(j);
-//
-//        cout << "G_i per i = " << j << endl;
-//        print_adjacent_vertex(G_i);
-//    }
-
-    //DEBUG end
 
 
     return 0; //EXIT_SUCCESS; seems to belong to stdlib.h

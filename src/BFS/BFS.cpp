@@ -15,7 +15,7 @@ BFS::BFS(UndirectedGraph g, Vertex u, unsigned long Dstr) {
     this->greaterThanDstar = false;
     this->uDeg = 0;
     this->Dstar = Dstr;
-    this->edgesMatrixInit(num_vertices(g));
+    this->edgesMatrixInit(num_vertices(g)); //O(n^2)
     this->toBeVisited = new std::queue<Vertex>();
     this->pause = false;
 }
@@ -24,11 +24,11 @@ void BFS::edgesMatrixInit(const NumVertices n) {
     this->visitedEdgesMatrix.resize(n);
     unsigned long i, j;
 
-    for (i = 0; i < n; i++) {
+    for (i = 0; i < n; i++) { //O(n)
         this->visitedEdgesMatrix[i].resize(n);
     }
 
-    for (i = 0; i < n; i++) {
+    for (i = 0; i < n; i++) { //O(n^2)
         for (j = 0; j < n; j++)
             this->visitedEdgesMatrix[i][j] = false;
     }
@@ -76,9 +76,8 @@ void BFS::nextStep(unsigned long pBFS) {
 void BFS::firstStep() {
     NeighboursIterator ai, ai_end;
     unsigned long k = boost::degree(this->vertexU, this->graph);
-    Vertex /*source, */target;
+    Vertex target;
     VertexMap vMap = get(vertex_index, this->graph);
-    //source = get(vertex_index, this->graph, this->vertexU);
 
     if (k) {
         for (boost::tie(ai, ai_end) = adjacent_vertices(this->vertexU, this->graph); ai != ai_end; ++ai) {
@@ -91,7 +90,7 @@ void BFS::firstStep() {
 
     this->uDeg = k;
     this->visitedVertices = 1; //just u in this first step
-    //if (num_vertices(this->graph) == this->visitedVertices) this->completed = true; //BFS Completed
+    //in the first step it's impossible to complete the BFS
     if (k > this->Dstar) greaterThanDstar = true;
 
 }
@@ -108,7 +107,9 @@ void BFS::setVisitedVertex() {
 }
 
 //Destructor
-BFS::~BFS() {}
+BFS::~BFS() {
+    delete this->toBeVisited;
+}
 
 
 unsigned long BFS::getVisitedVertices() const {

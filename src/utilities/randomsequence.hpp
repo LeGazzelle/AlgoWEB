@@ -37,13 +37,14 @@ public:
     }
 };
 
-//FIXME WARNING! rand() function returns a value in the range [0,RAND_MAX]
+//WARNING! rand() function returns a value in the range [0,RAND_MAX]
 // and RAND_MAX could not be enough to cover the space of 'long long int' type
+//     [FIXED with std::uniform_int_distribution<long long int>]
 class FisherYatesSequence {
 private:
     long long upLimit;
     long long max;
-    long long *numbers;
+    std::vector<long long> numbers;
     //std::random_device rd;
     std::mt19937 gen;
     std::uniform_int_distribution<long long> dis;
@@ -59,7 +60,7 @@ public:
     //FisherYatesSequence() {}
 
     FisherYatesSequence(long long size) : upLimit(size - 1), max(size - 1) {
-        this->numbers = new long long[size];
+        this->numbers = std::vector<long long>((unsigned long) size);
         std::random_device rd;
 
         //std::srand(std::time(0));
@@ -86,6 +87,10 @@ public:
             ans = (Vertex) this->numbers[0];
 
         return ans;
+    }
+
+    ~FisherYatesSequence () {
+        //delete &(this->numbers);
     }
 };
 
