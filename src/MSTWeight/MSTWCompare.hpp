@@ -27,6 +27,59 @@ public:
     long long getVertexIndex(long long globalIndex);
 };
 
+class CRTChronoResult {
+private:
+    long double boost_time;
+    long double approxGraphAvgDegreeTime;
+    long double extractGraphTime;
+    long double bfsTime;
+
+public:
+    double CRTresult;
+
+    CRTChronoResult() {
+        this->boost_time = 0.0;
+        this->approxGraphAvgDegreeTime = 0.0;
+    }
+
+    void addPartialDiff(clock_t start, clock_t end) {
+        this->boost_time += double(end - start);
+    }
+
+    void addPartialBfs(clock_t tot) {
+        this->bfsTime += double(tot);
+    }
+
+    void addPartialBoost(clock_t tot) {
+        this->boost_time += double(tot);
+    }
+
+    void addPartialApproxGraphAvgDegree(clock_t tot) {
+        this->approxGraphAvgDegreeTime += double(tot);
+    }
+
+    void addPartialExtractGraph(clock_t tot) {
+        this->extractGraphTime += double(tot);
+    }
+
+
+    long double getBfsTime() {
+        return this->bfsTime / CLOCKS_PER_SEC;
+    }
+
+    long double getBoostTime() {
+        return this->boost_time / CLOCKS_PER_SEC;
+    }
+
+    long double getApproxGraphAvgDegreeTime() {
+        return this->approxGraphAvgDegreeTime / CLOCKS_PER_SEC;
+    }
+
+    long double getExtractGraphTime() {
+        return this->extractGraphTime / CLOCKS_PER_SEC;
+    }
+};
+
 /*class RandomVertexExtractor {
 private:
     Vertex *vindexes;
@@ -46,11 +99,11 @@ class MSTWCompare {
 public:
     MSTWCompare(UndirectedGraph g, int maxWeight);
 
-    double CRTAlgorithm(double eps);
+    CRTChronoResult *CRTAlgorithm(double eps);
 
-    double prepareLightRun();
+    long double prepareLightRun();
 
-    double LightCRTAlgorithm(double eps);
+    CRTChronoResult *LightCRTAlgorithm(double eps);
 
     double KruskalAlgorithm();
 
@@ -73,6 +126,8 @@ private:
     std::vector<UndirectedGraph> subgraphs;
     std::vector<FisherYatesSequence> fys;
     std::priority_queue<WeightedEdge, std::vector<WeightedEdge>, WeightedEdgeComparator> copyOfOrderedEdges;
+    //Chrono result
+    CRTChronoResult *crtChronoResult;
 
     double approxNumConnectedComps(double eps, unsigned long avgDeg, int i);
 

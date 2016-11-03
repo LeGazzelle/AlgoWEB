@@ -34,21 +34,30 @@ void BFS::edgesMatrixInit(const NumVertices n) {
     }
 }
 
-void BFS::nextStep(unsigned long pBFS) {
+clock_t BFS::nextStep(unsigned long pBFS) {
+    clock_t start, end, tot = 0;
     NeighboursIterator ai, ai_end;
     Vertex source, target;
     unsigned long pauseBFS = pBFS ? pBFS : (2 * this->visitedEdges);
-    VertexMap vMap = get(vertex_index, this->graph);
     source = this->toBeVisited->front();
+
+    start = clock();
+    VertexMap vMap = get(vertex_index, this->graph);
     this->greaterThanDstar = boost::degree(source, this->graph) > this->Dstar;
     boost::tie(ai, ai_end) = adjacent_vertices(source, this->graph);
+    end = clock();
+    tot += (end - start);
+
     if (this->pause) {
         ai = this->ni;
         this->pause = false;
     }
 
     for (; ai != ai_end; ++ai) {
+        start = clock();
         target = get(vMap, *ai);
+        end = clock();
+        tot += (end - start);
 
         if (!this->visitedEdgesMatrix[source][target]) {
 
@@ -58,7 +67,7 @@ void BFS::nextStep(unsigned long pBFS) {
             if (this->visitedEdges == pauseBFS && ai != ai_end) {
                 this->pause = true;
                 this->ni = ++ai;
-                return;
+                return tot;
             }
         }
     }
@@ -67,21 +76,32 @@ void BFS::nextStep(unsigned long pBFS) {
 
     if (this->toBeVisited->empty()) {
         this->completed = true; //BFS Completed
-        return;
+        return tot;
     }
 
-    nextStep(pauseBFS);
+    return tot + nextStep(pauseBFS);
 }
 
-void BFS::firstStep() {
+clock_t BFS::firstStep() {
+    clock_t start, end, tot = 0;
     NeighboursIterator ai, ai_end;
+    //DEBUG measure
+    start = clock();
     unsigned long k = boost::degree(this->vertexU, this->graph);
-    Vertex target;
     VertexMap vMap = get(vertex_index, this->graph);
+    if (k)
+        boost::tie(ai, ai_end) = adjacent_vertices(this->vertexU, this->graph);
+    end = clock();
+    tot += (end - start);
+    Vertex target;
+
 
     if (k) {
-        for (boost::tie(ai, ai_end) = adjacent_vertices(this->vertexU, this->graph); ai != ai_end; ++ai) {
+        for (; ai != ai_end; ++ai) {
+            start = clock();
             target = get(vMap, *ai);
+            end = clock();
+            tot += (end - start);
 
             this->toBeVisited->push(target);
             setVisitedEdge(this->vertexU, target);
@@ -93,6 +113,7 @@ void BFS::firstStep() {
     //in the first step it's impossible to complete the BFS
     if (k > this->Dstar) greaterThanDstar = true;
 
+    return tot;
 }
 
 void BFS::setVisitedEdge(unsigned long source, unsigned long target) {

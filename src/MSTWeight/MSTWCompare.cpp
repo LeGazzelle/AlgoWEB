@@ -75,6 +75,8 @@ MSTWCompare::MSTWCompare(UndirectedGraph g, int maxWeight) : graph(g), maxWeight
     //light runs
     this->subgraphs = *new std::vector<UndirectedGraph>;
     this->fys = *new std::vector<FisherYatesSequence>;
+    //chrono result
+    this->crtChronoResult = new CRTChronoResult();
 
     EdgeIterator ei, eiend;
     for (boost::tie(ei, eiend) = edges(this->graph); ei != eiend; ++ei)
@@ -82,7 +84,9 @@ MSTWCompare::MSTWCompare(UndirectedGraph g, int maxWeight) : graph(g), maxWeight
 }
 
 //Destructor
-MSTWCompare::~MSTWCompare() {}
+MSTWCompare::~MSTWCompare() {
+    delete this->crtChronoResult;
+}
 
 /**
  * Set the graph the utilities will work on
@@ -100,7 +104,7 @@ MSTWCompare::~MSTWCompare() {}
  *
  * @return the time elapsed for the operation
  */
-double MSTWCompare::prepareLightRun() {
+long double MSTWCompare::prepareLightRun() {
     clock_t start, end;
     long long k;
 
@@ -134,18 +138,20 @@ double MSTWCompare::prepareLightRun() {
  * @param eps the maximum tolerated relative error
  * @return the approximation of the weight of the MST of the given graph
  */
-double MSTWCompare::LightCRTAlgorithm(double eps) {
+CRTChronoResult *MSTWCompare::LightCRTAlgorithm(double eps) {
     if (this->maxWeight == 0)
-        return -1.0;
+        return this->crtChronoResult;
 
     double c = 0.0;
     unsigned long d = lightApproxGraphAvgDegree(eps); //O(1/eps)
 
     for (int i = 1; i < this->maxWeight; i++) { //O(w)
         c += lightApproxNumConnectedComps(eps, d, i);
-}
+    }
 
-    return this->num_vert_G - this->maxWeight + c;
+    this->crtChronoResult->CRTresult = this->num_vert_G - this->maxWeight + c;
+
+    return this->crtChronoResult;
 }
 
 /**
@@ -155,18 +161,25 @@ double MSTWCompare::LightCRTAlgorithm(double eps) {
  * @param eps the maximum tolerated relative error
  * @return the approximation of the weight of the MST of the given graph
  */
-double MSTWCompare::CRTAlgorithm(double eps) {
+CRTChronoResult *MSTWCompare::CRTAlgorithm(double eps) {
+    clock_t start, end;
+
     if (this->maxWeight == 0)
-        return -1.0;
+        return this->crtChronoResult;
 
     double c = 0.0;
+    start = clock();
     unsigned long d = approxGraphAvgDegree(eps);
+    end = clock();
+    this->crtChronoResult->addPartialApproxGraphAvgDegree(end - start);
 
     for (int i = 1; i < this->maxWeight; i++) {
         c += approxNumConnectedComps(eps, d, i);
     }
 
-    return this->num_vert_G - this->maxWeight + c;
+    this->crtChronoResult->CRTresult = this->num_vert_G - this->maxWeight + c;
+
+    return this->crtChronoResult;
 }
 
 long double MSTWCompare::getAverageDegree() {
@@ -191,8 +204,20 @@ long double MSTWCompare::getAverageDegree() {
  */
 
 double MSTWCompare::approxNumConnectedComps(double eps, unsigned long avgDeg, int i) {
+    clock_t start, end;
+
+    //DEBUG measure
+    start = clock();
     this->extractGraph(i);
+    end = clock();
+    this->crtChronoResult->addPartialExtractGraph(end - start);
+
+
+    //DEBUG measure
+    start = clock();
     unsigned long n_i = num_vertices(this->g_i);
+    end = clock();
+    this->crtChronoResult->addPartialDiff(start, end);
 
     if (!n_i)
         return 0.0;
@@ -211,38 +236,48 @@ double MSTWCompare::approxNumConnectedComps(double eps, unsigned long avgDeg, in
         u = fys->next();
         flips = 0;
 
+        start = clock();
         bfs = new BFS(this->g_i, u, avgDeg);
-        bfs->firstStep();
+        this->crtChronoResult->addPartialBoost(bfs->firstStep());
+        end = clock();
+        this->crtChronoResult->addPartialBfs(end - start);
+
         flipAgain = true;
 
         while (flipAgain) {
             flips++;
             flipAgain = Coin::flip() && bfs->getVisitedVertices() < threshold && !bfs->isGreaterThanDstar();
             if (flipAgain) {
-                bfs->nextStep(0);
+                start = clock();
+                this->crtChronoResult->addPartialBoost(bfs->nextStep(0));
+                end = clock();
+                this->crtChronoResult->addPartialBfs(end - start);
 
                 if (bfs->isCompleted()) {
                     flipAgain = false;
                     if (bfs->getVisitedEdges())
-                        Beta += (bfs->getUDeg() * std::pow(2, flips-1)) / bfs->getVisitedEdges();
+                        Beta += (bfs->getUDeg() * std::pow(2, flips - 1)) / bfs->getVisitedEdges();
                     else
                         Beta += 2;
                 }
             }
         }
 
+        start = clock();
         delete bfs;
+        end = clock();
+        this->crtChronoResult->addPartialBfs(end - start);
     }
 
 
     return (this->num_vert_G * Beta) / r;
 }
+
 //TODO check that hypothesis for theorem 6 are met
 unsigned long MSTWCompare::approxGraphAvgDegree(double eps) {
-    unsigned long maxDegree = 0;
+    unsigned long deg, maxDegree = 0;
     unsigned long c = computeNumVerticesLemma4(this->num_vert_G, eps);
-    //RandomVertexExtractor *rve = new RandomVertexExtractor(this->num_vert_G); //mischia tutti i nodi per darne solo una parte... inefficiente
-    //rve->prepare();
+    clock_t start, end;
     FisherYatesSequence *fys = new FisherYatesSequence((long long int) this->num_vert_G);
     unsigned int i;
     Vertex v;
@@ -250,8 +285,14 @@ unsigned long MSTWCompare::approxGraphAvgDegree(double eps) {
     for (i = 0; i < c; i++) {
         v = fys->next();
 
-        if (boost::degree(v, this->graph) > maxDegree)
-            maxDegree = boost::degree(v, this->graph);
+        //DEBUG measure
+        start = clock();
+        deg = boost::degree(v, this->graph);
+        end = clock();
+        this->crtChronoResult->addPartialDiff(start, end);
+
+        if (deg > maxDegree)
+            maxDegree = deg;
     }
 
     delete fys;
@@ -260,7 +301,13 @@ unsigned long MSTWCompare::approxGraphAvgDegree(double eps) {
 
 double MSTWCompare::lightApproxNumConnectedComps(double eps, unsigned long avgDeg, int i) {
     //this->extractGraph(i);
+    clock_t start, end;
+
+    //DEBUG measure
+    start = clock();
     unsigned long n_i = num_vertices(this->subgraphs[i]);
+    end = clock();
+    this->crtChronoResult->addPartialDiff(start, end);
 
     if (!n_i)
         return 0.0;
@@ -281,14 +328,14 @@ double MSTWCompare::lightApproxNumConnectedComps(double eps, unsigned long avgDe
         flips = 0;
 
         bfs = new BFS(this->subgraphs[i], u, avgDeg); //O(n^2) ???
-        bfs->firstStep();
+        this->crtChronoResult->addPartialBoost(bfs->firstStep());
         flipAgain = true;
 
         while (flipAgain) {
             flips++;
             flipAgain = Coin::flip() && bfs->getVisitedVertices() < threshold && !bfs->isGreaterThanDstar();
             if (flipAgain) {
-                bfs->nextStep(0);
+                this->crtChronoResult->addPartialBoost(bfs->nextStep(0));
 
                 if (bfs->isCompleted()) {
                     flipAgain = false;
@@ -308,8 +355,9 @@ double MSTWCompare::lightApproxNumConnectedComps(double eps, unsigned long avgDe
 }
 
 unsigned long MSTWCompare::lightApproxGraphAvgDegree(double eps) {
-    unsigned long maxDegree = 0;
+    unsigned long deg, maxDegree = 0;
     unsigned long c = computeNumVerticesLemma4(this->num_vert_G, eps);
+    clock_t start, end;
     //RandomVertexExtractor *rve = new RandomVertexExtractor(this->num_vert_G); //mischia tutti i nodi per darne solo una parte... inefficiente
     //rve->prepare();
     unsigned int i;
@@ -318,8 +366,14 @@ unsigned long MSTWCompare::lightApproxGraphAvgDegree(double eps) {
     for (i = 0; i < c; i++) {
         v = this->fys[this->num_vert_G].next(); // O(1)
 
-        if (boost::degree(v, this->graph) > maxDegree)
-            maxDegree = boost::degree(v, this->graph);
+        //DEBUG measure
+        start = clock();
+        deg = boost::degree(v, this->graph);
+        end = clock();
+        this->crtChronoResult->addPartialDiff(start, end);
+
+        if (deg > maxDegree)
+            maxDegree = deg;
     }
 
     return maxDegree;
@@ -328,7 +382,7 @@ unsigned long MSTWCompare::lightApproxGraphAvgDegree(double eps) {
 unsigned long MSTWCompare::computeNumVertices(unsigned long n, double eps) {
     unsigned long y;
     double den = eps * eps;
-    den = 1 + n*den;
+    den = 1 + n * den;
     y = (unsigned long) std::floor(n / den);
 
     return y == 0 ? 1 : y;
@@ -352,11 +406,17 @@ unsigned long MSTWCompare::computeNumVerticesLemma4(unsigned long n, double eps)
  */
 void MSTWCompare::extractGraph(int i) {
     WeightedEdge minimum = this->orderedEdges.top();
+    clock_t start, end;
 
     if (minimum.weight <= i) {
         do {
+            //DEBUG measure
+            start = clock();
             add_edge(vertex(this->vc.getVertexIndex(minimum.source), this->g_i),
                      vertex(this->vc.getVertexIndex(minimum.target), this->g_i), this->g_i);
+            end = clock();
+            this->crtChronoResult->addPartialDiff(start, end);
+
             this->orderedEdges.pop();
             minimum = this->orderedEdges.top();
         } while (minimum.weight <= i && !this->orderedEdges.empty());

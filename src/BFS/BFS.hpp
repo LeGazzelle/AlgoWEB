@@ -15,9 +15,9 @@ public:
 
     BFS(UndirectedGraph g, Vertex u, unsigned long Dstr);
 
-    void nextStep(unsigned long pBFS);
+    clock_t nextStep(unsigned long pBFS);
 
-    void firstStep();
+    clock_t firstStep();
 
     ~BFS();
 
