@@ -48,7 +48,7 @@ public:
 
     double CRTAlgorithm(double eps);
 
-    double prepareLightRun();
+    long double prepareLightRun();
 
     double LightCRTAlgorithm(double eps);
 

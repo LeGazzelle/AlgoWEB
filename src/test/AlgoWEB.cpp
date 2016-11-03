@@ -97,7 +97,7 @@ int main(void) {
     double krk_ans = algo->KruskalAlgorithm();
     clock_t krk_end = clock();
 
-    double elapsed_krk = double(krk_end - krk_begin) / CLOCKS_PER_SEC;
+    long double elapsed_krk = double(krk_end - krk_begin) / CLOCKS_PER_SEC;
 
     cout << "Risultato Kruskal:\t" << krk_ans << endl;
     cout << "Tempo: " << elapsed_krk << endl << "--------------------\n";
@@ -110,7 +110,7 @@ int main(void) {
     double prm_ans = algo->PrimAlgorithm();
     clock_t prm_end = clock();
 
-    double elapsed_prm = double(prm_end - prm_begin) / CLOCKS_PER_SEC;
+    long double elapsed_prm = double(prm_end - prm_begin) / CLOCKS_PER_SEC;
 
     cout << "Risultato Prim:\t" << prm_ans << endl;
     cout << "Tempo: " << elapsed_prm << endl << "--------------------\n";
@@ -119,12 +119,12 @@ int main(void) {
 
     /*******/
 #if 1
-    double elapsed_preparation_lcrt = algo->prepareLightRun();
+    long double elapsed_preparation_lcrt = algo->prepareLightRun();
     clock_t lcrt_begin = clock();
     double lcrt_ans = algo->LightCRTAlgorithm(EPSILON);
     clock_t lcrt_end = clock();
 
-    double elapsed_calculus_lcrt = double(lcrt_end - lcrt_begin) / CLOCKS_PER_SEC;
+    long double elapsed_calculus_lcrt = double(lcrt_end - lcrt_begin) / CLOCKS_PER_SEC;
     elapsed_preparation_lcrt /= CLOCKS_PER_SEC;
 
 
@@ -145,7 +145,7 @@ int main(void) {
     clock_t crt_end = clock();
 
     //auto elapsed_crt_hr = chrono::duration_cast<chrono::nanoseconds>(crt_end_hr - crt_begin_hr).count() / 1000000000.0;
-    double elapsed_crt = double(crt_end - crt_begin) / CLOCKS_PER_SEC;
+    long double elapsed_crt = double(crt_end - crt_begin) / CLOCKS_PER_SEC;
 
     cout << "Risultato CRT:\t" << crt_ans << endl;
     cout << "Tempo: " << elapsed_crt << /*" oppure " << elapsed_crt_hr << */endl << "--------------------\n";

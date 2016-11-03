@@ -100,7 +100,7 @@ MSTWCompare::~MSTWCompare() {}
  *
  * @return the time elapsed for the operation
  */
-double MSTWCompare::prepareLightRun() {
+long double MSTWCompare::prepareLightRun() {
     clock_t start, end;
     long long k;
 
@@ -224,7 +224,7 @@ double MSTWCompare::approxNumConnectedComps(double eps, unsigned long avgDeg, in
                 if (bfs->isCompleted()) {
                     flipAgain = false;
                     if (bfs->getVisitedEdges())
-                        Beta += (bfs->getUDeg() * std::pow(2, flips-1)) / bfs->getVisitedEdges();
+                        Beta += (bfs->getUDeg() * std::pow(2, flips - 1)) / bfs->getVisitedEdges();
                     else
                         Beta += 2;
                 }
@@ -237,6 +237,7 @@ double MSTWCompare::approxNumConnectedComps(double eps, unsigned long avgDeg, in
 
     return (this->num_vert_G * Beta) / r;
 }
+
 //TODO check that hypothesis for theorem 6 are met
 unsigned long MSTWCompare::approxGraphAvgDegree(double eps) {
     unsigned long maxDegree = 0;
@@ -328,7 +329,7 @@ unsigned long MSTWCompare::lightApproxGraphAvgDegree(double eps) {
 unsigned long MSTWCompare::computeNumVertices(unsigned long n, double eps) {
     unsigned long y;
     double den = eps * eps;
-    den = 1 + n*den;
+    den = 1 + n * den;
     y = (unsigned long) std::floor(n / den);
 
     return y == 0 ? 1 : y;
