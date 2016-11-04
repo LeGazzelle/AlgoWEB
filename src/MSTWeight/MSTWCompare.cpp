@@ -27,7 +27,7 @@ public:
 boost::random::mt19937 Coin::generator;
 boost::random::uniform_int_distribution<> Coin::coin;
 
-
+/*
 VertexConverter::VertexConverter() {}
 
 void VertexConverter::init(unsigned long dim) {
@@ -42,7 +42,7 @@ long long VertexConverter::getVertexIndex(long long globalIndex) {
         this->vertices[globalIndex] = this->next++;
 
     return vertices[globalIndex];
-}
+}*/
 //TODO EFFICENTARE IL RANDOM VERTEX EXTRACTOR CON GLI ARTICOLI TROVATI IN RETE SU GENERAZIONE O(1)
 
 /*RandomVertexExtractor::RandomVertexExtractor(unsigned long dim) {

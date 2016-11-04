@@ -4,16 +4,24 @@
 
 #include "GraphIO.hpp"
 
-bool GraphIO::readGraph(std::string fileName, UndirectedGraph *g, int *maxWeight) {
+
+FastGraph *GraphIO::readGraph(std::string fileName, int *maxWeight) {
+    FastGraph *fg;
     std::ifstream inFile(fileName);
     std::string edge, tmp;
     std::string::size_type pt;
-    unsigned long u, v;
+    unsigned long size, u, v;
     int w;
 
     *maxWeight = 0;
 
     if (inFile.is_open()) {
+        if (getline(inFile, edge)) {
+            size = std::stoul(edge);
+            fg = new FastGraph(size);
+        } else {
+            return nullptr;
+        }
         while (getline(inFile, edge)) {
             u = std::stoul(edge, &pt);
             pt++;
@@ -25,30 +33,33 @@ bool GraphIO::readGraph(std::string fileName, UndirectedGraph *g, int *maxWeight
             if (w > *maxWeight)
                 *maxWeight = w;
 
-            if (__VERB)
-                std::cout << "adding edge (" << u << "," << v << ") with weight " << w << std::endl;
-
-            add_edge(vertex(u, *g), vertex(v, *g), Weight(w), *g);
+            fg->addEdge(u, v, w);
         }
 
         inFile.close();
-        return true;
+        return fg;
     } else {
-        return false;
+        return nullptr;
     }
 }
 
-bool GraphIO::writeGraph(std::string fileName, const UndirectedGraph g) {
+bool GraphIO::writeGraph(std::string fileName, const FastGraph g) {
     std::ofstream outFile(fileName, std::ios::out);
-    ConstWeightMap weight= get(edge_weight, g);
-    EdgeIterator ei, eend;
+    AdjacencyList al;
+    AdjacencyIterator ai;
 
     if (outFile.is_open()) {
-        for (boost::tie(ei, eend) = edges(g); ei != eend; ++ei) {
-            outFile << get(vertex_index, g)[source(*ei, g)] << " "
-                    << get(vertex_index, g)[target(*ei, g)] << " "
-                    << get(weight, *ei) << "\n";
+        outFile << g.numVertices() << "\n";
+
+        for (vertex_index_t v = 0ULL; v < g.numVertices(); v++) {
+            al = g.adjacentVertices(v);
+
+            for (ai = al.begin(); ai != al.end(); ai++)
+                outFile << v << " "
+                        << ai->second << " "
+                        << ai->first << "\n";
         }
+
 
         outFile.close();
         return true;

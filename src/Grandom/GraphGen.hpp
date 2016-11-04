@@ -6,20 +6,24 @@
 #define ALGOWEB_GRAPHGEN_HPP
 
 #include <ctime>
-#include "../AlgoWEB.hpp"
-
-typedef std::pair<Edge, bool> Result;
+#include <random>
+//#include "../AlgoWEB.hpp"
+#include "../Graphs/FastGraphs.hpp"
 
 class GraphGen {
 public:
-    static UndirectedGraph generate(unsigned long, unsigned long, unsigned int, unsigned int);
+    static FastGraph generate(vertex_index_t, vertex_index_t, weight_t, unsigned int);
 
 private:
-    static void swap(unsigned long *, unsigned long *);
+    static void swap(vertex_index_t *, vertex_index_t *);
 
-    static void permute(unsigned long *, unsigned long);
+    static void permute(vertex_index_t *, vertex_index_t);
 
-    static void initArray(unsigned long *, unsigned long);
+    static void initArray(vertex_index_t *, vertex_index_t);
+
+    static EdgesMatrix edgesMatrixInit(const vertex_index_t);
+
+    static inline void updateEdgesMatrix(EdgesMatrix *em, vertex_index_t, vertex_index_t);
 };
 
 #endif //ALGOWEB_GRAPHGEN_HPP

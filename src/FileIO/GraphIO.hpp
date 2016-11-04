@@ -6,15 +6,15 @@
 #define ALGOWEB_GRAPHIO_HPP
 
 #include <fstream>
-#include "../AlgoWEB.hpp"
+#include "../Graphs/FastGraphs.hpp"
 
 extern bool __VERB;
 
 class GraphIO {
 public:
-    static bool readGraph(std::string, UndirectedGraph *, int *);
+    static FastGraph *readGraph(std::string, int *);
 
-    static bool writeGraph(std::string, const UndirectedGraph);
+    static bool writeGraph(std::string, const FastGraph);
 };
 
 #endif //ALGOWEB_GRAPHIO_HPP

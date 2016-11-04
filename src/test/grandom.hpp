@@ -6,6 +6,7 @@
 #define ALGOWEB_GRANDOM_HPP
 
 #include <vector>
+#include <iostream>
 
 #include "../utilities/optionparser.h"
 #include "../FileIO/GraphIO.hpp"

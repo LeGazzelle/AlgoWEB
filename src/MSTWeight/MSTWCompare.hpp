@@ -14,7 +14,7 @@
 #include <boost/graph/kruskal_min_spanning_tree.hpp>
 #include <boost/graph/prim_minimum_spanning_tree.hpp>
 
-class VertexConverter {
+/*class VertexConverter {
 private:
     long long next;
     long long *vertices;
@@ -27,7 +27,7 @@ public:
     long long getVertexIndex(long long globalIndex);
 };
 
-/*class RandomVertexExtractor {
+class RandomVertexExtractor {
 private:
     Vertex *vindexes;
     unsigned long size;

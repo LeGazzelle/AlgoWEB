@@ -62,9 +62,10 @@ int main(int argc, char *argv[]) {
     }
 
     if (options[VERBOSE]) {
-        __VERB = true;
+        std::wcerr << "\n********\nVerbose option currently unavailable" << std::endl;
+        //__VERB = true;
     } else {
-        __VERB = false;
+        //__VERB = false;
     }
 
     //Other sanitary checks
@@ -82,7 +83,7 @@ int main(int argc, char *argv[]) {
     }
 
     //Random, weighted, connected, undirected graph generation
-    UndirectedGraph g = GraphGen::generate(v, e, w, s);
+    FastGraph g = GraphGen::generate(v, e, w, s);
 
     //save file
     GraphIO::writeGraph(fileName, g);

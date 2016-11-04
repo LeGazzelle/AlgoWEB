@@ -8,32 +8,32 @@ class RandomGenerator {
 public:
     RandomGenerator() {}
 
-    void init(int max) {
+    void init(vertex_index_t max) {
         generator.seed((const uint32_t &) std::time(0));
-        this->dist = boost::random::uniform_int_distribution<>(1, max);
+        this->dist = std::uniform_int_distribution<vertex_index_t>(1, max);
     }
 
-    void init(int max, unsigned int seed) {
+    void init(vertex_index_t max, unsigned int seed) {
         generator.seed(seed);
-        this->dist = boost::random::uniform_int_distribution<>(1, max);
+        this->dist = std::uniform_int_distribution<vertex_index_t>(1, max);
     }
 
-    int rand() {
-        return this->dist(generator);
+    weight_t rand() {
+        return (weight_t) this->dist(generator);
     }
 
-    int rand(int max) {
-        boost::random::uniform_int_distribution<> tmpDist(0, max);
+    vertex_index_t rand(vertex_index_t max) {
+        std::uniform_int_distribution<vertex_index_t> tmpDist(0, max);
         return tmpDist(generator);
     }
 
 private:
     //int seed;
-    static boost::random::mt19937 generator;
-    boost::random::uniform_int_distribution<> dist;
+    static std::mt19937 generator;
+    std::uniform_int_distribution<vertex_index_t> dist;
 };
 
-boost::random::mt19937 RandomGenerator::generator;
+std::mt19937 RandomGenerator::generator;
 RandomGenerator *rg = new RandomGenerator();
 
 /**
@@ -58,12 +58,12 @@ RandomGenerator *rg = new RandomGenerator();
  *
  * @param v number of nodes
  * @param e number of edges
- * @param maxWeight max integer weight for the edges
+ * @param maxWeight max positive integer weight for the edges
  * @return a random, connected, weighted undirected graph
  */
-UndirectedGraph GraphGen::generate(unsigned long v, unsigned long e, unsigned int maxWeight, unsigned int seed) {
-    unsigned long tree[v], i, j, count;
-    Result res;
+FastGraph GraphGen::generate(vertex_index_t v, vertex_index_t e, weight_t maxWeight, unsigned int seed) {
+    vertex_index_t tree[v], i, j, count;
+    EdgesMatrix em = GraphGen::edgesMatrixInit(v);
 
     //Initialize random generator
     if (seed)
@@ -71,7 +71,7 @@ UndirectedGraph GraphGen::generate(unsigned long v, unsigned long e, unsigned in
     else
         rg->init(maxWeight);
 
-    UndirectedGraph *g = new UndirectedGraph(v);
+    FastGraph *g = new FastGraph(v);
 
     /*  Generate a random permutation in the array tree. */
     GraphGen::initArray(tree, v);
@@ -84,11 +84,15 @@ UndirectedGraph GraphGen::generate(unsigned long v, unsigned long e, unsigned in
          the tree.  Add an edge incident on tree[ i ]
          and a random vertex in the set {tree[ 0 ],...,tree[ i - 1 ]}.
     */
-    add_edge(vertex(tree[1], *g), vertex(tree[0], *g), Weight(rg->rand()), *g);
+    //add_edge(vertex(tree[1], *g), vertex(tree[0], *g), Weight(rg->rand()), *g);
+    g->addEdge(tree[1], tree[0], rg->rand());
+    updateEdgesMatrix(&em, tree[1], tree[0]);
 
     for (i = 2; i < v; i++) {
-        j = (unsigned long) rg->rand((int) i - 1);
-        add_edge(vertex(tree[i], *g), vertex(tree[j], *g), Weight(rg->rand()), *g);
+        j = rg->rand(i - 1);
+        //add_edge(vertex(tree[i], *g), vertex(tree[j], *g), Weight(rg->rand()), *g);
+        g->addEdge(tree[i], tree[j], rg->rand());
+        updateEdgesMatrix(&em, tree[i], tree[j]);
     }
 
     /* Add additional random edges until achieving at least desired number */
@@ -96,8 +100,8 @@ UndirectedGraph GraphGen::generate(unsigned long v, unsigned long e, unsigned in
     count = v - 1;
 
     while (count < e) {
-        i = (unsigned long) rg->rand((int) v - 1);
-        j = (unsigned long) rg->rand((int) v - 1);
+        i = rg->rand(v - 1);
+        j = rg->rand(v - 1);
 
         if (i == j)
             continue;
@@ -106,10 +110,18 @@ UndirectedGraph GraphGen::generate(unsigned long v, unsigned long e, unsigned in
          * res is a pair <Edge, bool> where bool is true iff no edge existed
          * between i and j, hence a correct insertion has been performed; false otherwise
          */
-        res = add_edge(vertex(i, *g), vertex(j, *g), Weight(rg->rand()), *g);
 
-        if (res.second)
+        /**
+         * if no edge exists between i and j, insert it
+         */
+        if (!em[i][j]) {
+            g->addEdge(i, j, rg->rand());
             count++;
+        }
+        //res = add_edge(vertex(i, *g), vertex(j, *g), Weight(rg->rand()), *g);
+
+        //if (res.second)
+        //    count++;
 
     }
 
@@ -119,8 +131,8 @@ UndirectedGraph GraphGen::generate(unsigned long v, unsigned long e, unsigned in
 
 
 /* set a[ i ] = i, for i = 0,...,end - 1 */
-void GraphGen::initArray(unsigned long *a, unsigned long end) {
-    unsigned long i;
+void GraphGen::initArray(vertex_index_t *a, vertex_index_t end) {
+    vertex_index_t i;
 
     for (i = 0; i < end; i++)
         *a++ = i;
@@ -128,17 +140,39 @@ void GraphGen::initArray(unsigned long *a, unsigned long end) {
 
 
 /* randomly permute a[ 0 ],...,a[ n - 1 ] */
-void GraphGen::permute(unsigned long *a, unsigned long n) {
-    unsigned long i;
+void GraphGen::permute(vertex_index_t *a, vertex_index_t n) {
+    vertex_index_t i;
 
     for (i = 0; i < n - 1; i++)
-        swap(a + i + rg->rand((int) (n - i - 1)), a + i);
+        swap(a + i + rg->rand((n - i - 1)), a + i);
 }
 
-void GraphGen::swap(unsigned long *a, unsigned long *b) {
-    unsigned long temp;
+void GraphGen::swap(vertex_index_t *a, vertex_index_t *b) {
+    vertex_index_t temp;
 
     temp = *a;
     *a = *b;
     *b = temp;
+}
+
+EdgesMatrix GraphGen::edgesMatrixInit(const vertex_index_t n) {
+    EdgesMatrix em = *new EdgesMatrix(n);
+    //this->edgesMatrix.resize(n);
+    vertex_index_t i, j;
+
+    for (i = 0; i < n; i++) { //O(n)
+        em[i].resize(n);
+    }
+
+    for (i = 0; i < n; i++) { //O(n^2)
+        for (j = 0; j < n; j++)
+            em[i][j] = false;
+    }
+
+    return em;
+}
+
+void GraphGen::updateEdgesMatrix(EdgesMatrix *em, vertex_index_t u, vertex_index_t v) {
+    (*em)[u][v] = true;
+    (*em)[v][u] = true;
 }
