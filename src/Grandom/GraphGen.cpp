@@ -85,13 +85,13 @@ FastGraph GraphGen::generate(vertex_index_t v, vertex_index_t e, weight_t maxWei
          and a random vertex in the set {tree[ 0 ],...,tree[ i - 1 ]}.
     */
     //add_edge(vertex(tree[1], *g), vertex(tree[0], *g), Weight(rg->rand()), *g);
-    g->addEdge(tree[1], tree[0], rg->rand());
+    g->addUndirectedEdge(tree[1], tree[0], rg->rand());
     updateEdgesMatrix(&em, tree[1], tree[0]);
 
     for (i = 2; i < v; i++) {
         j = rg->rand(i - 1);
         //add_edge(vertex(tree[i], *g), vertex(tree[j], *g), Weight(rg->rand()), *g);
-        g->addEdge(tree[i], tree[j], rg->rand());
+        g->addUndirectedEdge(tree[i], tree[j], rg->rand());
         updateEdgesMatrix(&em, tree[i], tree[j]);
     }
 
@@ -114,8 +114,8 @@ FastGraph GraphGen::generate(vertex_index_t v, vertex_index_t e, weight_t maxWei
         /**
          * if no edge exists between i and j, insert it
          */
-        if (!em[i][j].edgeState) {
-            g->addEdge(i, j, rg->rand());
+        if (!em[i][j]) {
+            g->addUndirectedEdge(i, j, rg->rand());
             count++;
         }
         //res = add_edge(vertex(i, *g), vertex(j, *g), Weight(rg->rand()), *g);
@@ -174,6 +174,6 @@ BfsMatrix GraphGen::edgesMatrixInit(const vertex_index_t n) {
 }
 
 void GraphGen::updateEdgesMatrix(BfsMatrix *em, vertex_index_t u, vertex_index_t v) {
-    (*em)[u][v].edgeState = true;
-    (*em)[v][u].edgeState = true;
+    (*em)[u][v] = true;
+    (*em)[v][u] = true;
 }

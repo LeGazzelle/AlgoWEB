@@ -33,7 +33,7 @@ FastGraph *GraphIO::readGraph(std::string fileName, weight_t *maxWeight) {
             if (w > *maxWeight)
                 *maxWeight = w;
 
-            fg->addEdge(u, v, w);
+            fg->addNoRepeatingUndirectedEdge(u, v, w);
         }
 
         inFile.close();

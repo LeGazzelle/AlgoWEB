@@ -34,7 +34,9 @@ public:
 
     void printByEdges();
 
-    virtual void addEdge(Vertex v1, Vertex v2, Weight w);
+    virtual void addUndirectedEdge(Vertex v1, Vertex v2, Weight w);
+
+    void addNoRepeatingUndirectedEdge(Vertex v1, Vertex v2, Weight w);
 
     EdgeList edges();
 
@@ -52,7 +54,7 @@ public:
 
     FastSubGraph(const FastSubGraph *other); //copy constructor
 
-    void addEdge(Vertex v1, Vertex v2, Weight w);
+    void addUndirectedEdge(Vertex v1, Vertex v2, Weight w);
 
     void printByAdjListLocal();
 

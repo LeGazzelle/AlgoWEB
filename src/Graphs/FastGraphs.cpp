@@ -37,11 +37,30 @@ vertex_index_t FastGraph::degree(Vertex u) {
  * @param v2
  * @param weight
  */
-void FastGraph::addEdge(Vertex v1, Vertex v2, Weight w) {
+void FastGraph::addUndirectedEdge(Vertex v1, Vertex v2, Weight w) {
     this->adjacencyLists[v1].emplace_back(w, v2);
     this->adjacencyLists[v2].emplace_back(w, v1);
 
     this->edgeList.emplace_back(WeightedEdge(v1, v2, w));
+}
+
+/**
+ * Add edge between node v1 and v2, smart version: if an
+ * edge between v2 and v1 does esist, no edge will be added,
+ * mantaining only one pair (v1,v2)-(v2,v1)
+ *
+ * @param v1
+ * @param v2
+ * @param weight
+ */
+void FastGraph::addNoRepeatingUndirectedEdge(Vertex v1, Vertex v2, Weight w) {
+    AdjacencyIterator ai_end = this->adjacencyLists[v1].end();
+
+    for (AdjacencyIterator ai = this->adjacencyLists[v1].begin(); ai != ai_end; ai++)
+        if (ai->second == v2)
+            return;
+
+    this->addUndirectedEdge(v1, v2, w);
 }
 
 EdgeList FastGraph::edges() {
@@ -86,7 +105,7 @@ FastGraph::FastGraph(const FastGraph *other) :
 
 FastSubGraph::FastSubGraph(vertex_index_t n) : FastGraph(n), vc(n) {}
 
-void FastSubGraph::addEdge(Vertex v1, Vertex v2, Weight w) {
+void FastSubGraph::addUndirectedEdge(Vertex v1, Vertex v2, Weight w) {
     v1 = this->vc.getVertexIndex(v1);
     v2 = this->vc.getVertexIndex(v2);
 

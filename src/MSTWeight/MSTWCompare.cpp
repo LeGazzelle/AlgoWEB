@@ -155,12 +155,12 @@ long double MSTWCompare::getAverageDegree() {
 
 long double MSTWCompare::approxNumConnectedComps(double eps, vertex_index_t avgDeg, weight_t i) {
     this->extractGraph(i);
-    unsigned long n_i = this->g_i.numVertices();
+    vertex_index_t n_i = this->g_i.numVertices();
 
     if (!n_i)
         return 0.0;
 
-    FisherYatesSequence *fys = new FisherYatesSequence((long long int) n_i);
+    FisherYatesSequence *fys = new FisherYatesSequence(n_i);
     vertex_index_t j, r = computeNumVertices(n_i, eps);
     Vertex u;
     double Beta = 0.0;
@@ -182,7 +182,7 @@ long double MSTWCompare::approxNumConnectedComps(double eps, vertex_index_t avgD
             flips++;
             flipAgain = Coin::flip() && bfs->getVisitedVertices() < threshold && !bfs->isGreaterThanDstar();
             if (flipAgain) {
-                bfs->nextStep(0);
+                bfs->nextStep();
 
                 if (bfs->isCompleted()) {
                     flipAgain = false;
@@ -249,7 +249,7 @@ double MSTWCompare::lightApproxNumConnectedComps(double eps, vertex_index_t avgD
             flips++;
             flipAgain = Coin::flip() && bfs->getVisitedVertices() < threshold && !bfs->isGreaterThanDstar();
             if (flipAgain) {
-                bfs->nextStep(0);
+                bfs->nextStep();
 
                 if (bfs->isCompleted()) {
                     flipAgain = false;
@@ -314,7 +314,7 @@ void MSTWCompare::extractGraph(weight_t i) {
 
     if (minimum.weight <= i) {
         do {
-            this->g_i.addEdge(minimum.source, minimum.target, minimum.weight);
+            this->g_i.addUndirectedEdge(minimum.source, minimum.target, minimum.weight);
             this->orderedEdges.pop();
             minimum = this->orderedEdges.top();
         } while (minimum.weight <= i && !this->orderedEdges.empty());
@@ -333,16 +333,11 @@ FastSubGraph MSTWCompare::lightExtractGraph(weight_t i) {
 
     if (minimum.weight <= i) {
         do {
-            this->g_i.addEdge(minimum.source, minimum.target, minimum.weight);
+            this->g_i.addUndirectedEdge(minimum.source, minimum.target, minimum.weight);
             this->copyOfOrderedEdges.pop();
             minimum = this->copyOfOrderedEdges.top();
         } while (minimum.weight <= i && !this->copyOfOrderedEdges.empty());
     }
-
-    //DEBUG
-    std::cout << "g_" << i << ":" << std::endl;
-    this->g_i.printByAdjList();
-    std::cout << "-------------------------------------------------------------------------------------\n";
 
     return this->g_i;
 }

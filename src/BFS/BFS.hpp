@@ -16,7 +16,7 @@ public:
 
     BFS(FastGraph g, Vertex u, vertex_index_t Dstr);
 
-    void nextStep(vertex_index_t pBFS);
+    void nextStep();
 
     void firstStep();
 
@@ -44,15 +44,18 @@ private:
     vertex_index_t Dstar;
     //data structures for BFS
     std::queue<Vertex> *toBeVisited;
-    BfsMatrix visitedEdgesMatrix; //initialized to false
+    //BfsMatrix visitedEdgesMatrix; //initialized to false
+    BfsVertices verticesState;
     bool pause;
     AdjacencyIterator ni;
 
-    void edgesMatrixInit(vertex_index_t n);
+    //void edgesMatrixInit(vertex_index_t n);
 
-    void setVisitedEdge(Vertex source, Vertex target);
+    //void setVisitedEdge(Vertex source, Vertex target);
 
-    void setVisitedVertex();
+    void setVisited(Vertex v);
+
+    void queue(Vertex v);
 };
 
 #endif //ALGOWEB_BFS_H

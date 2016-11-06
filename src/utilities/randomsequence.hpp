@@ -44,7 +44,6 @@ private:
     vertex_index_t upLimit;
     vertex_index_t max;
     std::vector<vertex_index_t> numbers;
-    //std::random_device rd;
     std::mt19937 gen;
     std::uniform_int_distribution<vertex_index_t> dis;
 
@@ -56,15 +55,13 @@ private:
     }
 
 public:
-    //FisherYatesSequence() {}
-
     FisherYatesSequence(vertex_index_t size) : upLimit(size - 1), max(size - 1) {
         this->numbers = std::vector<vertex_index_t>(size);
         std::random_device rd;
 
         //std::srand(std::time(0));
         this->gen = std::mt19937(rd());
-        this->dis = std::uniform_int_distribution<vertex_index_t>(0, size - 1);
+        this->dis = std::uniform_int_distribution<vertex_index_t>();
         for (vertex_index_t k = 0; k < size; k++)
             this->numbers[k] = k;
     }
@@ -76,21 +73,19 @@ public:
     Vertex next() {
         Vertex ans;
 
-        if (max) {
-            this->swap(this->max, this->dis(this->gen));
+        if (this->max) {
+            this->swap(this->max, this->dis(this->gen) % this->max);
             ans = (Vertex) this->numbers[this->max];
             this->max--;
-            if (!this->max)
-                this->max = this->upLimit;
-        } else
+        } else {
             ans = (Vertex) this->numbers[0];
+            this->max = this->upLimit;
+        }
 
         return ans;
     }
 
-    ~FisherYatesSequence () {
-        //delete &(this->numbers);
-    }
+    ~FisherYatesSequence() {}
 };
 
 #endif //ALGOWEB_RANDOMSEQUENCE_HPP

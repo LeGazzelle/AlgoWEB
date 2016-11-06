@@ -14,12 +14,15 @@ BFS::BFS(FastGraph g, Vertex u, vertex_index_t Dstr) : graph(g) {
     this->greaterThanDstar = false;
     this->uDeg = 0;
     this->Dstar = Dstr;
-    this->edgesMatrixInit(g.numVertices()); //O(n^2)
+    //this->edgesMatrixInit(g.numVertices()); //O(n^2)
+    this->verticesState = BfsVertices(g.numVertices());
+    //DEBUG
+    //this->verticesState = {}; //initialize the entire array to UNEXPLORED
     this->toBeVisited = new std::queue<Vertex>();
     this->pause = false;
 }
 
-void BFS::edgesMatrixInit(const vertex_index_t n) {
+/*void BFS::edgesMatrixInit(const vertex_index_t n) {
     this->visitedEdgesMatrix.resize(n);
     vertex_index_t i;
 
@@ -32,80 +35,93 @@ void BFS::edgesMatrixInit(const vertex_index_t n) {
 //        for (j = 0; j < n; j++)
 //            this->visitedEdgesMatrix[i][j].edgeState = false;
 //    }
-}
-
-void BFS::nextStep(vertex_index_t pBFS) {
-    AdjacencyIterator ai, ai_end;
-    AdjacencyList al;
-    Vertex source, target;
-    vertex_index_t pauseBFS = pBFS ? pBFS : (2 * this->visitedEdges);
-    source = this->toBeVisited->front();
-    al = this->graph.adjacentVertices(source);
-    ai_end = al.end();
-    this->greaterThanDstar = this->graph.degree(source) > this->Dstar;
-    if (this->pause) {
-        ai = this->ni;
-        this->pause = false;
-    } else {
-        ai = al.begin();
-    }
-
-    for (; ai != ai_end; ++ai) {
-        target = ai->second;
-
-        if (!this->visitedEdgesMatrix[source][target].edgeState) {
-
-            this->toBeVisited->push(target);
-            setVisitedEdge(source, target);
-
-            if (this->visitedEdges == pauseBFS && ai != ai_end) {
-                this->pause = true;
-                this->ni = ++ai;
-                return;
-            }
-        }
-    }
-
-    setVisitedVertex();
-
-    if (this->toBeVisited->empty()) {
-        this->completed = true; //BFS Completed
-        return;
-    }
-
-    nextStep(pauseBFS);
-}
+}*/
 
 void BFS::firstStep() {
-    AdjacencyIterator ai, ai_end;
     AdjacencyList al = this->graph.adjacentVertices(this->vertexU);
     vertex_index_t k = this->graph.degree(this->vertexU);
-    ai_end = al.end();
+    AdjacencyIterator ai_end = al.end();
     Vertex target;
 
     if (k) {
-        for (ai = al.begin(); ai != ai_end; ++ai) {
+        for (AdjacencyIterator ai = al.begin(); ai != ai_end; ++ai) {
             target = ai->second;
 
-            this->toBeVisited->push(target);
-            setVisitedEdge(this->vertexU, target);
+            queue(target);
         }
     }
 
     this->uDeg = k;
-    this->visitedVertices = 1; //just u in this first step
-    //in the first step it's impossible to complete the BFS
+    //skip completeness check -- in the first step it's impossible to complete the BFS
+    this->verticesState[this->vertexU] = EXPLORED;
+    this->visitedVertices++; //just u in the first step -- no need to call setVisited since for the first vertex we do not use the queue
     if (k > this->Dstar) greaterThanDstar = true;
-
 }
 
-void BFS::setVisitedEdge(Vertex source, Vertex target) {
-    this->visitedEdgesMatrix[source][target].edgeState = true;
-    this->visitedEdgesMatrix[target][source].edgeState = true;
+void BFS::nextStep() {
+    AdjacencyIterator ai, ai_end;
+    AdjacencyList al;
+    Vertex source;
+
+    vertex_index_t pauseBFS = 2 * this->visitedEdges;
+
+    while (!this->toBeVisited->empty()) {
+        source = this->toBeVisited->front();
+        //optimization
+        if (this->graph.degree(source) == 1) {
+            setVisited(source);
+            continue;
+        }
+        al = this->graph.adjacentVertices(source);
+
+        //resume state, eventually
+        if (!this->pause) {
+            ai = al.begin();
+        } else {
+            ai = this->ni;
+            this->pause = false;
+        }
+        ai_end = al.end();
+
+        while (ai != ai_end) {
+            if (this->verticesState[ai->second] != UNEXPLORED) {
+                ai++;
+                continue;
+            }
+
+            queue(ai->second);
+            ai++;
+
+            if (this->visitedEdges == pauseBFS) {
+                //save state
+                if (ai != ai_end) {
+                    this->pause = true;
+                    this->ni = ai;
+                } else {
+                    setVisited(source);
+                }
+                return;
+            }
+        }
+        setVisited(source);
+    }
+
+    this->completed = true;
+}
+
+void BFS::queue(Vertex v) {
+    this->toBeVisited->push(v);
+    this->verticesState[v] = EXPLORED;
     this->visitedEdges++;
 }
 
-void BFS::setVisitedVertex() {
+/*void BFS::setVisitedEdge(Vertex source, Vertex target) {
+    this->visitedEdgesMatrix[source][target].edgeState = true;
+    this->visitedEdgesMatrix[target][source].edgeState = true;
+    this->visitedEdges++;
+}*/
+
+void BFS::setVisited(Vertex v) {
     this->toBeVisited->pop();
     this->visitedVertices++;
 }
