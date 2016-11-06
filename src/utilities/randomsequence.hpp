@@ -5,10 +5,9 @@
 #ifndef ALGOWEB_RANDOMSEQUENCE_HPP
 #define ALGOWEB_RANDOMSEQUENCE_HPP
 
-//#include <random>
-//#include <cstdlib>
 #include <iostream>
 #include <random>
+#include "../AlgoWEB.hpp"
 
 /**
  * From an idea of Jeff Preshing of 31/12/12.
@@ -42,15 +41,15 @@ public:
 //     [FIXED with std::uniform_int_distribution<long long int>]
 class FisherYatesSequence {
 private:
-    long long upLimit;
-    long long max;
-    std::vector<long long> numbers;
+    vertex_index_t upLimit;
+    vertex_index_t max;
+    std::vector<vertex_index_t> numbers;
     //std::random_device rd;
     std::mt19937 gen;
-    std::uniform_int_distribution<long long> dis;
+    std::uniform_int_distribution<vertex_index_t> dis;
 
-    void swap(long long what, long long with) {
-        long long tmp = this->numbers[what];
+    void swap(vertex_index_t what, vertex_index_t with) {
+        vertex_index_t tmp = this->numbers[what];
 
         this->numbers[what] = this->numbers[with];
         this->numbers[with] = tmp;
@@ -59,18 +58,18 @@ private:
 public:
     //FisherYatesSequence() {}
 
-    FisherYatesSequence(long long size) : upLimit(size - 1), max(size - 1) {
-        this->numbers = std::vector<long long>((unsigned long) size);
+    FisherYatesSequence(vertex_index_t size) : upLimit(size - 1), max(size - 1) {
+        this->numbers = std::vector<vertex_index_t>(size);
         std::random_device rd;
 
         //std::srand(std::time(0));
         this->gen = std::mt19937(rd());
-        this->dis = std::uniform_int_distribution<long long>(0, size - 1);
-        for (long long k = 0; k < size; k++)
+        this->dis = std::uniform_int_distribution<vertex_index_t>(0, size - 1);
+        for (vertex_index_t k = 0; k < size; k++)
             this->numbers[k] = k;
     }
 
-    void seed(long long seed) {
+    void seed(vertex_index_t seed) {
         this->max = seed;
     }
 

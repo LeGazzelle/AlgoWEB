@@ -5,17 +5,24 @@
 #ifndef ALGOWEB_FASTGRAPHS_HPP
 #define ALGOWEB_FASTGRAPHS_HPP
 
+#include <iostream>
 #include "../MSTWeight/WeightedEdge.hpp"
+#include "VertexConverter.hpp"
 
-typedef std::priority_queue<WeightedEdge, std::vector<WeightedEdge>, WeightedEdgeComparator> EdgeList;
+typedef std::list<WeightedEdge> EdgeList;
+typedef std::list<WeightedEdge>::iterator EdgeIterator;
 
 
-class FastSubGraph {
+class FastGraph {
+private:
+    EdgeList edgeList;
 protected:
     std::vector<AdjacencyList> adjacencyLists;
 
 public:
-    FastSubGraph(vertex_index_t n);
+    FastGraph(vertex_index_t n);
+
+    FastGraph(const FastGraph *other); //copy constructor
 
     virtual vertex_index_t numVertices() const;
 
@@ -23,28 +30,37 @@ public:
 
     vertex_index_t degree(Vertex u);
 
+    void printByAdjList();
+
+    void printByEdges();
+
     virtual void addEdge(Vertex v1, Vertex v2, Weight w);
 
-    virtual ~FastSubGraph();
+    EdgeList edges();
+
+    virtual ~FastGraph();
 };
 
-class FastGraph : public FastSubGraph {
+class FastSubGraph : public FastGraph {
 private:
-    EdgeList edgeList;
     //need to track manually the number of vertices because the list of nodes is
     //pre-initialized to n and could always return n as size
-    vertex_index_t num_vertices;
+    //it has been done with internal structure of VertexConverter
+    VertexConverter vc;
 public:
-    FastGraph(vertex_index_t n);
+    FastSubGraph(vertex_index_t n);
 
-    //std::vector<Vertex> vertices(); ??? da rivedere
-    EdgeList edges();
+    FastSubGraph(const FastSubGraph *other); //copy constructor
 
     void addEdge(Vertex v1, Vertex v2, Weight w);
 
+    void printByAdjListLocal();
+
+    void printByAdjListGlobal();
+
     vertex_index_t numVertices() const;
 
-    ~FastGraph();
+    ~FastSubGraph();
 };
 
 #endif //ALGOWEB_FASTGRAPHS_HPP

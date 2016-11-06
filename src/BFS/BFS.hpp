@@ -9,47 +9,48 @@
 #include <queue>
 #include <vector>
 #include "../AlgoWEB.hpp"
+#include "../Graphs/FastGraphs.hpp"
 
 class BFS {
 public:
 
-    BFS(UndirectedGraph g, Vertex u, unsigned long Dstr);
+    BFS(FastGraph g, Vertex u, vertex_index_t Dstr);
 
-    void nextStep(unsigned long pBFS);
+    void nextStep(vertex_index_t pBFS);
 
     void firstStep();
 
     ~BFS();
 
-    unsigned long getVisitedVertices() const;
+    vertex_index_t getVisitedVertices() const;
 
-    unsigned long getVisitedEdges() const;
+    vertex_index_t getVisitedEdges() const;
 
     bool isCompleted() const;
 
     bool isGreaterThanDstar() const;
 
-    unsigned long getUDeg() const;
+    vertex_index_t getUDeg() const;
 
 
 private:
-    UndirectedGraph graph;
+    FastGraph graph;
     Vertex vertexU;
-    unsigned long visitedVertices;
-    unsigned long visitedEdges;
+    vertex_index_t visitedVertices;
+    vertex_index_t visitedEdges;
     bool completed;
     bool greaterThanDstar;
-    unsigned long uDeg;
-    unsigned long Dstar;
+    vertex_index_t uDeg;
+    vertex_index_t Dstar;
     //data structures for BFS
     std::queue<Vertex> *toBeVisited;
-    EdgesMatrix visitedEdgesMatrix; //initialized to false
+    BfsMatrix visitedEdgesMatrix; //initialized to false
     bool pause;
-    NeighboursIterator ni;
+    AdjacencyIterator ni;
 
-    void edgesMatrixInit(NumVertices n);
+    void edgesMatrixInit(vertex_index_t n);
 
-    void setVisitedEdge(unsigned long source, unsigned long target);
+    void setVisitedEdge(Vertex source, Vertex target);
 
     void setVisitedVertex();
 };

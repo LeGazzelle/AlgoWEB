@@ -19,8 +19,14 @@ typedef unsigned int weight_t;
 typedef std::pair<weight_t, vertex_index_t> AdjacentItem;
 typedef std::list<AdjacentItem> AdjacencyList;
 typedef std::list<AdjacentItem>::iterator AdjacencyIterator;
-typedef std::vector<std::vector<bool>> EdgesMatrix;
-
+enum bfs_vertex_state_t {
+    UNEXPLORED, QUEUED, EXPLORED
+};
+union bfs_matrix_t {
+    bool edgeState;
+    bfs_vertex_state_t vertexState;
+};
+typedef std::vector<std::vector<bfs_matrix_t>> BfsMatrix;
 
 #endif //ALGOWEB_ALGOWEB_HPP
 
@@ -59,7 +65,7 @@ typedef std::vector<std::vector<bool>> EdgesMatrix;
 //typedef property_map<UndirectedGraph, edge_weight_t>::type WeightMap;
 //typedef property_map<UndirectedGraph, edge_weight_t>::const_type ConstWeightMap;
 //typedef property_map<UndirectedGraph, vertex_index_t>::type VertexMap;
-//typedef std::vector<std::vector<bool>> EdgesMatrix;
+//typedef std::vector<std::vector<bool>> BfsMatrix;
 //
 ////DEBUG
 //template<typename UndirectedGraph>

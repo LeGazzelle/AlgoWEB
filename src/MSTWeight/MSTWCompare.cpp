@@ -7,15 +7,15 @@
 
 class Coin {
 private:
-    static boost::random::mt19937 generator;
-    static boost::random::uniform_int_distribution<> coin;
+    static std::mt19937 generator;
+    static std::uniform_int_distribution<> coin;
 
 public:
     static int flip() {
         static bool init = false;
 
         if (!init) {
-            coin = boost::random::uniform_int_distribution<>(0, 1);
+            coin = std::uniform_int_distribution<>(0, 1);
             generator.seed((const uint32_t &) std::time(0));
             init = true;
         }
@@ -24,61 +24,24 @@ public:
     }
 };
 
-boost::random::mt19937 Coin::generator;
-boost::random::uniform_int_distribution<> Coin::coin;
-
-/*
-VertexConverter::VertexConverter() {}
-
-void VertexConverter::init(unsigned long dim) {
-    this->vertices = new long long[dim];
-
-    for (long long i = 0LL; i < dim; i++)
-        this->vertices[i] = NULL_VERTEX;
-}
-
-long long VertexConverter::getVertexIndex(long long globalIndex) {
-    if (this->vertices[globalIndex] < 0LL)
-        this->vertices[globalIndex] = this->next++;
-
-    return vertices[globalIndex];
-}*/
-//TODO EFFICENTARE IL RANDOM VERTEX EXTRACTOR CON GLI ARTICOLI TROVATI IN RETE SU GENERAZIONE O(1)
-
-/*RandomVertexExtractor::RandomVertexExtractor(unsigned long dim) {
-    this->vindexes = new Vertex[dim];
-    this->size = dim;
-
-    for (long long i = 0; i < dim; i++)
-        this->vindexes[i] = (Vertex) i;
-}
-
-Vertex RandomVertexExtractor::extractRandomVertex() {
-    return *std::rotate(this->vindexes, this->vindexes + 1, this->vindexes + this->size);
-}
-
-void RandomVertexExtractor::prepare() {
-    this->scramble();
-}
-
-void RandomVertexExtractor::scramble() {
-    std::random_shuffle(this->vindexes, this->vindexes + this->size);
-}*/
+std::mt19937 Coin::generator;
+std::uniform_int_distribution<> Coin::coin;
 
 //Constructor with given graph
-MSTWCompare::MSTWCompare(UndirectedGraph g, int maxWeight) : graph(g), maxWeight(maxWeight) {
+MSTWCompare::MSTWCompare(FastGraph g, weight_t maxWeight) : graph(g), maxWeight(maxWeight), g_i(g.numVertices()) {
     this->generator.seed((const uint32_t &) std::time(0));
-    this->g_i = *new UndirectedGraph();
-    this->num_vert_G = num_vertices(g);
-    this->vc.init(num_vert_G);
-    WeightMap weights = get(edge_weight, this->graph);
+    //this->g_i = *new FastSubGraph(10); //FIXME c'è da risolvere il fatto che il costruttore vorrebbe il numero di vertici a priori (vedi sopra)
+    this->num_vert_G = g.numVertices();
+    //this->vc.init(num_vert_G);
+    //WeightMap weights = get(edge_weight, this->graph);
     //light runs
-    this->subgraphs = *new std::vector<UndirectedGraph>;
+    this->subgraphs = *new std::vector<FastSubGraph>;
     this->fys = *new std::vector<FisherYatesSequence>;
 
-    EdgeIterator ei, eiend;
-    for (boost::tie(ei, eiend) = edges(this->graph); ei != eiend; ++ei)
-        this->orderedEdges.push(WeightedEdge(source(*ei, this->graph), target(*ei, this->graph), weights[*ei]));
+    EdgeList edgeList = this->graph.edges();
+    EdgeIterator ei;
+    for (ei = edgeList.begin(); ei != edgeList.end(); ++ei)
+        this->orderedEdges.push(*ei);
 }
 
 //Destructor
@@ -102,24 +65,25 @@ MSTWCompare::~MSTWCompare() {}
  */
 long double MSTWCompare::prepareLightRun() {
     clock_t start, end;
-    long long k;
+    weight_t k;
+    vertex_index_t h;
 
     start = clock();
     this->copyOfOrderedEdges = std::priority_queue<WeightedEdge, std::vector<WeightedEdge>, WeightedEdgeComparator>(
             this->orderedEdges);
 
-    this->subgraphs.push_back(UndirectedGraph()); //we discard position '0'
+    this->subgraphs.push_back(FastSubGraph(vertex_index_t(0))); //we discard position '0'
     for (k = 1; k <= this->maxWeight; k++) {
-        this->subgraphs.push_back(*new UndirectedGraph(this->lightExtractGraph((int) k)));
+        this->subgraphs.push_back(*new FastSubGraph(this->lightExtractGraph((k))));
     }
     //end = clock();
 
     //restore internal data structure for subsequent calls
-    this->g_i.clear();
+    //this->g_i;
 
     this->fys.push_back(FisherYatesSequence(1)); //again discard position '0'
-    for (k = 1; k <= this->num_vert_G; k++) {
-        this->fys.push_back(*new FisherYatesSequence(k));
+    for (h = 1; h <= this->num_vert_G; h++) {
+        this->fys.push_back(*new FisherYatesSequence(h));
     }
     end = clock(); //TODO we could differentiate the two phases
 
@@ -141,7 +105,7 @@ double MSTWCompare::LightCRTAlgorithm(double eps) {
     double c = 0.0;
     unsigned long d = lightApproxGraphAvgDegree(eps); //O(1/eps)
 
-    for (int i = 1; i < this->maxWeight; i++) { //O(w)
+    for (weight_t i = 1; i < this->maxWeight; i++) { //O(w)
         c += lightApproxNumConnectedComps(eps, d, i);
 }
 
@@ -162,7 +126,7 @@ double MSTWCompare::CRTAlgorithm(double eps) {
     double c = 0.0;
     unsigned long d = approxGraphAvgDegree(eps);
 
-    for (int i = 1; i < this->maxWeight; i++) {
+    for (weight_t i = 1; i < this->maxWeight; i++) {
         c += approxNumConnectedComps(eps, d, i);
     }
 
@@ -173,13 +137,12 @@ long double MSTWCompare::getAverageDegree() {
     if (this->num_vert_G == 1)
         return 0.0;
 
-    VertexIterator vi, vi_end;
-    boost::tie(vi, vi_end) = vertices(this->graph);
-    long double degreeAvg = degree(*vi, this->graph);
+    vertex_index_t vi = 0ULL;
+    long double degreeAvg = this->graph.degree(vi);
     vi++;
 
-    while (vi != vi_end) {
-        degreeAvg = (degreeAvg + degree(*vi, this->graph)) / 2.0;
+    while (vi != this->num_vert_G) {
+        degreeAvg = (degreeAvg + this->graph.degree(vi)) / 2.0;
         vi++;
     }
 
@@ -190,15 +153,15 @@ long double MSTWCompare::getAverageDegree() {
  * Private
  */
 
-double MSTWCompare::approxNumConnectedComps(double eps, unsigned long avgDeg, int i) {
+long double MSTWCompare::approxNumConnectedComps(double eps, vertex_index_t avgDeg, weight_t i) {
     this->extractGraph(i);
-    unsigned long n_i = num_vertices(this->g_i);
+    unsigned long n_i = this->g_i.numVertices();
 
     if (!n_i)
         return 0.0;
 
     FisherYatesSequence *fys = new FisherYatesSequence((long long int) n_i);
-    unsigned long j, r = computeNumVertices(n_i, eps);
+    vertex_index_t j, r = computeNumVertices(n_i, eps);
     Vertex u;
     double Beta = 0.0;
     BFS *bfs;
@@ -239,29 +202,26 @@ double MSTWCompare::approxNumConnectedComps(double eps, unsigned long avgDeg, in
 }
 
 //TODO check that hypothesis for theorem 6 are met
-unsigned long MSTWCompare::approxGraphAvgDegree(double eps) {
-    unsigned long maxDegree = 0;
-    unsigned long c = computeNumVerticesLemma4(this->num_vert_G, eps);
-    //RandomVertexExtractor *rve = new RandomVertexExtractor(this->num_vert_G); //mischia tutti i nodi per darne solo una parte... inefficiente
-    //rve->prepare();
-    FisherYatesSequence *fys = new FisherYatesSequence((long long int) this->num_vert_G);
-    unsigned int i;
+vertex_index_t MSTWCompare::approxGraphAvgDegree(double eps) {
+    vertex_index_t i, deg, maxDegree = 0;
+    vertex_index_t c = computeNumVerticesLemma4(this->num_vert_G, eps);
+    FisherYatesSequence *fys = new FisherYatesSequence(this->num_vert_G);
     Vertex v;
 
     for (i = 0; i < c; i++) {
         v = fys->next();
 
-        if (boost::degree(v, this->graph) > maxDegree)
-            maxDegree = boost::degree(v, this->graph);
+        if ((deg = this->graph.degree(v)) > maxDegree)
+            maxDegree = deg;
     }
 
     delete fys;
     return maxDegree;
 }
 
-double MSTWCompare::lightApproxNumConnectedComps(double eps, unsigned long avgDeg, int i) {
+double MSTWCompare::lightApproxNumConnectedComps(double eps, vertex_index_t avgDeg, weight_t i) {
     //this->extractGraph(i);
-    unsigned long n_i = num_vertices(this->subgraphs[i]);
+    unsigned long n_i = this->subgraphs[i].numVertices();
 
     if (!n_i)
         return 0.0;
@@ -308,25 +268,23 @@ double MSTWCompare::lightApproxNumConnectedComps(double eps, unsigned long avgDe
     return (this->num_vert_G * Beta) / r;
 }
 
-unsigned long MSTWCompare::lightApproxGraphAvgDegree(double eps) {
-    unsigned long maxDegree = 0;
+vertex_index_t MSTWCompare::lightApproxGraphAvgDegree(double eps) {
+    vertex_index_t i, deg, maxDegree = 0;
     unsigned long c = computeNumVerticesLemma4(this->num_vert_G, eps);
-    //RandomVertexExtractor *rve = new RandomVertexExtractor(this->num_vert_G); //mischia tutti i nodi per darne solo una parte... inefficiente
-    //rve->prepare();
-    unsigned int i;
     Vertex v;
 
     for (i = 0; i < c; i++) {
         v = this->fys[this->num_vert_G].next(); // O(1)
+        deg = this->graph.degree(v);
 
-        if (boost::degree(v, this->graph) > maxDegree)
-            maxDegree = boost::degree(v, this->graph);
+        if (deg > maxDegree)
+            maxDegree = deg;
     }
 
     return maxDegree;
 }
 
-unsigned long MSTWCompare::computeNumVertices(unsigned long n, double eps) {
+vertex_index_t MSTWCompare::computeNumVertices(vertex_index_t n, double eps) {
     unsigned long y;
     double den = eps * eps;
     den = 1 + n * den;
@@ -335,7 +293,7 @@ unsigned long MSTWCompare::computeNumVertices(unsigned long n, double eps) {
     return y == 0 ? 1 : y;
 }
 
-unsigned long MSTWCompare::computeNumVerticesLemma4(unsigned long n, double eps) {
+vertex_index_t MSTWCompare::computeNumVerticesLemma4(vertex_index_t n, double eps) {
     unsigned long y;
 
     double sqrtn = std::sqrt(n);
@@ -351,13 +309,12 @@ unsigned long MSTWCompare::computeNumVerticesLemma4(unsigned long n, double eps)
  *
  * @param i
  */
-void MSTWCompare::extractGraph(int i) {
+void MSTWCompare::extractGraph(weight_t i) {
     WeightedEdge minimum = this->orderedEdges.top();
 
     if (minimum.weight <= i) {
         do {
-            add_edge(vertex(this->vc.getVertexIndex(minimum.source), this->g_i),
-                     vertex(this->vc.getVertexIndex(minimum.target), this->g_i), this->g_i);
+            this->g_i.addEdge(minimum.source, minimum.target, minimum.weight);
             this->orderedEdges.pop();
             minimum = this->orderedEdges.top();
         } while (minimum.weight <= i && !this->orderedEdges.empty());
@@ -371,47 +328,33 @@ void MSTWCompare::extractGraph(int i) {
  * @param i
  * @return the subgraph
  */
-UndirectedGraph MSTWCompare::lightExtractGraph(int i) {
+FastSubGraph MSTWCompare::lightExtractGraph(weight_t i) {
     WeightedEdge minimum = this->copyOfOrderedEdges.top();
 
     if (minimum.weight <= i) {
         do {
-            add_edge(vertex(this->vc.getVertexIndex(minimum.source), this->g_i),
-                     vertex(this->vc.getVertexIndex(minimum.target), this->g_i), this->g_i);
+            this->g_i.addEdge(minimum.source, minimum.target, minimum.weight);
             this->copyOfOrderedEdges.pop();
             minimum = this->copyOfOrderedEdges.top();
         } while (minimum.weight <= i && !this->copyOfOrderedEdges.empty());
     }
 
+    //DEBUG
+    std::cout << "g_" << i << ":" << std::endl;
+    this->g_i.printByAdjList();
+    std::cout << "-------------------------------------------------------------------------------------\n";
+
     return this->g_i;
 }
 
 double MSTWCompare::KruskalAlgorithm() {
-    std::vector<Edge> spanning_tree;
-    WeightMap weight = get(edge_weight, this->graph);
-    double MSTWeight = 0.0;
+    //TODO
 
-    kruskal_minimum_spanning_tree(this->graph, std::back_inserter(spanning_tree));
-
-    for (std::vector<Edge>::iterator ei = spanning_tree.begin(); ei != spanning_tree.end(); ++ei) {
-        MSTWeight += weight[*ei];
-    }
-
-    return MSTWeight;
+    return -1.0;
 }
 
 double MSTWCompare::PrimAlgorithm() {
-    std::vector<Vertex> spanning_tree(this->num_vert_G);
-    WeightMap weight = get(edge_weight, this->graph);
-    double MSTWeight = 0.0;
+    //TODO
 
-    prim_minimum_spanning_tree(this->graph, &spanning_tree[0]);
-
-    for (Vertex vi = 0; vi != spanning_tree.size(); ++vi) {
-        if (spanning_tree[vi] != vi) {
-            MSTWeight += weight[edge(vi, spanning_tree[vi], this->graph).first];
-        }
-    }
-
-    return MSTWeight;
+    return -1.0;
 }

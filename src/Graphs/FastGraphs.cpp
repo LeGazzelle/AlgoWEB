@@ -5,22 +5,24 @@
 #include "FastGraphs.hpp"
 
 
-FastSubGraph::FastSubGraph(vertex_index_t n) {
-    this->adjacencyLists = std::vector<AdjacencyList>(n);
+/*
+ *  FASTGRAPH
+ */
 
-//    for (vertex_index_t i = 0ULL; i < n; i++)
-//        this->adjacencyLists[i] = std::list<AdjacentItem>();
+FastGraph::FastGraph(vertex_index_t n) {
+    this->adjacencyLists = std::vector<AdjacencyList>(n);
+    this->edgeList = EdgeList();
 }
 
-vertex_index_t FastSubGraph::numVertices() const {
+vertex_index_t FastGraph::numVertices() const {
     return this->adjacencyLists.size();
 }
 
-AdjacencyList FastSubGraph::adjacentVertices(Vertex u) const {
+AdjacencyList FastGraph::adjacentVertices(Vertex u) const {
     return this->adjacencyLists[u];
 }
 
-vertex_index_t FastSubGraph::degree(Vertex u) {
+vertex_index_t FastGraph::degree(Vertex u) {
     return this->adjacencyLists[u].size();
 }
 
@@ -35,35 +37,77 @@ vertex_index_t FastSubGraph::degree(Vertex u) {
  * @param v2
  * @param weight
  */
-void FastSubGraph::addEdge(Vertex v1, Vertex v2, Weight w) {
+void FastGraph::addEdge(Vertex v1, Vertex v2, Weight w) {
     this->adjacencyLists[v1].emplace_back(w, v2);
     this->adjacencyLists[v2].emplace_back(w, v1);
-}
 
-FastSubGraph::~FastSubGraph() {
-}
-
-FastGraph::FastGraph(vertex_index_t n) : FastSubGraph(n) {
-    this->edgeList = EdgeList();
-    this->num_vertices = 0ULL;
+    this->edgeList.emplace_back(WeightedEdge(v1, v2, w));
 }
 
 EdgeList FastGraph::edges() {
     return this->edgeList;
 }
 
-void FastGraph::addEdge(Vertex v1, Vertex v2, Weight w) {
-    //fare col vertex converter...
-    FastSubGraph::addEdge(v1, v2, w);
-    this->edgeList.push(WeightedEdge(v1, v2, w));
-    this->num_vertices += 2; //FIXME differenziare se aggiunge zero, uno o due nodi
-}
-
-vertex_index_t FastGraph::numVertices() const {
-    return FastSubGraph::numVertices();
-
-    //FIXME finché non è risolto il fixme a riga 59 return this->num_vertices;
-}
-
 FastGraph::~FastGraph() {
 }
+
+void FastGraph::printByAdjList() {
+    AdjacencyList al;
+    AdjacencyIterator ai;
+
+    for (vertex_index_t v = 0ULL; v < this->numVertices(); v++) {
+        al = this->adjacencyLists[v];
+
+        std::cout << v << " ---> ";
+
+        for (ai = al.begin(); ai != al.end(); ai++)
+            std::cout << "(w:" << ai->first << ") "
+                      << ai->second << ", ";
+        std::cout << std::endl;
+    }
+}
+
+void FastGraph::printByEdges() {
+    EdgeIterator ei, eend = this->edgeList.end();
+
+    for (ei = this->edgeList.begin(); ei != eend; ++ei) {
+        std::cout << ei->source << " ----("
+                  << ei->weight << ")---->"
+                  << ei->target << '\n';
+    }
+}
+
+FastGraph::FastGraph(const FastGraph *other) :
+        edgeList(other->edgeList), adjacencyLists(other->adjacencyLists) {}
+
+/*
+ *  FASTSUBGRAPH
+ */
+
+FastSubGraph::FastSubGraph(vertex_index_t n) : FastGraph(n), vc(n) {}
+
+void FastSubGraph::addEdge(Vertex v1, Vertex v2, Weight w) {
+    v1 = this->vc.getVertexIndex(v1);
+    v2 = this->vc.getVertexIndex(v2);
+
+    this->adjacencyLists[v1].emplace_back(w, v2);
+    this->adjacencyLists[v2].emplace_back(w, v1);
+}
+
+vertex_index_t FastSubGraph::numVertices() const {
+    return this->vc.getSize();
+}
+
+FastSubGraph::~FastSubGraph() {
+}
+
+void FastSubGraph::printByAdjListGlobal() {
+    //TODO add support to VertexConverter class
+}
+
+void FastSubGraph::printByAdjListLocal() {
+    FastGraph::printByAdjList();
+}
+
+FastSubGraph::FastSubGraph(const FastSubGraph *other) :
+        FastGraph(other), vc(other->vc) {}

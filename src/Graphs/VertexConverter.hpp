@@ -6,20 +6,21 @@
 #define ALGOWEB_VERTEXCONVERTER_HPP
 
 #include <climits>
+#include "../AlgoWEB.hpp"
 
 #define NULL_VERTEX ULLONG_MAX
 
 class VertexConverter {
 private:
-    unsigned long long next;
-    unsigned long long *vertices;
+    vertex_index_t next;
+    vertex_index_t *vertices;
 
 public:
-    VertexConverter();
+    VertexConverter(vertex_index_t dim);
 
-    void init(unsigned long long dim);
+    vertex_index_t getVertexIndex(vertex_index_t globalIndex);
 
-    long long getVertexIndex(unsigned long long globalIndex);
+    vertex_index_t getSize() const;
 };
 
 #endif //ALGOWEB_VERTEXCONVERTER_HPP

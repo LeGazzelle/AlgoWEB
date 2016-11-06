@@ -5,13 +5,13 @@
 #include "GraphIO.hpp"
 
 
-FastGraph *GraphIO::readGraph(std::string fileName, int *maxWeight) {
+FastGraph *GraphIO::readGraph(std::string fileName, weight_t *maxWeight) {
     FastGraph *fg;
     std::ifstream inFile(fileName);
     std::string edge, tmp;
     std::string::size_type pt;
-    unsigned long size, u, v;
-    int w;
+    vertex_index_t size, u, v;
+    weight_t w;
 
     *maxWeight = 0;
 
@@ -28,7 +28,7 @@ FastGraph *GraphIO::readGraph(std::string fileName, int *maxWeight) {
             tmp = edge.substr(pt);
             v = std::stoul(tmp, &pt);
             pt++;
-            w = std::stoi(tmp.substr(pt));
+            w = (weight_t) std::stoul(tmp.substr(pt));
 
             if (w > *maxWeight)
                 *maxWeight = w;

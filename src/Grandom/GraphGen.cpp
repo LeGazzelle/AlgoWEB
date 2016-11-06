@@ -63,7 +63,7 @@ RandomGenerator *rg = new RandomGenerator();
  */
 FastGraph GraphGen::generate(vertex_index_t v, vertex_index_t e, weight_t maxWeight, unsigned int seed) {
     vertex_index_t tree[v], i, j, count;
-    EdgesMatrix em = GraphGen::edgesMatrixInit(v);
+    BfsMatrix em = GraphGen::edgesMatrixInit(v);
 
     //Initialize random generator
     if (seed)
@@ -114,7 +114,7 @@ FastGraph GraphGen::generate(vertex_index_t v, vertex_index_t e, weight_t maxWei
         /**
          * if no edge exists between i and j, insert it
          */
-        if (!em[i][j]) {
+        if (!em[i][j].edgeState) {
             g->addEdge(i, j, rg->rand());
             count++;
         }
@@ -155,24 +155,25 @@ void GraphGen::swap(vertex_index_t *a, vertex_index_t *b) {
     *b = temp;
 }
 
-EdgesMatrix GraphGen::edgesMatrixInit(const vertex_index_t n) {
-    EdgesMatrix em = *new EdgesMatrix(n);
+BfsMatrix GraphGen::edgesMatrixInit(const vertex_index_t n) {
+    BfsMatrix em = *new BfsMatrix(n);
     //this->edgesMatrix.resize(n);
-    vertex_index_t i, j;
+    vertex_index_t i;
 
     for (i = 0; i < n; i++) { //O(n)
         em[i].resize(n);
+        em[i] = {};
     }
 
-    for (i = 0; i < n; i++) { //O(n^2)
-        for (j = 0; j < n; j++)
-            em[i][j] = false;
-    }
+//    for (i = 0; i < n; i++) { //O(n^2)
+//        for (j = 0; j < n; j++)
+//            em[i][j] = false;
+//    }
 
     return em;
 }
 
-void GraphGen::updateEdgesMatrix(EdgesMatrix *em, vertex_index_t u, vertex_index_t v) {
-    (*em)[u][v] = true;
-    (*em)[v][u] = true;
+void GraphGen::updateEdgesMatrix(BfsMatrix *em, vertex_index_t u, vertex_index_t v) {
+    (*em)[u][v].edgeState = true;
+    (*em)[v][u].edgeState = true;
 }

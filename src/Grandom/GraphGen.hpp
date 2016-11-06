@@ -21,9 +21,9 @@ private:
 
     static void initArray(vertex_index_t *, vertex_index_t);
 
-    static EdgesMatrix edgesMatrixInit(const vertex_index_t);
+    static BfsMatrix edgesMatrixInit(const vertex_index_t);
 
-    static inline void updateEdgesMatrix(EdgesMatrix *em, vertex_index_t, vertex_index_t);
+    static inline void updateEdgesMatrix(BfsMatrix *em, vertex_index_t, vertex_index_t);
 };
 
 #endif //ALGOWEB_GRAPHGEN_HPP

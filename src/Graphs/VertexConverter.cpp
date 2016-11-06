@@ -4,18 +4,20 @@
 
 #include "VertexConverter.hpp"
 
-VertexConverter::VertexConverter() {}
+VertexConverter::VertexConverter(vertex_index_t dim) {
+    this->vertices = new vertex_index_t[dim];
 
-void VertexConverter::init(unsigned long long dim) {
-    this->vertices = new unsigned long long[dim];
-
-    for (long long i = 0LL; i < dim; i++)
+    for (vertex_index_t i = 0LL; i < dim; i++)
         this->vertices[i] = NULL_VERTEX;
 }
 
-long long VertexConverter::getVertexIndex(unsigned long long globalIndex) {
-    if (this->vertices[globalIndex] < 0LL)
+vertex_index_t VertexConverter::getVertexIndex(vertex_index_t globalIndex) {
+    if (this->vertices[globalIndex] == NULL_VERTEX)
         this->vertices[globalIndex] = this->next++;
 
     return vertices[globalIndex];
+}
+
+vertex_index_t VertexConverter::getSize() const {
+    return this->next;
 }

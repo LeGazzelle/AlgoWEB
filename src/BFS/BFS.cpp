@@ -6,8 +6,7 @@
 
 
 //Constructor with a given graph and a vertex from where the BFS starts
-BFS::BFS(UndirectedGraph g, Vertex u, unsigned long Dstr) {
-    this->graph = g;
+BFS::BFS(FastGraph g, Vertex u, vertex_index_t Dstr) : graph(g) {
     this->vertexU = u;
     this->visitedVertices = 0;
     this->visitedEdges = 0;
@@ -15,42 +14,46 @@ BFS::BFS(UndirectedGraph g, Vertex u, unsigned long Dstr) {
     this->greaterThanDstar = false;
     this->uDeg = 0;
     this->Dstar = Dstr;
-    this->edgesMatrixInit(num_vertices(g)); //O(n^2)
+    this->edgesMatrixInit(g.numVertices()); //O(n^2)
     this->toBeVisited = new std::queue<Vertex>();
     this->pause = false;
 }
 
-void BFS::edgesMatrixInit(const NumVertices n) {
+void BFS::edgesMatrixInit(const vertex_index_t n) {
     this->visitedEdgesMatrix.resize(n);
-    unsigned long i, j;
+    vertex_index_t i;
 
     for (i = 0; i < n; i++) { //O(n)
         this->visitedEdgesMatrix[i].resize(n);
+        this->visitedEdgesMatrix[i] = {}; //initialize the entire array to: false for edgeState, UNEXPLORED for vertexState
     }
 
-    for (i = 0; i < n; i++) { //O(n^2)
-        for (j = 0; j < n; j++)
-            this->visitedEdgesMatrix[i][j] = false;
-    }
+//    for (i = 0; i < n; i++) { //O(n^2)
+//        for (j = 0; j < n; j++)
+//            this->visitedEdgesMatrix[i][j].edgeState = false;
+//    }
 }
 
-void BFS::nextStep(unsigned long pBFS) {
-    NeighboursIterator ai, ai_end;
+void BFS::nextStep(vertex_index_t pBFS) {
+    AdjacencyIterator ai, ai_end;
+    AdjacencyList al;
     Vertex source, target;
-    unsigned long pauseBFS = pBFS ? pBFS : (2 * this->visitedEdges);
-    VertexMap vMap = get(vertex_index, this->graph);
+    vertex_index_t pauseBFS = pBFS ? pBFS : (2 * this->visitedEdges);
     source = this->toBeVisited->front();
-    this->greaterThanDstar = boost::degree(source, this->graph) > this->Dstar;
-    boost::tie(ai, ai_end) = adjacent_vertices(source, this->graph);
+    al = this->graph.adjacentVertices(source);
+    ai_end = al.end();
+    this->greaterThanDstar = this->graph.degree(source) > this->Dstar;
     if (this->pause) {
         ai = this->ni;
         this->pause = false;
+    } else {
+        ai = al.begin();
     }
 
     for (; ai != ai_end; ++ai) {
-        target = get(vMap, *ai);
+        target = ai->second;
 
-        if (!this->visitedEdgesMatrix[source][target]) {
+        if (!this->visitedEdgesMatrix[source][target].edgeState) {
 
             this->toBeVisited->push(target);
             setVisitedEdge(source, target);
@@ -74,14 +77,15 @@ void BFS::nextStep(unsigned long pBFS) {
 }
 
 void BFS::firstStep() {
-    NeighboursIterator ai, ai_end;
-    unsigned long k = boost::degree(this->vertexU, this->graph);
+    AdjacencyIterator ai, ai_end;
+    AdjacencyList al = this->graph.adjacentVertices(this->vertexU);
+    vertex_index_t k = this->graph.degree(this->vertexU);
+    ai_end = al.end();
     Vertex target;
-    VertexMap vMap = get(vertex_index, this->graph);
 
     if (k) {
-        for (boost::tie(ai, ai_end) = adjacent_vertices(this->vertexU, this->graph); ai != ai_end; ++ai) {
-            target = get(vMap, *ai);
+        for (ai = al.begin(); ai != ai_end; ++ai) {
+            target = ai->second;
 
             this->toBeVisited->push(target);
             setVisitedEdge(this->vertexU, target);
@@ -95,9 +99,9 @@ void BFS::firstStep() {
 
 }
 
-void BFS::setVisitedEdge(unsigned long source, unsigned long target) {
-    this->visitedEdgesMatrix[source][target] = true;
-    this->visitedEdgesMatrix[target][source] = true;
+void BFS::setVisitedEdge(Vertex source, Vertex target) {
+    this->visitedEdgesMatrix[source][target].edgeState = true;
+    this->visitedEdgesMatrix[target][source].edgeState = true;
     this->visitedEdges++;
 }
 
@@ -112,11 +116,11 @@ BFS::~BFS() {
 }
 
 
-unsigned long BFS::getVisitedVertices() const {
+vertex_index_t BFS::getVisitedVertices() const {
     return visitedVertices;
 }
 
-unsigned long BFS::getVisitedEdges() const {
+vertex_index_t BFS::getVisitedEdges() const {
     return visitedEdges;
 }
 
@@ -130,6 +134,6 @@ bool BFS::isGreaterThanDstar() const {
 }
 
 
-unsigned long BFS::getUDeg() const {
+vertex_index_t BFS::getUDeg() const {
     return uDeg;
 }

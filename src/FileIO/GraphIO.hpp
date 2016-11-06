@@ -12,7 +12,7 @@ extern bool __VERB;
 
 class GraphIO {
 public:
-    static FastGraph *readGraph(std::string, int *);
+    static FastGraph *readGraph(std::string, weight_t *);
 
     static bool writeGraph(std::string, const FastGraph);
 };

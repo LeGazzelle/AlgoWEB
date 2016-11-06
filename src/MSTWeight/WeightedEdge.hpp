@@ -9,9 +9,9 @@ public:
     //Edge edge;
     Vertex source;
     Vertex target;
-    int weight;
+    weight_t weight;
 
-    WeightedEdge(Vertex s, Vertex t, int w) : source(s), target (t), weight(w) {}
+    WeightedEdge(Vertex s, Vertex t, weight_t w) : source(s), target(t), weight(w) {}
     //WeightedEdge(Edge e, int w) : edge(e), weight(w) {}
 };
 

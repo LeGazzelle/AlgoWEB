@@ -14,6 +14,7 @@ template<typename UndirectedGraph>
 void print_adjacent_vertex(UndirectedGraph const);
 
 const double EPSILON = 0.4999;
+const std::string CWG_FILE = "/home/gabriel/tmp_dataset/test_little.cwg";
 
 
 int main(void) {
@@ -82,10 +83,11 @@ int main(void) {
 //
 //    print_adjacent_vertex(*g3);
 
-    UndirectedGraph *g = new UndirectedGraph();
-    UndirectedGraph *g2 = new UndirectedGraph();
-    int maxWeight;
-    GraphIO::readGraph("/home/gabriel/tmp_dataset/test_medium_big.cwg", g, &maxWeight);
+    FastGraph *g;
+    FastGraph *g2;
+    weight_t maxWeight;
+    g = GraphIO::readGraph(CWG_FILE, &maxWeight);
+
 
     MSTWCompare *algo = new MSTWCompare(*g, maxWeight);
 
@@ -136,7 +138,9 @@ int main(void) {
 
     /*******/
 #if 1
-    GraphIO::readGraph("/home/gabriel/tmp_dataset/test_medium_big.cwg", g2, &maxWeight);
+    g2 = GraphIO::readGraph(CWG_FILE, &maxWeight);
+    //DEBUG
+    g2->printByAdjList();
     MSTWCompare *algo2 = new MSTWCompare(*g2, maxWeight);
     clock_t crt_begin = clock();
     //auto crt_begin_hr = chrono::high_resolution_clock::now();
@@ -147,6 +151,7 @@ int main(void) {
     //auto elapsed_crt_hr = chrono::duration_cast<chrono::nanoseconds>(crt_end_hr - crt_begin_hr).count() / 1000000000.0;
     long double elapsed_crt = double(crt_end - crt_begin) / CLOCKS_PER_SEC;
 
+
     cout << "Risultato CRT:\t" << crt_ans << endl;
     cout << "Tempo: " << elapsed_crt << /*" oppure " << elapsed_crt_hr << */endl << "--------------------\n";
 #endif
@@ -156,14 +161,14 @@ int main(void) {
     return 0; //EXIT_SUCCESS; seems to belong to stdlib.h
 }
 
-template<typename UndirectedGraph>
-void print_weighted_graph(UndirectedGraph g) {
-    WeightMap weight = get(edge_weight, g);
-    EdgeIterator ei, eend;
-    for (boost::tie(ei, eend) = edges(g); ei != eend; ++ei) {
-        cout << get(vertex_index, g)[source(*ei, g)] << " ----("
-             << get(weight, *ei) << ")---->"
-             << get(vertex_index, g)[target(*ei, g)] << '\n';
+void print_weighted_graph(FastGraph g) {
+    EdgeList edgeList = g.edges();
+    EdgeIterator ei, eend = edgeList.end();
+
+    for (ei = edgeList.begin(); ei != eend; ++ei) {
+        cout << ei->source << " ----("
+             << ei->weight << ")---->"
+             << ei->target << '\n';
     }
 }
 
