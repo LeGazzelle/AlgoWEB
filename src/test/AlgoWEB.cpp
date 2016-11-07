@@ -85,7 +85,7 @@ int main(void) {
     UndirectedGraph *g = new UndirectedGraph();
     UndirectedGraph *g2 = new UndirectedGraph();
     int maxWeight;
-    GraphIO::readGraph("/home/gabriel/tmp_dataset/test_medium_big.cwg", g, &maxWeight);
+    GraphIO::readGraph("/home/gabriel/tmp_dataset/test_10k_40k_25.cwg", g, &maxWeight);
 
     MSTWCompare *algo = new MSTWCompare(*g, maxWeight);
 

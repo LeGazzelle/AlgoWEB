@@ -14,6 +14,8 @@ bool GraphIO::readGraph(std::string fileName, UndirectedGraph *g, int *maxWeight
     *maxWeight = 0;
 
     if (inFile.is_open()) {
+        getline(inFile, edge); //skip dimension
+
         while (getline(inFile, edge)) {
             u = std::stoul(edge, &pt);
             pt++;
