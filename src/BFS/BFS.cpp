@@ -14,10 +14,7 @@ BFS::BFS(FastGraph g, Vertex u, vertex_index_t Dstr) : graph(g) {
     this->greaterThanDstar = false;
     this->uDeg = 0;
     this->Dstar = Dstr;
-    //this->edgesMatrixInit(g.numVertices()); //O(n^2)
-    this->verticesState = BfsVertices(g.numVertices());
-    //DEBUG
-    //this->verticesState = {}; //initialize the entire array to UNEXPLORED
+    this->verticesState = StatefulVertices(g.numVertices());
     this->toBeVisited = new std::queue<Vertex>();
     this->pause = false;
 }
@@ -53,7 +50,7 @@ void BFS::firstStep() {
 
     this->uDeg = k;
     //skip completeness check -- in the first step it's impossible to complete the BFS
-    this->verticesState[this->vertexU] = EXPLORED;
+    this->verticesState[this->vertexU] = true; //set EXPLORED
     this->visitedVertices++; //just u in the first step -- no need to call setVisited since for the first vertex we do not use the queue
     if (k > this->Dstar) greaterThanDstar = true;
 }
@@ -69,7 +66,7 @@ void BFS::nextStep() {
         source = this->toBeVisited->front();
         //optimization
         if (this->graph.degree(source) == 1) {
-            setVisited(source);
+            setVisited();
             continue;
         }
         al = this->graph.adjacentVertices(source);
@@ -84,7 +81,7 @@ void BFS::nextStep() {
         ai_end = al.end();
 
         while (ai != ai_end) {
-            if (this->verticesState[ai->second] != UNEXPLORED) {
+            if (this->verticesState[ai->second]) {
                 ai++;
                 continue;
             }
@@ -98,12 +95,12 @@ void BFS::nextStep() {
                     this->pause = true;
                     this->ni = ai;
                 } else {
-                    setVisited(source);
+                    setVisited();
                 }
                 return;
             }
         }
-        setVisited(source);
+        setVisited();
     }
 
     this->completed = true;
@@ -111,7 +108,7 @@ void BFS::nextStep() {
 
 void BFS::queue(Vertex v) {
     this->toBeVisited->push(v);
-    this->verticesState[v] = EXPLORED;
+    this->verticesState[v] = true; //set QUEUED
     this->visitedEdges++;
 }
 
@@ -121,7 +118,7 @@ void BFS::queue(Vertex v) {
     this->visitedEdges++;
 }*/
 
-void BFS::setVisited(Vertex v) {
+void BFS::setVisited() {
     this->toBeVisited->pop();
     this->visitedVertices++;
 }

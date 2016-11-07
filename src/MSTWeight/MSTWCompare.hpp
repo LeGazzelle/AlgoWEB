@@ -32,17 +32,18 @@ public:
 
 private:
     FastGraph graph;
+    //CRT management
     weight_t maxWeight;
-    //management
-    std::mt19937 generator;
     FastSubGraph g_i;
     vertex_index_t num_vert_G;
-    std::priority_queue<WeightedEdge, std::vector<WeightedEdge>, WeightedEdgeComparator> orderedEdges;
-    //VertexConverter vc;
-    //management for light runs
+    std::priority_queue<WeightedEdge, std::vector<WeightedEdge>, WeightedEdgeComparator> crtOrderedEdges;
+    //LightCRT management (light runs)
     std::vector<FastSubGraph> subgraphs;
     std::vector<FisherYatesSequence> fys;
     std::priority_queue<WeightedEdge, std::vector<WeightedEdge>, WeightedEdgeComparator> copyOfOrderedEdges;
+    //Prim management
+    std::priority_queue<WeightedEdge, std::vector<WeightedEdge>, WeightedEdgeComparator> primOrderedEdges;
+    StatefulVertices visited;
 
     long double approxNumConnectedComps(double eps, vertex_index_t avgDeg, weight_t i);
 
@@ -59,6 +60,8 @@ private:
     void extractGraph(weight_t i);
 
     FastSubGraph lightExtractGraph(weight_t i);
+
+    vertex_index_t getRandomVertex(vertex_index_t);
 };
 
 #endif //ALGOWEB_CRT_MSTW_HPP

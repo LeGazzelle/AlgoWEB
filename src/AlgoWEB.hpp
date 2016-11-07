@@ -19,15 +19,15 @@ typedef unsigned int weight_t;
 typedef std::pair<weight_t, vertex_index_t> AdjacentItem;
 typedef std::list<AdjacentItem> AdjacencyList;
 typedef std::list<AdjacentItem>::iterator AdjacencyIterator;
-enum bfs_vertex_state_t {
-    UNEXPLORED, EXPLORED //stand for white, gray, black --> we do not need black
-};
+//enum bfs_vertex_state_t {
+//    UNEXPLORED, EXPLORED //stand for white, gray, black --> we do not need black
+//};
 //union bfs_matrix_t {
 //    bool edgeState;
 //    bfs_vertex_state_t vertexState;
 //};
 typedef std::vector<std::vector<bool>> BfsMatrix;
-typedef std::vector<bfs_vertex_state_t> BfsVertices;
+typedef std::vector<bool> StatefulVertices; //false stands for UNEXPLORED, true for QUEUED/EXPLORED
 
 #endif //ALGOWEB_ALGOWEB_HPP
 

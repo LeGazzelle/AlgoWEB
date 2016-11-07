@@ -29,33 +29,22 @@ std::uniform_int_distribution<> Coin::coin;
 
 //Constructor with given graph
 MSTWCompare::MSTWCompare(FastGraph g, weight_t maxWeight) : graph(g), maxWeight(maxWeight), g_i(g.numVertices()) {
-    this->generator.seed((const uint32_t &) std::time(0));
     //this->g_i = *new FastSubGraph(10); //FIXME c'è da risolvere il fatto che il costruttore vorrebbe il numero di vertici a priori (vedi sopra)
     this->num_vert_G = g.numVertices();
-    //this->vc.init(num_vert_G);
-    //WeightMap weights = get(edge_weight, this->graph);
     //light runs
     this->subgraphs = *new std::vector<FastSubGraph>;
     this->fys = *new std::vector<FisherYatesSequence>;
+    //prim
+    this->primOrderedEdges = std::priority_queue<WeightedEdge, std::vector<WeightedEdge>, WeightedEdgeComparator>();
 
     EdgeList edgeList = this->graph.edges();
     EdgeIterator ei;
     for (ei = edgeList.begin(); ei != edgeList.end(); ++ei)
-        this->orderedEdges.push(*ei);
+        this->crtOrderedEdges.push(*ei);
 }
 
 //Destructor
 MSTWCompare::~MSTWCompare() {}
-
-/**
- * Set the graph the utilities will work on
- *
- * @param g undirected graph
- */
-//void MSTWCompare::setGraph(UndirectedGraph g, int maxWeight) {
-//    this->graph = g;
-//    this->maxWeight = maxWeight;
-//}
 
 /**
  * This method is to be called compulsory prior to a MSTWCompare::LightCRTAlgorithm
@@ -70,10 +59,10 @@ long double MSTWCompare::prepareLightRun() {
 
     start = clock();
     this->copyOfOrderedEdges = std::priority_queue<WeightedEdge, std::vector<WeightedEdge>, WeightedEdgeComparator>(
-            this->orderedEdges);
+            this->crtOrderedEdges);
 
     this->subgraphs.push_back(FastSubGraph(vertex_index_t(0))); //we discard position '0'
-    for (k = 1; k <= this->maxWeight; k++) {
+    for (k = 1; k <= this->maxWeight; ++k) {
         this->subgraphs.push_back(*new FastSubGraph(this->lightExtractGraph((k))));
     }
     //end = clock();
@@ -82,7 +71,7 @@ long double MSTWCompare::prepareLightRun() {
     //this->g_i;
 
     this->fys.push_back(FisherYatesSequence(1)); //again discard position '0'
-    for (h = 1; h <= this->num_vert_G; h++) {
+    for (h = 1; h <= this->num_vert_G; ++h) {
         this->fys.push_back(*new FisherYatesSequence(h));
     }
     end = clock(); //TODO we could differentiate the two phases
@@ -105,9 +94,9 @@ double MSTWCompare::LightCRTAlgorithm(double eps) {
     double c = 0.0;
     unsigned long d = lightApproxGraphAvgDegree(eps); //O(1/eps)
 
-    for (weight_t i = 1; i < this->maxWeight; i++) { //O(w)
+    for (weight_t i = 1; i < this->maxWeight; ++i) { //O(w)
         c += lightApproxNumConnectedComps(eps, d, i);
-}
+    }
 
     return this->num_vert_G - this->maxWeight + c;
 }
@@ -126,7 +115,7 @@ double MSTWCompare::CRTAlgorithm(double eps) {
     double c = 0.0;
     unsigned long d = approxGraphAvgDegree(eps);
 
-    for (weight_t i = 1; i < this->maxWeight; i++) {
+    for (weight_t i = 1; i < this->maxWeight; ++i) {
         c += approxNumConnectedComps(eps, d, i);
     }
 
@@ -170,7 +159,7 @@ long double MSTWCompare::approxNumConnectedComps(double eps, vertex_index_t avgD
     double threshold = 4 * this->maxWeight;
     threshold /= eps;
 
-    for (j = 0; j < r; j++) {
+    for (j = 0; j < r; ++j) {
         u = fys->next();
         flips = 0;
 
@@ -208,7 +197,7 @@ vertex_index_t MSTWCompare::approxGraphAvgDegree(double eps) {
     FisherYatesSequence *fys = new FisherYatesSequence(this->num_vert_G);
     Vertex v;
 
-    for (i = 0; i < c; i++) {
+    for (i = 0; i < c; ++i) {
         v = fys->next();
 
         if ((deg = this->graph.degree(v)) > maxDegree)
@@ -237,7 +226,7 @@ double MSTWCompare::lightApproxNumConnectedComps(double eps, vertex_index_t avgD
     double threshold = 4 * this->maxWeight;
     threshold /= eps;
 
-    for (j = 0; j < r; j++) {
+    for (j = 0; j < r; ++j) {
         u = this->fys[n_i].next(); //O(1)
         flips = 0;
 
@@ -273,7 +262,7 @@ vertex_index_t MSTWCompare::lightApproxGraphAvgDegree(double eps) {
     unsigned long c = computeNumVerticesLemma4(this->num_vert_G, eps);
     Vertex v;
 
-    for (i = 0; i < c; i++) {
+    for (i = 0; i < c; ++i) {
         v = this->fys[this->num_vert_G].next(); // O(1)
         deg = this->graph.degree(v);
 
@@ -310,14 +299,14 @@ vertex_index_t MSTWCompare::computeNumVerticesLemma4(vertex_index_t n, double ep
  * @param i
  */
 void MSTWCompare::extractGraph(weight_t i) {
-    WeightedEdge minimum = this->orderedEdges.top();
+    WeightedEdge minimum = this->crtOrderedEdges.top();
 
     if (minimum.weight <= i) {
         do {
             this->g_i.addUndirectedEdge(minimum.source, minimum.target, minimum.weight);
-            this->orderedEdges.pop();
-            minimum = this->orderedEdges.top();
-        } while (minimum.weight <= i && !this->orderedEdges.empty());
+            this->crtOrderedEdges.pop();
+            minimum = this->crtOrderedEdges.top();
+        } while (minimum.weight <= i && !this->crtOrderedEdges.empty());
     }
 }
 
@@ -349,7 +338,73 @@ double MSTWCompare::KruskalAlgorithm() {
 }
 
 double MSTWCompare::PrimAlgorithm() {
-    //TODO
+    vertex_index_t newVertex, current = getRandomVertex(this->num_vert_G - 1);
+    this->visited = StatefulVertices(this->num_vert_G);
+    WeightedEdge minimum;
+    vertex_index_t i = 0;
+    FastGraph mst = FastGraph(this->num_vert_G);
+    AdjacencyList al;
+    AdjacencyIterator ai, ai_end;
+    EdgeList el;
+    EdgeIterator ei, ei_end;
+    double ans = 0.0;
 
-    return -1.0;
+    while (i < this->num_vert_G) {
+        if (!visited[current]) {            // If current node is not visited
+            visited[current] = true;        // Mark it visited
+
+            al = this->graph.adjacentVertices(current);
+            ai_end = al.end();
+
+            for (ai = al.begin(); ai != ai_end; ++ai) {
+                if (!visited[ai->second]) {
+                    // If the edge leads to an un-visited
+                    // vertex only then enqueue it
+                    this->primOrderedEdges.push(WeightedEdge(current, ai->second, ai->first));
+                }
+            }
+
+            minimum = this->primOrderedEdges.top();     // The greedy choice
+            this->primOrderedEdges.pop();
+
+            newVertex = minimum.target;
+            current = minimum.source;
+
+            if (!visited[newVertex]) {
+                mst.addUndirectedEdge(current, newVertex, minimum.weight);
+            }
+
+            current = newVertex;
+            ++i;
+        } else {
+
+            minimum = this->primOrderedEdges.top();
+            this->primOrderedEdges.pop();
+
+            newVertex = minimum.target;
+            current = minimum.source;
+
+            if (!visited[newVertex]) {
+                mst.addUndirectedEdge(current, newVertex, minimum.weight);
+            }
+
+            current = newVertex;
+        }
+    }
+
+    el = mst.edges();
+    ei_end = el.end();
+
+    for (ei = el.begin(); ei != ei_end; ++ei)
+        ans += ei->weight;
+
+    return ans;
+}
+
+vertex_index_t MSTWCompare::getRandomVertex(vertex_index_t max) {
+    static std::random_device rd;
+    static std::mt19937 gen(rd());
+    std::uniform_int_distribution<vertex_index_t> dis(0, max);
+
+    return dis(gen);
 }

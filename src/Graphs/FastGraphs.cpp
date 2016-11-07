@@ -99,6 +99,10 @@ void FastGraph::printByEdges() {
 FastGraph::FastGraph(const FastGraph *other) :
         edgeList(other->edgeList), adjacencyLists(other->adjacencyLists) {}
 
+vertex_index_t FastGraph::numEdges() {
+    return this->edgeList.size();
+}
+
 /*
  *  FASTSUBGRAPH
  */
@@ -130,3 +134,8 @@ void FastSubGraph::printByAdjListLocal() {
 
 FastSubGraph::FastSubGraph(const FastSubGraph *other) :
         FastGraph(other), vc(other->vc) {}
+
+void FastSubGraph::addNoRepeatingUndirectedEdge(Vertex v1, Vertex v2, Weight w) {
+    this->adjacencyLists[v1].emplace_back(w, v2);
+    this->adjacencyLists[v2].emplace_back(w, v1);
+}

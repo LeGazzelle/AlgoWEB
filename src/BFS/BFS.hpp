@@ -45,7 +45,7 @@ private:
     //data structures for BFS
     std::queue<Vertex> *toBeVisited;
     //BfsMatrix visitedEdgesMatrix; //initialized to false
-    BfsVertices verticesState;
+    StatefulVertices verticesState;
     bool pause;
     AdjacencyIterator ni;
 
@@ -53,7 +53,7 @@ private:
 
     //void setVisitedEdge(Vertex source, Vertex target);
 
-    void setVisited(Vertex v);
+    void setVisited();
 
     void queue(Vertex v);
 };

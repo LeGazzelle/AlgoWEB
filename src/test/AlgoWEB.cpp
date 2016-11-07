@@ -14,7 +14,7 @@ template<typename UndirectedGraph>
 void print_adjacent_vertex(UndirectedGraph const);
 
 const double EPSILON = 0.4999;
-const std::string CWG_FILE = "/home/gabriel/tmp_dataset/test_80k_150k_1000.cwg";
+const std::string CWG_FILE = "/home/gabriel/tmp_dataset/test_10k_40k_3.cwg";
 
 
 int main(void) {
@@ -65,7 +65,7 @@ int main(void) {
     /*******/
 
     /*******/
-#if 0
+#if 1
     clock_t prm_begin = clock();
     double prm_ans = algo->PrimAlgorithm();
     clock_t prm_end = clock();
