@@ -47,7 +47,8 @@ private:
     //BfsMatrix visitedEdgesMatrix; //initialized to false
     StatefulVertices verticesState;
     bool pause;
-    AdjacencyIterator ni;
+    AdjacencyList savedAl;
+    AdjacencyIterator savedAi;
 
     //void edgesMatrixInit(vertex_index_t n);
 

@@ -64,18 +64,20 @@ void BFS::nextStep() {
 
     while (!this->toBeVisited->empty()) {
         source = this->toBeVisited->front();
+
         //optimization
         if (this->graph.degree(source) == 1) {
             setVisited();
             continue;
         }
-        al = this->graph.adjacentVertices(source);
 
         //resume state, eventually
         if (!this->pause) {
+            al = this->graph.adjacentVertices(source);
             ai = al.begin();
         } else {
-            ai = this->ni;
+            al = this->savedAl;
+            ai = this->savedAi;
             this->pause = false;
         }
         ai_end = al.end();
@@ -93,7 +95,8 @@ void BFS::nextStep() {
                 //save state
                 if (ai != ai_end) {
                     this->pause = true;
-                    this->ni = ai;
+                    this->savedAl = al;
+                    this->savedAi = ai;
                 } else {
                     setVisited();
                 }

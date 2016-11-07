@@ -14,7 +14,7 @@ template<typename UndirectedGraph>
 void print_adjacent_vertex(UndirectedGraph const);
 
 const double EPSILON = 0.4999;
-const std::string CWG_FILE = "/home/gabriel/tmp_dataset/test_10k_40k_3.cwg";
+const std::string CWG_FILE = "/home/gabriel/tmp_dataset/test_5k_8,5k_50.cwg";
 
 
 int main(void) {
