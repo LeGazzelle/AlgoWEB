@@ -13,8 +13,8 @@ void print_weighted_graph(UndirectedGraph const);
 template<typename UndirectedGraph>
 void print_adjacent_vertex(UndirectedGraph const);
 
-const double EPSILON = 0.4999;
-const std::string CWG_FILE = "/home/gabriel/tmp_dataset/test_5k_8,5k_50.cwg";
+const double EPSILON = 0.49;
+const std::string CWG_FILE = "/home/gabriel/tmp_dataset/test_10k_40k_25.cwg";
 
 
 int main(void) {
@@ -52,7 +52,7 @@ int main(void) {
     cout << "Average degree d = " << algo->getAverageDegree() << endl;
 
     /*******/
-#if 0
+#if 1
     clock_t krk_begin = clock();
     double krk_ans = algo->KruskalAlgorithm();
     clock_t krk_end = clock();

@@ -64,4 +64,22 @@ private:
     vertex_index_t getRandomVertex(vertex_index_t);
 };
 
+//utility for Kruskal
+class DisjointSets {
+private:
+    vertex_index_t *parent, *rnk;
+    vertex_index_t n;
+
+public:
+    // Constructor.
+    DisjointSets(vertex_index_t n);
+
+    // Find the parent of a node 'u'
+    // Path Compression
+    vertex_index_t find(vertex_index_t u);
+
+    // Union by rank
+    void merge(vertex_index_t x, vertex_index_t y);
+};
+
 #endif //ALGOWEB_CRT_MSTW_HPP

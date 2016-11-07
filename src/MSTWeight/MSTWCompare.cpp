@@ -332,9 +332,40 @@ FastSubGraph MSTWCompare::lightExtractGraph(weight_t i) {
 }
 
 double MSTWCompare::KruskalAlgorithm() {
-    //TODO
+    EdgeList edges = this->graph.edges();
+    double mst_wt = 0.0; // Initialize result
 
-    return -1.0;
+    // Sort edges in increasing order on basis of cost
+    edges.sort([](const WeightedEdge &lhs, const WeightedEdge &rhs) { return lhs.weight > rhs.weight; });
+
+    // Create disjoint sets
+    DisjointSets ds(this->graph.numVertices());
+
+    // Iterate through all sorted edges
+    EdgeIterator ei, ei_end = edges.end();
+
+    for (ei = edges.begin(); ei != ei_end; ei++) {
+        Vertex u = ei->source;
+        Vertex v = ei->target;
+
+        vertex_index_t set_u = ds.find(u);
+        vertex_index_t set_v = ds.find(v);
+
+        // Check if the selected edge is creating
+        // a cycle or not (Cycle is created if u
+        // and v belong to same set)
+        if (set_u != set_v) {
+            // Current edge will be in the MST
+            // Update MST weight
+            mst_wt += ei->weight;
+
+            // Merge two sets
+            ds.merge(set_u, set_v);
+        }
+    }
+
+    return mst_wt;
+
 }
 
 double MSTWCompare::PrimAlgorithm() {
@@ -407,4 +438,42 @@ vertex_index_t MSTWCompare::getRandomVertex(vertex_index_t max) {
     std::uniform_int_distribution<vertex_index_t> dis(0, max);
 
     return dis(gen);
+}
+
+DisjointSets::DisjointSets(vertex_index_t n) {
+    // Allocate memory
+    this->n = n;
+    parent = new vertex_index_t[n + 1];
+    rnk = new vertex_index_t[n + 1];
+
+    // Initially, all vertices are in
+    // different sets and have rank 0.
+    for (vertex_index_t i = 0; i <= n; i++) {
+        rnk[i] = 0;
+
+        //every element is parent of itself
+        parent[i] = i;
+    }
+}
+
+vertex_index_t DisjointSets::find(vertex_index_t u) {
+    /* Make the parent of the nodes in the path
+       from u--> parent[u] point to parent[u] */
+    if (u != parent[u])
+        parent[u] = find(parent[u]);
+    return parent[u];
+}
+
+void DisjointSets::merge(vertex_index_t x, vertex_index_t y) {
+    x = find(x), y = find(y);
+
+    /* Make tree with smaller height
+       a subtree of the other tree  */
+    if (rnk[x] > rnk[y])
+        parent[y] = x;
+    else // If rnk[x] <= rnk[y]
+        parent[x] = y;
+
+    if (rnk[x] == rnk[y])
+        rnk[y]++;
 }
