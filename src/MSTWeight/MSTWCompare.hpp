@@ -18,9 +18,9 @@ public:
 
     double CRTAlgorithm(double eps);
 
-    long double prepareLightRun();
-
-    double LightCRTAlgorithm(double eps);
+//    long double prepareLightRun();
+//
+//    double LightCRTAlgorithm(double eps);
 
     double KruskalAlgorithm();
 
@@ -38,9 +38,9 @@ private:
     vertex_index_t num_vert_G;
     std::priority_queue<WeightedEdge, std::vector<WeightedEdge>, WeightedEdgeComparator> crtOrderedEdges;
     //LightCRT management (light runs)
-    std::vector<FastSubGraph> subgraphs;
-    std::vector<FisherYatesSequence> fys;
-    std::priority_queue<WeightedEdge, std::vector<WeightedEdge>, WeightedEdgeComparator> copyOfOrderedEdges;
+//    std::vector<FastSubGraph> subgraphs;
+//    std::vector<FisherYatesSequence> fys;
+//    std::priority_queue<WeightedEdge, std::vector<WeightedEdge>, WeightedEdgeComparator> copyOfOrderedEdges;
     //Prim management
     std::priority_queue<WeightedEdge, std::vector<WeightedEdge>, WeightedEdgeComparator> primOrderedEdges;
     StatefulVertices visited;
@@ -49,9 +49,9 @@ private:
 
     vertex_index_t approxGraphAvgDegree(double eps);
 
-    double lightApproxNumConnectedComps(double eps, vertex_index_t avgDeg, weight_t i);
-
-    vertex_index_t lightApproxGraphAvgDegree(double eps);
+//    double lightApproxNumConnectedComps(double eps, vertex_index_t avgDeg, weight_t i);
+//
+//    vertex_index_t lightApproxGraphAvgDegree(double eps);
 
     vertex_index_t computeNumVertices(vertex_index_t n, double eps);
 
@@ -59,7 +59,7 @@ private:
 
     void extractGraph(weight_t i);
 
-    FastSubGraph lightExtractGraph(weight_t i);
+//    FastSubGraph lightExtractGraph(weight_t i);
 
     vertex_index_t getRandomVertex(vertex_index_t);
 };

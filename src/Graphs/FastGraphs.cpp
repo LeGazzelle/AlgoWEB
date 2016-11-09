@@ -14,12 +14,12 @@ FastGraph::FastGraph(vertex_index_t n) {
     this->edgeList = EdgeList();
 }
 
-vertex_index_t FastGraph::numVertices() const {
+vertex_index_t FastGraph::numVertices() {
     return this->adjacencyLists.size();
 }
 
-AdjacencyList FastGraph::adjacentVertices(Vertex u) const {
-    return this->adjacencyLists[u];
+AdjacencyList *FastGraph::adjacentVertices(Vertex u) {
+    return &this->adjacencyLists[u];
 }
 
 vertex_index_t FastGraph::degree(Vertex u) {
@@ -63,8 +63,8 @@ void FastGraph::addNoRepeatingUndirectedEdge(Vertex v1, Vertex v2, Weight w) {
     this->addUndirectedEdge(v1, v2, w);
 }
 
-EdgeList FastGraph::edges() {
-    return this->edgeList;
+EdgeList *FastGraph::edges() {
+    return &this->edgeList;
 }
 
 FastGraph::~FastGraph() {

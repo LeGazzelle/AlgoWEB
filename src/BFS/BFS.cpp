@@ -6,7 +6,8 @@
 
 
 //Constructor with a given graph and a vertex from where the BFS starts
-BFS::BFS(FastGraph g, Vertex u, vertex_index_t Dstr) : graph(g) {
+BFS::BFS(FastGraph &g, Vertex u, vertex_index_t Dstr) {
+    this->graph = &g;
     this->vertexU = u;
     this->visitedVertices = 0;
     this->visitedEdges = 0;
@@ -35,13 +36,16 @@ BFS::BFS(FastGraph g, Vertex u, vertex_index_t Dstr) : graph(g) {
 }*/
 
 void BFS::firstStep() {
-    AdjacencyList al = this->graph.adjacentVertices(this->vertexU);
-    vertex_index_t k = this->graph.degree(this->vertexU);
-    AdjacencyIterator ai_end = al.end();
+    AdjacencyList *al = this->graph->adjacentVertices(this->vertexU);
+    vertex_index_t k = this->graph->degree(this->vertexU);
+    AdjacencyIterator ai_end = al->end();
     Vertex target;
 
-    if (k) {
-        for (AdjacencyIterator ai = al.begin(); ai != ai_end; ++ai) {
+    if (k > this->Dstar) { //optimization
+        greaterThanDstar = true;
+        return;
+    } else if (k) {
+        for (AdjacencyIterator ai = al->begin(); ai != ai_end; ++ai) {
             target = ai->second;
 
             queue(target);
@@ -52,12 +56,11 @@ void BFS::firstStep() {
     //skip completeness check -- in the first step it's impossible to complete the BFS
     this->verticesState[this->vertexU] = true; //set EXPLORED
     this->visitedVertices++; //just u in the first step -- no need to call setVisited since for the first vertex we do not use the queue
-    if (k > this->Dstar) greaterThanDstar = true;
 }
 
 void BFS::nextStep() {
     AdjacencyIterator ai, ai_end;
-    AdjacencyList al;
+    AdjacencyList *al;
     Vertex source;
 
     vertex_index_t pauseBFS = 2 * this->visitedEdges;
@@ -66,21 +69,21 @@ void BFS::nextStep() {
         source = this->toBeVisited->front();
 
         //optimization
-        if (this->graph.degree(source) == 1) {
+        if (this->graph->degree(source) == 1) {
             setVisited();
             continue;
         }
 
         //resume state, eventually
         if (!this->pause) {
-            al = this->graph.adjacentVertices(source);
-            ai = al.begin();
+            al = this->graph->adjacentVertices(source);
+            ai = al->begin();
         } else {
             al = this->savedAl;
             ai = this->savedAi;
             this->pause = false;
         }
-        ai_end = al.end();
+        ai_end = al->end();
 
         while (ai != ai_end) {
             if (this->verticesState[ai->second]) {

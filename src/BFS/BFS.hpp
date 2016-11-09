@@ -14,7 +14,7 @@
 class BFS {
 public:
 
-    BFS(FastGraph g, Vertex u, vertex_index_t Dstr);
+    BFS(FastGraph &g, Vertex u, vertex_index_t Dstr);
 
     void nextStep();
 
@@ -34,7 +34,7 @@ public:
 
 
 private:
-    FastGraph graph;
+    FastGraph *graph;
     Vertex vertexU;
     vertex_index_t visitedVertices;
     vertex_index_t visitedEdges;
@@ -47,7 +47,7 @@ private:
     //BfsMatrix visitedEdgesMatrix; //initialized to false
     StatefulVertices verticesState;
     bool pause;
-    AdjacencyList savedAl;
+    AdjacencyList *savedAl;
     AdjacencyIterator savedAi;
 
     //void edgesMatrixInit(vertex_index_t n);

@@ -24,9 +24,9 @@ public:
 
     FastGraph(const FastGraph *other); //copy constructor
 
-    virtual vertex_index_t numVertices() const;
+    virtual vertex_index_t numVertices();
 
-    AdjacencyList adjacentVertices(Vertex u) const;
+    AdjacencyList *adjacentVertices(Vertex u);
 
     vertex_index_t degree(Vertex u);
 
@@ -38,7 +38,7 @@ public:
 
     virtual void addNoRepeatingUndirectedEdge(Vertex v1, Vertex v2, Weight w);
 
-    EdgeList edges();
+    EdgeList *edges();
 
     virtual ~FastGraph();
 

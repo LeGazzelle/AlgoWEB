@@ -43,9 +43,9 @@ FastGraph *GraphIO::readGraph(std::string fileName, weight_t *maxWeight) {
     }
 }
 
-bool GraphIO::writeGraph(std::string fileName, const FastGraph g) {
+bool GraphIO::writeGraph(std::string fileName, FastGraph g) {
     std::ofstream outFile(fileName, std::ios::out);
-    AdjacencyList al;
+    AdjacencyList *al;
     AdjacencyIterator ai;
 
     if (outFile.is_open()) {
@@ -54,7 +54,7 @@ bool GraphIO::writeGraph(std::string fileName, const FastGraph g) {
         for (vertex_index_t v = 0ULL; v < g.numVertices(); v++) {
             al = g.adjacentVertices(v);
 
-            for (ai = al.begin(); ai != al.end(); ai++)
+            for (ai = al->begin(); ai != al->end(); ai++)
                 outFile << v << " "
                         << ai->second << " "
                         << ai->first << "\n";
