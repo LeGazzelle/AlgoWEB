@@ -5,36 +5,9 @@
 #ifndef ALGOWEB_RANDOMSEQUENCE_HPP
 #define ALGOWEB_RANDOMSEQUENCE_HPP
 
-#include <iostream>
 #include <random>
 #include "../AlgoWEB.hpp"
 
-/**
- * From an idea of Jeff Preshing of 31/12/12.
- */
-class RandomSequenceOfUnique {
-private:
-    unsigned int m_index;
-    unsigned int m_intermediateOffset;
-
-    static unsigned int permuteQPR(unsigned int x) {
-        static const unsigned int prime = 4294967291u;
-        if (x >= prime)
-            return x;  // The 5 integers out of range are mapped to themselves.
-        unsigned int residue = ((unsigned long long) x * x) % prime;
-        return (x <= prime / 2) ? residue : prime - residue;
-    }
-
-public:
-    RandomSequenceOfUnique(unsigned int seedBase, unsigned int seedOffset) {
-        m_index = permuteQPR(permuteQPR(seedBase) + 0x682f0161);
-        m_intermediateOffset = permuteQPR(permuteQPR(seedOffset) + 0x46790905);
-    }
-
-    unsigned int next() {
-        return permuteQPR((permuteQPR(m_index++) + m_intermediateOffset) ^ 0x5bf03635);
-    }
-};
 
 //WARNING! rand() function returns a value in the range [0,RAND_MAX]
 // and RAND_MAX could not be enough to cover the space of 'long long int' type
@@ -55,6 +28,8 @@ private:
     }
 
 public:
+    FisherYatesSequence() {}
+
     FisherYatesSequence(vertex_index_t size) : upLimit(size - 1), max(size - 1) {
         this->numbers = std::vector<vertex_index_t>(size);
         std::random_device rd;

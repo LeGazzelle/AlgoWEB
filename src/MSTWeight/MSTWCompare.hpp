@@ -11,12 +11,27 @@
 #include "../BFS/BFS.hpp"
 #include "../Graphs/FastGraphs.hpp"
 #include "../Graphs/VertexConverter.hpp"
+#include "../UI/ProgressAnimations.hpp"
+
+//utility for CRT
+//class CRTsubgraphs {
+//private:
+//    std::vector<FastSubGraph> mSub;
+//
+//public:
+//    FastSubGraph& operator[](weight_t idx)       { return mSub[idx-1]; }
+//    const FastSubGraph& operator[](weight_t idx) const { return mSub[idx-1]; }
+//
+//    CRTsubgraphs(weight_t i) {
+//        this->mSub = std::vector<FastSubGraph>(i);
+//    }
+//};
 
 class MSTWCompare {
 public:
     MSTWCompare(FastGraph g, weight_t maxWeight);
 
-    double CRTAlgorithm(double eps);
+    CRTresult CRTAlgorithm(double eps);
 
 //    long double prepareLightRun();
 //
@@ -37,10 +52,11 @@ private:
     FastSubGraph g_i;
     vertex_index_t num_vert_G;
     std::priority_queue<WeightedEdge, std::vector<WeightedEdge>, WeightedEdgeComparator> crtOrderedEdges;
-    //LightCRT management (light runs)
-//    std::vector<FastSubGraph> subgraphs;
-//    std::vector<FisherYatesSequence> fys;
-//    std::priority_queue<WeightedEdge, std::vector<WeightedEdge>, WeightedEdgeComparator> copyOfOrderedEdges;
+    //CRT management (needed structures)
+    //CRTsubgraphs subgraphs; //list of graphs, containint G_i at position i (transparently mapped to positions [0, w-1])
+    //std::vector<FisherYatesSequence> fys;
+    FisherYatesSequence *fys;
+    //std::priority_queue<WeightedEdge, std::vector<WeightedEdge>, WeightedEdgeComparator> copyOfOrderedEdges;
     //Prim management
     std::priority_queue<WeightedEdge, std::vector<WeightedEdge>, WeightedEdgeComparator> primOrderedEdges;
     StatefulVertices visited;
@@ -57,11 +73,13 @@ private:
 
     vertex_index_t computeNumVerticesLemma4(vertex_index_t n, double eps);
 
-    void extractGraph(weight_t i);
+    //void extractGraph(weight_t i);
 
 //    FastSubGraph lightExtractGraph(weight_t i);
 
     vertex_index_t getRandomVertex(vertex_index_t);
+
+    void extractSubGraph(weight_t);
 };
 
 //utility for Kruskal

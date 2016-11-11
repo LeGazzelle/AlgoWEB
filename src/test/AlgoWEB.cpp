@@ -13,8 +13,8 @@ void print_weighted_graph(UndirectedGraph const);
 template<typename UndirectedGraph>
 void print_adjacent_vertex(UndirectedGraph const);
 
-const double EPSILON = 0.49;
-const std::string CWG_FILE = "/home/gabriel/tmp_dataset/test_1k_10k_60.cwg";
+const double EPSILON = 0.3;
+const std::string CWG_FILE = "/home/gabriel/tmp_dataset/test_10k_10M_50.cwg";
 
 
 int main(void) {
@@ -42,7 +42,7 @@ int main(void) {
      */
 
     FastGraph *g;
-    FastGraph *g2;
+    //FastGraph *g2;
     weight_t maxWeight;
     g = GraphIO::readGraph(CWG_FILE, &maxWeight);
 
@@ -96,17 +96,17 @@ int main(void) {
 
     /*******/
 #if 1
-    g2 = GraphIO::readGraph(CWG_FILE, &maxWeight);
-    MSTWCompare *algo2 = new MSTWCompare(*g2, maxWeight);
+    //g2 = GraphIO::readGraph(CWG_FILE, &maxWeight);
+    //MSTWCompare *algo2 = new MSTWCompare(*g2, maxWeight);
     clock_t crt_begin = clock();
-    double crt_ans = algo2->CRTAlgorithm(EPSILON);
+    CRTresult crt_ans = algo->CRTAlgorithm(EPSILON);
     clock_t crt_end = clock();
 
     long double elapsed_crt = double(crt_end - crt_begin) / CLOCKS_PER_SEC;
 
 
-    cout << "Risultato CRT:\t" << crt_ans << endl;
-    cout << "Tempo: " << elapsed_crt << endl << "--------------------\n";
+    cout << "Risultato CRT:\t" << crt_ans.res << endl;
+    cout << "Tempo: " << crt_ans.time << "        [tot: " << elapsed_crt << "]" << endl << "--------------------\n";
 #endif
     /*******/
 

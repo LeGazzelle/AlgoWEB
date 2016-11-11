@@ -6,6 +6,7 @@
 
 VertexConverter::VertexConverter(vertex_index_t dim) {
     this->vertices = new vertex_index_t[dim];
+    this->next = 0;
 
     for (vertex_index_t i = 0LL; i < dim; i++)
         this->vertices[i] = NULL_VERTEX;

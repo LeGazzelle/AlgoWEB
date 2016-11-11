@@ -13,6 +13,8 @@ typedef std::list<WeightedEdge> EdgeList;
 typedef std::list<WeightedEdge>::iterator EdgeIterator;
 
 
+class FastSubGraph;
+
 class FastGraph {
 private:
     EdgeList edgeList;
@@ -24,7 +26,7 @@ public:
 
     FastGraph(const FastGraph *other); //copy constructor
 
-    virtual vertex_index_t numVertices();
+    virtual vertex_index_t numVertices() const;
 
     AdjacencyList *adjacentVertices(Vertex u);
 
@@ -43,6 +45,8 @@ public:
     virtual ~FastGraph();
 
     vertex_index_t numEdges();
+
+    explicit operator FastSubGraph() const;
 };
 
 class FastSubGraph : public FastGraph {
@@ -52,6 +56,8 @@ private:
     //it has been done with internal structure of VertexConverter
     VertexConverter vc;
 public:
+    FastSubGraph();
+
     FastSubGraph(vertex_index_t n);
 
     FastSubGraph(const FastSubGraph *other); //copy constructor
@@ -67,6 +73,8 @@ public:
     vertex_index_t numVertices() const;
 
     ~FastSubGraph();
+
+    //explicit operator FastSubGraph(const FastGraph&) const;
 };
 
 #endif //ALGOWEB_FASTGRAPHS_HPP

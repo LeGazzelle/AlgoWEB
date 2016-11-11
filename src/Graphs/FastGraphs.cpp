@@ -5,6 +5,8 @@
 #include "FastGraphs.hpp"
 
 
+//class FastSubGraph;
+
 /*
  *  FASTGRAPH
  */
@@ -14,7 +16,7 @@ FastGraph::FastGraph(vertex_index_t n) {
     this->edgeList = EdgeList();
 }
 
-vertex_index_t FastGraph::numVertices() {
+vertex_index_t FastGraph::numVertices() const {
     return this->adjacencyLists.size();
 }
 
@@ -103,11 +105,25 @@ vertex_index_t FastGraph::numEdges() {
     return this->edgeList.size();
 }
 
+FastGraph::operator FastSubGraph() const {
+    //BUG PRONE: cannot add vertices; inconsistent state of vertex converter
+    FastSubGraph ret = FastSubGraph(this->numVertices());
+    ret.adjacencyLists = std::vector<AdjacencyList>(this->adjacencyLists);
+
+    return ret;
+}
+
+
 /*
  *  FASTSUBGRAPH
  */
 
+FastSubGraph::FastSubGraph() : FastGraph(vertex_index_t(0)), vc(0) {}
+
 FastSubGraph::FastSubGraph(vertex_index_t n) : FastGraph(n), vc(n) {}
+
+FastSubGraph::FastSubGraph(const FastSubGraph *other) :
+        FastGraph(other), vc(other->vc) {}
 
 void FastSubGraph::addUndirectedEdge(Vertex v1, Vertex v2, Weight w) {
     v1 = this->vc.getVertexIndex(v1);
@@ -131,9 +147,6 @@ void FastSubGraph::printByAdjListGlobal() {
 void FastSubGraph::printByAdjListLocal() {
     FastGraph::printByAdjList();
 }
-
-FastSubGraph::FastSubGraph(const FastSubGraph *other) :
-        FastGraph(other), vc(other->vc) {}
 
 void FastSubGraph::addNoRepeatingUndirectedEdge(Vertex v1, Vertex v2, Weight w) {
     this->adjacencyLists[v1].emplace_back(w, v2);

@@ -7,7 +7,6 @@
 
 #include <list>
 #include <vector>
-//#include <tuple>
 #include <queue>
 
 typedef unsigned long long Vertex;
@@ -28,6 +27,11 @@ typedef std::list<AdjacentItem>::iterator AdjacencyIterator;
 //};
 typedef std::vector<std::vector<bool>> BfsMatrix;
 typedef std::vector<bool> StatefulVertices; //false stands for UNEXPLORED, true for QUEUED/EXPLORED
+
+typedef struct _result {
+    double res;
+    double time;
+} CRTresult;
 
 #endif //ALGOWEB_ALGOWEB_HPP
 

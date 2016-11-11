@@ -2,8 +2,8 @@
 // Created by Gabriele Santi on 25/09/16.
 //
 
-#include <queue>
 #include "MSTWCompare.hpp"
+
 
 class Coin {
 private:
@@ -30,18 +30,41 @@ std::uniform_int_distribution<> Coin::coin;
 //Constructor with given graph
 MSTWCompare::MSTWCompare(FastGraph g, weight_t maxWeight) : graph(g), maxWeight(maxWeight), g_i(g.numVertices()) {
     //this->g_i = *new FastSubGraph(10); //FIXME c'è da risolvere il fatto che il costruttore vorrebbe il numero di vertici a priori (vedi sopra)
+    std::cout << "Preparing the data structures for the run..." << std::endl;
+    std::cout.flush();
+    ProgressAnimations progressAnimations = ProgressAnimations();
+    vertex_index_t total = this->graph.numEdges(), i = 0;
+
     this->num_vert_G = g.numVertices();
-    //light runs
-    //this->subgraphs = *new std::vector<FastSubGraph>;
-    //this->fys = *new std::vector<FisherYatesSequence>;
+    //prepare needed structure
+    //this->subgraphs = CRTsubgraphs(this->num_vert_G);
+    //this->fys = std::vector<FisherYatesSequence>(this->num_vert_G + 1);
     //prim
     this->primOrderedEdges = std::priority_queue<WeightedEdge, std::vector<WeightedEdge>, WeightedEdgeComparator>();
 
     EdgeList *edgeList = this->graph.edges();
     EdgeIterator ei, ei_end;
     ei_end = edgeList->end();
-    for (ei = edgeList->begin(); ei != ei_end; ++ei)
+    std::cout << "Ordering edges...\n" << std::flush;
+    for (ei = edgeList->begin(); ei != ei_end; ++ei) {
         this->crtOrderedEdges.push(*ei);
+        ++i;
+        progressAnimations.printProgBar((unsigned) std::ceil(100.0 * i / total));
+    }
+    std::cout << std::endl;
+    std::cout.flush();
+    //extractSubGraphs();
+
+    std::cout << "Creating Fisher-Yates sequences..." << std::flush;
+    this->fys = new FisherYatesSequence(this->num_vert_G);
+    std::cout << "DONE" << std::flush;
+//    for (vertex_index_t h = 1; h <= this->num_vert_G; ++h) {
+//        if (!(h % 100))
+//            progressAnimations.printProgBar((unsigned) std::ceil(100.0 * h / this->num_vert_G));
+//        this->fys[h] = FisherYatesSequence(h);
+//    }
+
+    std::cout << "\n\n";
 }
 
 //Destructor
@@ -75,7 +98,7 @@ MSTWCompare::~MSTWCompare() {}
 //    for (h = 1; h <= this->num_vert_G; ++h) {
 //        this->fys.push_back(*new FisherYatesSequence(h));
 //    }
-//    end = clock(); //TODO we could differentiate the two phases
+//    end = clock();
 //
 //    return double(end - start);
 //}
@@ -109,18 +132,31 @@ MSTWCompare::~MSTWCompare() {}
  * @param eps the maximum tolerated relative error
  * @return the approximation of the weight of the MST of the given graph
  */
-double MSTWCompare::CRTAlgorithm(double eps) {
-    if (this->maxWeight == 0)
-        return -1.0;
-
+CRTresult MSTWCompare::CRTAlgorithm(double eps) {
+    CRTresult res;
+    clock_t start, end;
     double c = 0.0;
+
+    start = clock();
     vertex_index_t d = approxGraphAvgDegree(eps);
+    end = clock();
+
+    res.time = end - start;
 
     for (weight_t i = 1; i < this->maxWeight; ++i) {
+        this->extractSubGraph(i);
+        this->fys = new FisherYatesSequence(this->g_i.numVertices());
+        start = clock();
         c += approxNumConnectedComps(eps, d, i);
+        end = clock();
+        delete this->fys;
+        res.time += (end - start);
     }
 
-    return this->num_vert_G - this->maxWeight + c;
+    res.res = this->num_vert_G - this->maxWeight + c;
+    res.time /= CLOCKS_PER_SEC;
+
+    return res;
 }
 
 long double MSTWCompare::getAverageDegree() {
@@ -144,14 +180,15 @@ long double MSTWCompare::getAverageDegree() {
  */
 
 long double MSTWCompare::approxNumConnectedComps(double eps, vertex_index_t avgDeg, weight_t i) {
-    this->extractGraph(i);
+    //this->extractGraph(i);
     vertex_index_t n_i = this->g_i.numVertices();
 
     if (!n_i)
         return 0.0;
 
-    FisherYatesSequence *fys = new FisherYatesSequence(n_i);
-    vertex_index_t j, r = computeNumVertices(n_i, eps);
+    //FisherYatesSequence *fys = new FisherYatesSequence(n_i);
+    vertex_index_t j, r = (vertex_index_t) std::floor(
+            (std::sqrt(n_i / i) * eps - 1) / std::pow(eps, 2)); //computeNumVertices(n_i, eps);
     Vertex u;
     double Beta = 0.0;
     BFS *bfs;
@@ -161,7 +198,7 @@ long double MSTWCompare::approxNumConnectedComps(double eps, vertex_index_t avgD
     threshold /= eps;
 
     for (j = 0; j < r; ++j) {
-        u = fys->next();
+        u = this->fys->next();
         flips = 0;
 
         bfs = new BFS(this->g_i, u, avgDeg);
@@ -187,7 +224,7 @@ long double MSTWCompare::approxNumConnectedComps(double eps, vertex_index_t avgD
         delete bfs;
     }
 
-    delete fys;
+    //delete fys;
 
     return (this->num_vert_G * Beta) / r;
 }
@@ -195,18 +232,19 @@ long double MSTWCompare::approxNumConnectedComps(double eps, vertex_index_t avgD
 //TODO check that hypothesis for theorem 6 are met
 vertex_index_t MSTWCompare::approxGraphAvgDegree(double eps) {
     vertex_index_t i, deg, maxDegree = 0;
-    vertex_index_t c = computeNumVerticesLemma4(this->num_vert_G, eps);
-    FisherYatesSequence *fys = new FisherYatesSequence(this->num_vert_G);
+    vertex_index_t c = (vertex_index_t) std::floor(
+            (std::sqrt(this->num_vert_G) * eps - 1) / eps); //computeNumVerticesLemma4(this->num_vert_G, eps);
+    //FisherYatesSequence *fys = new FisherYatesSequence(this->num_vert_G);
     Vertex v;
 
     for (i = 0; i < c; ++i) {
-        v = fys->next();
+        v = this->fys->next();
 
         if ((deg = this->graph.degree(v)) > maxDegree)
             maxDegree = deg;
     }
 
-    delete fys;
+    //delete fys;
     return maxDegree;
 }
 
@@ -300,7 +338,7 @@ vertex_index_t MSTWCompare::computeNumVerticesLemma4(vertex_index_t n, double ep
  *
  * @param i
  */
-void MSTWCompare::extractGraph(weight_t i) {
+void MSTWCompare::extractSubGraph(weight_t i) {
     WeightedEdge minimum = this->crtOrderedEdges.top();
 
     if (minimum.weight <= i) {
@@ -441,6 +479,48 @@ vertex_index_t MSTWCompare::getRandomVertex(vertex_index_t max) {
 
     return dis(gen);
 }
+
+//void MSTWCompare::extractSubGraphs() {
+//    WeightedEdge minimum;
+//    ProgressAnimations progressAnimations = ProgressAnimations();
+//
+//    std::cout << "Extracting graphs...\n" << std::flush;
+//
+//    //initialization
+//    this->subgraphs[1] = FastSubGraph(this->num_vert_G);
+//    minimum = this->crtOrderedEdges.top();
+//
+//    if (minimum.weight <= 1) {
+//        do {
+//            this->subgraphs[1].addUndirectedEdge(minimum.source, minimum.target, minimum.weight);
+//            this->crtOrderedEdges.pop();
+//            minimum = this->crtOrderedEdges.top();
+//        } while (minimum.weight <= 1 && !this->crtOrderedEdges.empty());
+//    }
+//
+//
+//    //population
+//    for (weight_t i = 2; i <= this->maxWeight; i++) {
+//        progressAnimations.printProgBar((unsigned int) std::ceil(100.0 * i / this->maxWeight));
+//
+//        minimum = this->crtOrderedEdges.top();
+//        this->subgraphs[i] = FastSubGraph(this->subgraphs[i-1]);
+//
+//        if (minimum.weight <= i) {
+//            do {
+//                this->subgraphs[i].addUndirectedEdge(minimum.source, minimum.target, minimum.weight);
+//                this->crtOrderedEdges.pop();
+//                minimum = this->crtOrderedEdges.top();
+//            } while (minimum.weight <= i && !this->crtOrderedEdges.empty());
+//        }
+//    }
+//
+//    std::cout << std::endl;
+//
+//    //conclusion
+//    //this->subgraphs[this->maxWeight] = (FastSubGraph) this->graph;
+//
+//}
 
 DisjointSets::DisjointSets(vertex_index_t n) {
     // Allocate memory
