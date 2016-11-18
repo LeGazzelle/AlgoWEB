@@ -6,13 +6,20 @@
 #include "../UI/ProgressAnimations.hpp"
 
 
+/**
+ * Assume no duplicate edges
+ *
+ * @param fileName
+ * @param maxWeight
+ * @return
+ */
 FastGraph *GraphIO::readGraph(std::string fileName, weight_t *maxWeight) {
     FastGraph *fg;
     ProgressAnimations progressAnimations = ProgressAnimations();
     std::ifstream inFile(fileName);
     std::string edge, tmp;
     std::string::size_type pt;
-    vertex_index_t vertices, edges, u, v, i = 0;
+    vertex_index_t vertices, lines, u, v, i = 0;
     weight_t w;
 
     *maxWeight = 0;
@@ -25,8 +32,8 @@ FastGraph *GraphIO::readGraph(std::string fileName, weight_t *maxWeight) {
             fg = new FastGraph(vertices);
 
             if (getline(inFile, edge)) {
-                edges = std::stoul(edge);
-                edges += edges;
+                lines = std::stoul(edge);
+                lines += 2; //number of lines of the file
             } else {
                 return nullptr;
             }
@@ -44,10 +51,10 @@ FastGraph *GraphIO::readGraph(std::string fileName, weight_t *maxWeight) {
             if (w > *maxWeight)
                 *maxWeight = w;
 
-            fg->addNoRepeatingUndirectedEdge(u, v, w);
+            fg->addUndirectedEdge(u, v, w);
 
             i++;
-            progressAnimations.printProgBar((unsigned) (100.0 * i / edges));
+            progressAnimations.printProgBar((unsigned) (100.0 * i / lines));
         }
 
         inFile.close();
@@ -59,6 +66,13 @@ FastGraph *GraphIO::readGraph(std::string fileName, weight_t *maxWeight) {
     }
 }
 
+/**
+ * This new version avoid to add duplicate edges!
+ *
+ * @param fileName
+ * @param g
+ * @return
+ */
 bool GraphIO::writeGraph(std::string fileName, FastGraph g) {
     std::ofstream outFile(fileName, std::ios::out);
     AdjacencyList *al;
@@ -66,17 +80,19 @@ bool GraphIO::writeGraph(std::string fileName, FastGraph g) {
 
     if (outFile.is_open()) {
         outFile << g.numVertices() << "\n";
-        outFile << g.numEdges() << "\n";
+        outFile << g.numEdges();
 
         for (vertex_index_t v = 0ULL; v < g.numVertices(); v++) {
             al = g.adjacentVertices(v);
 
             for (ai = al->begin(); ai != al->end(); ai++)
-                outFile << v << " "
-                        << ai->second << " "
-                        << ai->first << "\n";
+                if (ai->second > v) { //if ai->second < v it has been added already when v was equal to ai->second
+                    outFile << "\n" << v << " "
+                            << ai->second << " "
+                            << ai->first;
+                }
         }
-
+        //no empty line at the end of the file
 
         outFile.close();
         return true;

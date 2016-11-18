@@ -7,8 +7,11 @@
 
 #include <ctime>
 #include <random>
-//#include "../AlgoWEB.hpp"
+#include <unordered_map>
 #include "../Graphs/FastGraphs.hpp"
+
+typedef std::unordered_map<Edge, short, EdgeHash> EdgeMap;
+typedef std::pair<EdgeMap::iterator, bool> EMapIter;
 
 class GraphGen {
 public:
@@ -21,9 +24,11 @@ private:
 
     static void initArray(vertex_index_t *, vertex_index_t);
 
-    static BfsMatrix edgesMatrixInit(const vertex_index_t);
+//    static BfsMatrix edgesMatrixInit(const vertex_index_t);
 
-    static inline void updateEdgesMatrix(BfsMatrix *em, vertex_index_t, vertex_index_t);
+    static inline EMapIter updateEdgesMap(EdgeMap *em, vertex_index_t, vertex_index_t);
+
+    static std::pair<vertex_index_t, bool> findTarget(EdgeMap *, vertex_index_t, vertex_index_t, vertex_index_t);
 };
 
 #endif //ALGOWEB_GRAPHGEN_HPP

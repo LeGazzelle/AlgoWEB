@@ -106,7 +106,7 @@ vertex_index_t FastGraph::numEdges() {
 }
 
 FastGraph::operator FastSubGraph() const {
-    //BUG PRONE: cannot add vertices; inconsistent state of vertex converter
+    //BUG PRONE: cannot add vertices due to inconsistent state of vertex converter
     FastSubGraph ret = FastSubGraph(this->numVertices());
     ret.adjacencyLists = std::vector<AdjacencyList>(this->adjacencyLists);
 

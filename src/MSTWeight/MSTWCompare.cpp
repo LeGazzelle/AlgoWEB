@@ -214,9 +214,10 @@ long double MSTWCompare::approxNumConnectedComps(double eps, vertex_index_t avgD
                 if (bfs->isCompleted()) {
                     flipAgain = false;
                     if (bfs->getVisitedEdges())
-                        Beta += (bfs->getUDeg() * std::pow(2, flips - 1)) / bfs->getVisitedEdges();
+                        Beta += (bfs->getUDeg() * std::pow(2, flips - 1)) /
+                                bfs->getVisitedEdges(); //there's an implicit division by 2
                     else
-                        Beta += 2;
+                        Beta += 1; //remember we pre-divide by 2
                 }
             }
         }
@@ -226,7 +227,7 @@ long double MSTWCompare::approxNumConnectedComps(double eps, vertex_index_t avgD
 
     //delete fys;
 
-    return (this->num_vert_G * Beta) / r;
+    return (n_i * Beta) / r;
 }
 
 //TODO check that hypothesis for theorem 6 are met

@@ -2,6 +2,7 @@
 // Created by Gabriele Santi on 05/10/16.
 //
 
+#include <randomsequence.hpp>
 #include "GraphGen.hpp"
 
 class RandomGenerator {
@@ -63,15 +64,15 @@ RandomGenerator *rg = new RandomGenerator();
  */
 FastGraph GraphGen::generate(vertex_index_t v, vertex_index_t e, weight_t maxWeight, unsigned int seed) {
     vertex_index_t tree[v], i, j, count;
-    BfsMatrix em = GraphGen::edgesMatrixInit(v);
+    EdgeMap *edgeMap = new EdgeMap();
+    std::pair<vertex_index_t, bool> vertexFinder;
+    FastGraph *g = new FastGraph(v);
 
     //Initialize random generator
     if (seed)
         rg->init(maxWeight, seed);
     else
         rg->init(maxWeight);
-
-    FastGraph *g = new FastGraph(v);
 
     /*  Generate a random permutation in the array tree. */
     GraphGen::initArray(tree, v);
@@ -84,15 +85,14 @@ FastGraph GraphGen::generate(vertex_index_t v, vertex_index_t e, weight_t maxWei
          the tree.  Add an edge incident on tree[ i ]
          and a random vertex in the set {tree[ 0 ],...,tree[ i - 1 ]}.
     */
-    //add_edge(vertex(tree[1], *g), vertex(tree[0], *g), Weight(rg->rand()), *g);
     g->addUndirectedEdge(tree[1], tree[0], rg->rand());
-    updateEdgesMatrix(&em, tree[1], tree[0]);
+    updateEdgesMap(edgeMap, tree[1], tree[0]);
+
 
     for (i = 2; i < v; i++) {
         j = rg->rand(i - 1);
-        //add_edge(vertex(tree[i], *g), vertex(tree[j], *g), Weight(rg->rand()), *g);
         g->addUndirectedEdge(tree[i], tree[j], rg->rand());
-        updateEdgesMatrix(&em, tree[i], tree[j]);
+        updateEdgesMap(edgeMap, tree[i], tree[j]);
     }
 
     /* Add additional random edges until achieving at least desired number */
@@ -110,21 +110,20 @@ FastGraph GraphGen::generate(vertex_index_t v, vertex_index_t e, weight_t maxWei
          * res is a pair <Edge, bool> where bool is true iff no edge existed
          * between i and j, hence a correct insertion has been performed; false otherwise
          */
+        vertexFinder = GraphGen::findTarget(edgeMap, i, j, v);
 
         /**
-         * if no edge exists between i and j, insert it
+         * since no edge exists between i and j, insert it
          */
-        if (!em[i][j]) {
-            g->addUndirectedEdge(i, j, rg->rand());
+
+        if (vertexFinder.second) {
+            g->addUndirectedEdge(i, vertexFinder.first, rg->rand());
             count++;
         }
-        //res = add_edge(vertex(i, *g), vertex(j, *g), Weight(rg->rand()), *g);
-
-        //if (res.second)
-        //    count++;
 
     }
 
+    delete edgeMap;
 
     return *g;
 };
@@ -155,25 +154,59 @@ void GraphGen::swap(vertex_index_t *a, vertex_index_t *b) {
     *b = temp;
 }
 
-BfsMatrix GraphGen::edgesMatrixInit(const vertex_index_t n) {
-    BfsMatrix em = *new BfsMatrix(n);
-    //this->edgesMatrix.resize(n);
-    vertex_index_t i;
-
-    for (i = 0; i < n; i++) { //O(n)
-        em[i].resize(n);
-        em[i] = {};
-    }
-
+//BfsMatrix GraphGen::edgesMatrixInit(const vertex_index_t n) {
+//    BfsMatrix em = *new BfsMatrix(n);
+//    vertex_index_t i, j;
+//
+//    for (i = 0; i < n; i++) { //O(n)
+//        em[i].resize(n);
+//        //em[i] = {}; seem not to work
+//    }
+//
 //    for (i = 0; i < n; i++) { //O(n^2)
 //        for (j = 0; j < n; j++)
 //            em[i][j] = false;
 //    }
+//
+//    return em;
+//}
 
-    return em;
+EMapIter GraphGen::updateEdgesMap(EdgeMap *em, vertex_index_t u, vertex_index_t v) {
+    if (u < v)
+        return em->emplace(Edge(u, v), 0);
+    else
+        return em->emplace(Edge(v, u), 0);
 }
 
-void GraphGen::updateEdgesMatrix(BfsMatrix *em, vertex_index_t u, vertex_index_t v) {
-    (*em)[u][v] = true;
-    (*em)[v][u] = true;
+std::pair<vertex_index_t, bool>
+GraphGen::findTarget(EdgeMap *pMap, vertex_index_t i, vertex_index_t j, vertex_index_t max) {
+    if (updateEdgesMap(pMap, i, j).second)
+        return std::pair<vertex_index_t, bool>(j, true);
+    else {
+        vertex_index_t up, down;
+
+        down = i ? i - 1 : max - 1;
+
+        up = (i + 1) % max;
+
+        while (true) {
+            if (updateEdgesMap(pMap, i, up).second)
+                return std::pair<vertex_index_t, bool>(up, true);
+            else if (updateEdgesMap(pMap, i, down).second)
+                return std::pair<vertex_index_t, bool>(down, true);
+            else {
+                up = (up + 1) % max;
+                if (up == down)
+                    return std::pair<vertex_index_t, bool>(0, false);
+
+                if (down)
+                    --down;
+                else
+                    down = max - 1;
+
+                if (up == down)
+                    return std::pair<vertex_index_t, bool>(0, false);
+            }
+        }
+    }
 }

@@ -42,7 +42,7 @@ public:
     }
 
     void seed(vertex_index_t seed) {
-        this->max = seed;
+        this->gen.seed(seed);
     }
 
     Vertex next() {

@@ -1,55 +1,27 @@
 //
 // Created by Gabriele Santi on 25/09/16.
 //
-//#include <chrono>
 #include "../MSTWeight/MSTWCompare.hpp"
 #include "../FileIO/GraphIO.hpp"
 
 using namespace std;
 
-template<typename UndirectedGraph>
-void print_weighted_graph(UndirectedGraph const);
 
-template<typename UndirectedGraph>
-void print_adjacent_vertex(UndirectedGraph const);
-
-const double EPSILON = 0.3;
-const std::string CWG_FILE = "/home/gabriel/tmp_dataset/test_10k_10M_50.cwg";
-
-
-int main(void) {
+int main(int argc, char *argv[]) {
     cout << "AlgoWEB 2015-16" << endl;
 
-    /**
-     * UndirectedGraph g = ...; //<--- parse da file, creazione random...
-     *
-     * mstwUtilitez x = new maosmf();
-     *
-     * x.setGraph(g, w);
-     *
-     * time t1, t2;
-     *
-     * t1.start();
-     * result s1 = mstwUtilises.kruskal();
-     * t1.stop();
-     *
-     * t2.start();
-     * result s2 = mstwUtilities.crtAlgorithm(eps); //volendo anche Prim
-     * t2.stop();
-     *
-     * //print something
-     *
-     */
-
+    std::ofstream outfile;
+    outfile.open("/home/gabriel/tmp_dataset/results/out.ssv", std::ios_base::app);
     FastGraph *g;
-    //FastGraph *g2;
     weight_t maxWeight;
-    g = GraphIO::readGraph(CWG_FILE, &maxWeight);
+    g = GraphIO::readGraph(argv[1], &maxWeight);
 
 
     MSTWCompare *algo = new MSTWCompare(*g, maxWeight);
 
-    cout << "Average degree d = " << algo->getAverageDegree() << endl;
+    cout << "Average degree d = " << algo->getAverageDegree() << "; epsilon = " << stod(argv[2]) << endl;
+
+    outfile << g->numEdges() << " ";
 
     /*******/
 #if 0
@@ -61,6 +33,7 @@ int main(void) {
 
     cout << "Risultato Kruskal:\t" << krk_ans << endl;
     cout << "Tempo: " << elapsed_krk << endl << "--------------------\n";
+    outfile << elapsed_krk << " ";
 #endif
     /*******/
 
@@ -74,77 +47,21 @@ int main(void) {
 
     cout << "Risultato Prim:\t" << prm_ans << endl;
     cout << "Tempo: " << elapsed_prm << endl << "--------------------\n";
-#endif
-    /*******/
-
-    /*******/
-#if 0
-    long double elapsed_preparation_lcrt = algo->prepareLightRun();
-    clock_t lcrt_begin = clock();
-    double lcrt_ans = algo->LightCRTAlgorithm(EPSILON);
-    clock_t lcrt_end = clock();
-
-    long double elapsed_calculus_lcrt = double(lcrt_end - lcrt_begin) / CLOCKS_PER_SEC;
-    elapsed_preparation_lcrt /= CLOCKS_PER_SEC;
-
-
-    cout << "Risultato Light CRT:\t" << lcrt_ans << endl;
-    cout << "Tempo per la preparazione: " << elapsed_preparation_lcrt << endl << "-------\n";
-    cout << "Tempo per il calcolo: " << elapsed_calculus_lcrt << endl << "--------------------\n";
+    outfile << elapsed_prm << " ";
 #endif
     /*******/
 
     /*******/
 #if 1
-    //g2 = GraphIO::readGraph(CWG_FILE, &maxWeight);
-    //MSTWCompare *algo2 = new MSTWCompare(*g2, maxWeight);
-    clock_t crt_begin = clock();
-    CRTresult crt_ans = algo->CRTAlgorithm(EPSILON);
-    clock_t crt_end = clock();
-
-    long double elapsed_crt = double(crt_end - crt_begin) / CLOCKS_PER_SEC;
+    CRTresult crt_ans = algo->CRTAlgorithm(stod(argv[2]));
 
 
     cout << "Risultato CRT:\t" << crt_ans.res << endl;
-    cout << "Tempo: " << crt_ans.time << "        [tot: " << elapsed_crt << "]" << endl << "--------------------\n";
+    cout << "Tempo: " << crt_ans.time << endl << "--------------------\n";
+    outfile << crt_ans.time << std::endl;
 #endif
     /*******/
 
-//    FisherYatesSequence fys = FisherYatesSequence(15);
-//
-//    for (int k = 1; k <= 30; k++) {
-//        cout << fys.next() << ", ";
-//        if (k % 15 == 0)
-//            cout << endl;
-//    }
 
-
-    return 0; //EXIT_SUCCESS; seems to belong to stdlib.h
+    return 0;
 }
-
-void print_weighted_graph(FastGraph g) {
-    EdgeList *edgeList = g.edges();
-    EdgeIterator ei, eend = edgeList->end();
-
-    for (ei = edgeList->begin(); ei != eend; ++ei) {
-        cout << ei->source << " ----("
-             << ei->weight << ")---->"
-             << ei->target << '\n';
-    }
-}
-
-//template<typename UndirectedGraph>
-//void print_adjacent_vertex(const UndirectedGraph g) {
-//    ConstWeightMap weight = get(edge_weight, g);
-//    cout << "Graph Print: (between parentesis the weights on the edges)" << endl;
-//    for (pair<VertexIterator, VertexIterator> vertices = boost::vertices(g); vertices.first != vertices.second; ++vertices.first) {
-//        cout << *vertices.first << " is connected with ";
-//        for (auto neighbour = adjacent_vertices(*vertices.first, g);
-//             neighbour.first != neighbour.second; ++neighbour.first) {
-//            Result res = edge(*vertices.first, *neighbour.first, g);
-//            cout << *neighbour.first << "(" << get(weight, res.first) << ") ";
-//        }
-//        cout << endl;
-//    }
-//    cout << "#vertices: " << num_vertices(g) << ", #edges: " << num_edges(g) << endl;
-//}
