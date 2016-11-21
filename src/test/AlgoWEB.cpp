@@ -10,8 +10,15 @@ using namespace std;
 int main(int argc, char *argv[]) {
     cout << "AlgoWEB 2015-16" << endl;
 
-    std::ofstream outfile;
-    outfile.open("/home/gabriel/tmp_dataset/results/out.ssv", std::ios_base::app);
+    if (argc != 4) {
+        std::cerr << "Arguments error" << std::endl;
+        return -1;
+    }
+
+    std::string outPath(argv[3]);
+    std::ofstream times, diffResults;
+    times.open(outPath + "times.ssv", std::ios_base::app);
+    diffResults.open(outPath + "diff.ssv", std::ios_base::app);
     FastGraph *g;
     weight_t maxWeight;
     g = GraphIO::readGraph(argv[1], &maxWeight);
@@ -21,7 +28,8 @@ int main(int argc, char *argv[]) {
 
     cout << "Average degree d = " << algo->getAverageDegree() << "; epsilon = " << stod(argv[2]) << endl;
 
-    outfile << g->numEdges() << " ";
+    times << g->numEdges() << " ";
+    diffResults << g->numEdges() << " ";
 
     /*******/
 #if 0
@@ -33,7 +41,7 @@ int main(int argc, char *argv[]) {
 
     cout << "Risultato Kruskal:\t" << krk_ans << endl;
     cout << "Tempo: " << elapsed_krk << endl << "--------------------\n";
-    outfile << elapsed_krk << " ";
+    times << elapsed_krk << " ";
 #endif
     /*******/
 
@@ -47,7 +55,7 @@ int main(int argc, char *argv[]) {
 
     cout << "Risultato Prim:\t" << prm_ans << endl;
     cout << "Tempo: " << elapsed_prm << endl << "--------------------\n";
-    outfile << elapsed_prm << " ";
+    times << elapsed_prm << " ";
 #endif
     /*******/
 
@@ -58,9 +66,11 @@ int main(int argc, char *argv[]) {
 
     cout << "Risultato CRT:\t" << crt_ans.res << endl;
     cout << "Tempo: " << crt_ans.time << endl << "--------------------\n";
-    outfile << crt_ans.time << std::endl;
+    times << crt_ans.time << std::endl;
 #endif
     /*******/
+
+    diffResults << std::abs(prm_ans - crt_ans.res) << std::endl;
 
 
     return 0;

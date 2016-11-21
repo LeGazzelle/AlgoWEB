@@ -49,7 +49,8 @@ MSTWCompare::MSTWCompare(FastGraph g, weight_t maxWeight) : graph(g), maxWeight(
     for (ei = edgeList->begin(); ei != ei_end; ++ei) {
         this->crtOrderedEdges.push(*ei);
         ++i;
-        progressAnimations.printProgBar((unsigned) std::ceil(100.0 * i / total));
+        if (!(i % 150)) //avoids to process too much output to std cout
+            progressAnimations.printProgBar((unsigned) std::ceil(100.0 * i / total));
     }
     std::cout << std::endl;
     std::cout.flush();

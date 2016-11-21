@@ -2,6 +2,7 @@
 // Created by Gabriele Santi on 06/10/16.
 //
 
+#include <cmath>
 #include "GraphIO.hpp"
 #include "../UI/ProgressAnimations.hpp"
 
@@ -54,7 +55,8 @@ FastGraph *GraphIO::readGraph(std::string fileName, weight_t *maxWeight) {
             fg->addUndirectedEdge(u, v, w);
 
             i++;
-            progressAnimations.printProgBar((unsigned) (100.0 * i / lines));
+            if (!(i % 150)) //avoids to process too much output to std cout
+                progressAnimations.printProgBar((unsigned) std::ceil(100.0 * i / lines));
         }
 
         inFile.close();
