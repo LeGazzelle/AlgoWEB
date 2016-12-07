@@ -338,7 +338,7 @@ double MSTWCompare::KruskalAlgorithm() {
     double mst_wt = 0.0; // Initialize result
 
     // Sort edges in increasing order on basis of cost
-    edges.sort([](const WeightedEdge &lhs, const WeightedEdge &rhs) { return lhs.weight > rhs.weight; });
+    edges.sort([](const WeightedEdge &lhs, const WeightedEdge &rhs) { return lhs.weight < rhs.weight; });
 
     // Create disjoint sets
     DisjointSets ds(this->graph.numVertices());

@@ -22,6 +22,7 @@ FastGraph *GraphIO::readGraph(std::string fileName, weight_t *maxWeight) {
         } else {
             return nullptr;
         }
+        getline(inFile, edge);
         while (getline(inFile, edge)) {
             u = std::stoul(edge, &pt);
             pt++;

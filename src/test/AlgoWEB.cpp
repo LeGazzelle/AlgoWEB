@@ -14,7 +14,7 @@ template<typename UndirectedGraph>
 void print_adjacent_vertex(UndirectedGraph const);
 
 const double EPSILON = 0.49;
-const std::string CWG_FILE = "/home/gabriel/tmp_dataset/test_1k_10k_60.cwg";
+const std::string CWG_FILE = "/home/leo/Dataset_ALGOWEB/W_20/N_100K_M_1M_W20.cwg";
 
 
 int main(void) {
@@ -52,7 +52,7 @@ int main(void) {
     cout << "Average degree d = " << algo->getAverageDegree() << endl;
 
     /*******/
-#if 0
+#if 1
     clock_t krk_begin = clock();
     double krk_ans = algo->KruskalAlgorithm();
     clock_t krk_end = clock();
@@ -95,7 +95,7 @@ int main(void) {
     /*******/
 
     /*******/
-#if 1
+#if 0
     g2 = GraphIO::readGraph(CWG_FILE, &maxWeight);
     MSTWCompare *algo2 = new MSTWCompare(*g2, maxWeight);
     clock_t crt_begin = clock();
