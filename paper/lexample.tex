@@ -87,7 +87,7 @@
 \maketitle
 
 \begin{abstract}
-We present an implementation and an experimental evaluation of an algorithm that, given a connected graph G (represented by adjacency lists), estimates in sublinear time, with a relative error e, the Minimum Spanning Tree Weight of G (B. Chazelle, R. Rubinfeld, and L. Trevisan. Approximating the minimum spanning tree weight in sublinear time. SIAM J Computing, 34, 2005). 
+We present an implementation and an experimental evaluation of an algorithm that, given a connected graph G (represented by adjacency lists), estimates in sublinear time, with a relative error e, the Minimum Spanning Tree Weight of G (B. Chazelle, R. Rubinfeld, and L. Trevisan. Approximating the minimum spanning tree weight in sublinear time. SIAM J \textit{Computing}, 34, 2005). 
 As the reader can imagine, the theoretical performances have already been shown in the paper of Chazelle et al.; therefore our goal is, exclusively, to experimental evaluate the mentioned algorithm and at last to present the results.
 The algorithm is implemented in C++; although absolute performances are not important for us, whereas relative performances are the focus, the choice of the language is something not of the greatest importance. The reader can quickly realize that any other language is equivalent for this purpose. The performances of the algorithm are evaluated and widely discussed, comparing these with the performances of the Prim algorithm and the Kruskal algorithm, launching several runs on a heterogeneous set of graphs.
 \end{abstract}
@@ -115,7 +115,7 @@ Another thing that we notice is that the algorithm lends well itself to a parall
 
  As mentioned before, our choice is to implement our own graphs generator. The aim is to generate connected graphs with a specific set of parameters, like the number of nodes, the number of edges, the edges weight and the average degree. The key-concepts under the implementation of our connected graphs generator are the following: to generate a random connected graph, we begin by generating a random permutation of the vertices. We iteratively add edges to form a random spanning tree starting from the selected permutation and, finally, we add random edges following certain rules (i.e. certain probability density functions) to produce the desired number of edges and to build the desired type of graph. The random-generated connected graph, that has the requested parameters and whose type is the requested type, is at last saved in a text file, listing all the edges in the form of (source node, target node, edge weight).
 In the implementation of the algorithm, the graph stored in the text file is read in a FastGraph, our implementation of a graph represented by adjacency lists.
-We want to compare the performances of CRT algorithm with a standard MST algorithm, therefore we give a Prim's algorithm implementation, that runs in $O(m\cdot log(n))$, and also a Kruskal's algorithm implementation, that runs in  $O(m\cdot log(n))$ too, thanks to union-find data structures, but it is not very optimized so for a given set of graphs the results could be worse than expected.\\
+We want to compare the performances of CRT \footnote{Short for B. Chazelle, R. Rubinfeld, and L. Trevisan.\cite{crt}} algorithm with a standard MST algorithm, therefore we give a Prim's algorithm implementation, that runs in $O(m\cdot log(n))$, and also a Kruskal's algorithm implementation, that runs in  $O(m\cdot log(n))$ too, thanks to union-find data structures, but it is not very optimized so for a given set of graphs the results could be worse than expected.\\
 We want to emphasize now that the CRT algorithm is based on probabilistic bases; some parameters, that depend on $\varepsilon$ should be selected carefully in order to
 provide a good approximation very fast. These includes: 
 \begin{itemize}
@@ -155,7 +155,7 @@ For each type of graph we decide to produce a dataset of graphs with the followi
 \item w: 20, 40, 60, 80.\\
 \end{itemize}
 
-Regarding the $\varepsilon$ parameter, we choose: 0.2, 0.3, 0.4, 0.49999. \\ As mentioned before, the parameters should be selected carefully in order to provide a good approximation very fast. Since the CRT algorithm is a probabilistic algorithm, in which the $\varepsilon$ parameter is crucial either for performances or the accuracy of the estimate MST weight, it does not make sense to choose values too small for this parameter, as the performances could dramatically rise (as, indeed, is expected).
+Regarding the $\varepsilon$ parameter, we choose: 0.2, 0.3, 0.4, 0.49999. \\ As mentioned before, the parameters should be selected carefully in order to provide a good approximation very fast. Since the CRT algorithm is a probabilistic algorithm, in which the $\varepsilon$ parameter is crucial either for performances or the accuracy of the estimate MST weight, it does not make sense to choose values too small for this parameter, as the performances could dramatically degrades (as, indeed, is expected).
 Given the intrinsically probabilistic nature of the CRT algorithm, we have to launch several runs on the same graph, to have a correct estimate of the CRT running time. For this purpose we decide to launch 10 runs for each graph, and to take the average running time as the estimate of the running time.\\
 
  
@@ -224,6 +224,54 @@ Now we want to see what happens if there is an increase in the value of $d$, kee
 While in the corresponding Small-World graph and the corresponding Uniform graph the trend is similar to the Gaussian graph (Fig.~\ref{GAUSSIAN_E_02_W_20_D_100}), in the Scale-Free case the reader can easily see that CRT algorithm takes a little 'more time' to down permanently before Prim execution time (Fig.~\ref{SCALE_FREE_E_02_W_20_D_100}). This can be related to the presence, in this kind of graph, of different nodes that have an high degree, which can make slower the execution. \\ The reader can also may notice that for small instances (few edges) the CRT algorithm is worse than deterministic algorithms, but when increasing the graph size the trend returns to be sub-linear again. \\Also comparing, for example, (Fig.~\ref{GAUSSIAN_E_02_W_20_D_100}) with the corresponding (Fig.~\ref{GAUSSIAN_E_02_W_20_D_10}), one can easily see that the performances become worse, as expected having increased the $d$ value. \\ 
 
 Let us now see what happens if we increase $w$, keeping $d$ and $\varepsilon$ unchanged.
+ 
+\begin{figure}[htbp]
+  \centering
+   \includegraphics[scale=0.5]{GAUSSIAN_E_02_W_80_D_100.png}
+  \caption{Gaussian}
+  \label{GAUSSIAN_E_02_W_80_D_100}
+  \end{figure}
+  
+  \begin{figure}[htbp]
+  \centering
+   \includegraphics[scale=0.5]{SMALL_WORLD_E_02_W_80_D_100.png}
+  \caption{Small-World}
+  \label{SMALL_WORLD_E_02_W_80_D_100}
+  \end{figure} 
+ 
+As expected, the CRT running time is higher than before. To be precise, what happens is that for the Gaussian, for the Scale-Free and for the Uniform the trend is about the same (Fig.~\ref{GAUSSIAN_E_02_W_80_D_100}), while for the Small-World case the reader can observe (Fig.~\ref{SMALL_WORLD_E_02_W_80_D_100}) that for large graph instances the trend becomes sublinear. We can imagine that the same happens for even larger instances also in the previous three kinds of graph.
+ 
+ 
+
+To conclude the discussion on the consistency of the execution time, we want now to see what happens in the case we increase $\varepsilon$, keeping $d$ and $w$ unchanged. \\Since the $\varepsilon$ parameter is a denominator for the estimated running time, what is expected is that an increase of this value corresponds to improved performances.
+
+We can compare, for example, the performances of the CRT algorithm on two Small-World graphs with the following parameters: 
+\begin{itemize}
+\item $d=10$ 
+\item $w=20$
+\item and compare what happens for $\varepsilon=0.2$ and $\varepsilon=0.4$
+\end{itemize}
+ 
+
+ \begin{figure}[htbp]
+  \centering
+   \includegraphics[scale=0.5]{SMALL_WORLD_E_02_W_20_D_10.png}
+  \caption{Small-World, $\varepsilon=0.2$}
+  \label{SMALL_WORLD_E_02_W_20_D_10_second}
+  \end{figure}
+
+  \begin{figure}[htbp]
+  \centering
+   \includegraphics[scale=0.5]{SMALL_WORLD_E_04_W_20_D_10.png}
+  \caption{Small-World, $\varepsilon=0.4$}
+  \label{SMALL_WORLD_E_04_W_20_D_10}
+  \end{figure}
+ 
+ 
+ 
+ 
+The reader can easily see that the CRT trend has decreased.
+ 
  
  
  \section{Final thoughts} 
