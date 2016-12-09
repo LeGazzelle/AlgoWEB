@@ -46,6 +46,7 @@
 \newcommand\floor[1]{\lfloor#1\rfloor}
 \usepackage{amsmath}
 \usepackage{svg}
+\usepackage{graphicx}
 % definitions used by included articles, reproduced here for 
 % educational benefit, and to minimize alterations needed to be made
 % in developing this sample file.
@@ -172,7 +173,7 @@ We also know that the aim of the CRT algorithm is to be sublinear in the number 
  
  \begin{figure}[htbp]
   \centering
-  \includegraphics[scale=0.5]{GAUSSIAN_E_02_W_20_D_10.png}
+  \includegraphics[scale=0.6]{GAUSSIAN_E_02_W_20_D_10_EPS}
   \caption{Gaussian}
 \label{GAUSSIAN_E_02_W_20_D_10}
  \end{figure}
@@ -180,7 +181,7 @@ We also know that the aim of the CRT algorithm is to be sublinear in the number 
 
 \begin{figure}[htbp]
   \centering 
-  \includegraphics[scale=0.5]{SCALE_FREE_E_02_W_20_D_10.png}
+  \includegraphics[scale=0.6]{SCALE_FREE_E_02_W_20_D_10_EPS}
   \caption{Scale-Free}
   \label{SCALE_FREE_E_02_W_20_D_10}
   \end{figure}
@@ -188,7 +189,7 @@ We also know that the aim of the CRT algorithm is to be sublinear in the number 
   
   \begin{figure}[htbp]
   \centering
-   \includegraphics[scale=0.5]{SMALL_WORLD_E_02_W_20_D_10.png}
+   \includegraphics[scale=0.6]{SMALL_WORLD_E_02_W_20_D_10_EPS}
   \caption{Small-World}
   \label{SMALL_WORLD_E_02_W_20_D_10}
   \end{figure}
@@ -196,7 +197,7 @@ We also know that the aim of the CRT algorithm is to be sublinear in the number 
   
   \begin{figure}[htbp]
   \centering
-   \includegraphics[scale=0.5]{UNIFORM_E_02_W_20_D_10.png}
+   \includegraphics[scale=0.6]{UNIFORM_E_02_W_20_D_10_EPS}
   \caption{Uniform}
   \label{UNIFORM_E_02_W_20_D_10}
   \end{figure}
@@ -207,7 +208,7 @@ Now we want to see what happens if there is an increase in the value of $d$, kee
 
   \begin{figure}[htbp]
   \centering
-   \includegraphics[scale=0.5]{GAUSSIAN_E_02_W_20_D_100.png}
+   \includegraphics[scale=0.6]{GAUSSIAN_E_02_W_20_D_100_EPS}
   \caption{Gaussian}
   \label{GAUSSIAN_E_02_W_20_D_100}
   \end{figure}
@@ -215,33 +216,47 @@ Now we want to see what happens if there is an increase in the value of $d$, kee
   
    \begin{figure}[htbp]
   \centering
-   \includegraphics[scale=0.5]{SCALE_FREE_E_02_W_20_D_100.png}
+   \includegraphics[scale=0.6]{SCALE_FREE_E_02_W_20_D_100_EPS}
   \caption{Scale-Free}
   \label{SCALE_FREE_E_02_W_20_D_100}
   \end{figure}
  
  
-While in the corresponding Small-World graph and the corresponding Uniform graph the trend is similar to the Gaussian graph (Fig.~\ref{GAUSSIAN_E_02_W_20_D_100}), in the Scale-Free case the reader can easily see that CRT algorithm takes a little 'more time' to down permanently before Prim execution time (Fig.~\ref{SCALE_FREE_E_02_W_20_D_100}). This can be related to the presence, in this kind of graph, of different nodes that have an high degree, which can make slower the execution. \\ The reader can also may notice that for small instances (few edges) the CRT algorithm is worse than deterministic algorithms, but when increasing the graph size the trend returns to be sub-linear again. \\Also comparing, for example, (Fig.~\ref{GAUSSIAN_E_02_W_20_D_100}) with the corresponding (Fig.~\ref{GAUSSIAN_E_02_W_20_D_10}), one can easily see that the performances become worse, as expected having increased the $d$ value. \\ 
+While in the corresponding Small-World graph and the corresponding Uniform graph the trend is similar to the Gaussian graph (Fig.~\ref{GAUSSIAN_E_02_W_20_D_100}), in the Scale-Free case the reader can easily see that CRT algorithm takes a little 'more time' to down permanently under Prim execution time (Fig.~\ref{SCALE_FREE_E_02_W_20_D_100}). This can be related to the presence, in this kind of graph, of different nodes that have an high degree, which can make slower the execution. \\ The reader can also may notice that for small instances (few edges) the CRT algorithm is worse than deterministic algorithms, but when increasing the graph size the trend returns to be sub-linear again. \\Also comparing, for example, (Fig.~\ref{GAUSSIAN_E_02_W_20_D_100}) with the corresponding (Fig.~\ref{GAUSSIAN_E_02_W_20_D_10}), one can easily see that the performances become worse, as expected having increased the $d$ value. \\ 
 
 Let us now see what happens if we increase $w$, keeping $d$ and $\varepsilon$ unchanged.
  
 \begin{figure}[htbp]
   \centering
-   \includegraphics[scale=0.5]{GAUSSIAN_E_02_W_80_D_100.png}
+   \includegraphics[scale=0.6]{GAUSSIAN_E_02_W_80_D_100_EPS}
   \caption{Gaussian}
   \label{GAUSSIAN_E_02_W_80_D_100}
   \end{figure}
   
   \begin{figure}[htbp]
   \centering
-   \includegraphics[scale=0.5]{SMALL_WORLD_E_02_W_80_D_100.png}
+   \includegraphics[scale=0.6]{SMALL_WORLD_E_02_W_80_D_100_EPS}
   \caption{Small-World}
   \label{SMALL_WORLD_E_02_W_80_D_100}
   \end{figure} 
  
 As expected, the CRT running time is higher than before. To be precise, what happens is that for the Gaussian, for the Scale-Free and for the Uniform the trend is about the same (Fig.~\ref{GAUSSIAN_E_02_W_80_D_100}), while for the Small-World case the reader can observe (Fig.~\ref{SMALL_WORLD_E_02_W_80_D_100}) that for large graph instances the trend becomes sublinear. We can imagine that the same happens for even larger instances also in the previous three kinds of graph.
  
+To see if this is true we create an ad-hoc graphs dataset, that is an extension of our previously discussed dataset.\\
+We generate an extension in the Uniform graphs dataset, adding larger instances (i.e. in terms of nodes and edges), and we want to see if the CRT algorithm becomes sub-linear, as expected, onwards from a certain point.
+
+\begin{figure}[htbp]
+  \centering
+   \includegraphics[scale=0.6]{UNIFORM_BIG_RUN_EPS}
+  \caption{Uniform}
+  \label{UNIFORM_BIG_RUN_EPS}
+  \end{figure} 
  
+
+As the reader can see in Fig.~\ref{UNIFORM_BIG_RUN_EPS}, for larger instances the CRT algorithm really becomes sub-linear and its performances are better than, for example, Prim Algorithm.
+\\
+
+This is in agreement with the definition of the $O$ notation, that, for large arguments, indicates that the asymptotic behavior is of a certain type.\\
 
 To conclude the discussion on the consistency of the execution time, we want now to see what happens in the case we increase $\varepsilon$, keeping $d$ and $w$ unchanged. \\Since the $\varepsilon$ parameter is a denominator for the estimated running time, what is expected is that an increase of this value corresponds to improved performances.
 
@@ -255,14 +270,14 @@ We can compare, for example, the performances of the CRT algorithm on two Small-
 
  \begin{figure}[htbp]
   \centering
-   \includegraphics[scale=0.5]{SMALL_WORLD_E_02_W_20_D_10.png}
+   \includegraphics[scale=0.6]{SMALL_WORLD_E_02_W_20_D_10_EPS}
   \caption{Small-World, $\varepsilon=0.2$}
   \label{SMALL_WORLD_E_02_W_20_D_10_second}
   \end{figure}
 
   \begin{figure}[htbp]
   \centering
-   \includegraphics[scale=0.5]{SMALL_WORLD_E_04_W_20_D_10.png}
+   \includegraphics[scale=0.6]{SMALL_WORLD_E_04_W_20_D_10_EPS}
   \caption{Small-World, $\varepsilon=0.4$}
   \label{SMALL_WORLD_E_04_W_20_D_10}
   \end{figure}
