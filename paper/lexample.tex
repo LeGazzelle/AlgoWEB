@@ -45,6 +45,7 @@
 \documentclass[final,leqno]{siamltex}
 \newcommand\floor[1]{\lfloor#1\rfloor}
 \usepackage{amsmath}
+\usepackage{svg}
 % definitions used by included articles, reproduced here for 
 % educational benefit, and to minimize alterations needed to be made
 % in developing this sample file.
@@ -127,7 +128,7 @@ In our opinion, the choice of the 'r' parameter must depends on the number of ve
 As the paper says, the only requirement for 'r' is that it is an $O(\frac{1}{\varepsilon^{2}})$.
 
 To comply with this requirement, we trivially could choose $r=\frac{1}{\varepsilon^{2}}$; this choice, in our opinion, is not a proper choice, as it does not take into account the size of the graph. 
-Therefore we choose the following function to compute the 'r' parameter: $\floor{\dfrac{{(\sqrt{\dfrac{n}{\omega}}\cdot \varepsilon)-1}}{\varepsilon^{2}}}$.\\ \\
+Therefore we choose the following function to compute the 'r' parameter: $\floor{\dfrac{{(\sqrt{\dfrac{n}{w}}\cdot \varepsilon)-1}}{\varepsilon^{2}}}$.\\ \\
 Regarding the large constant C, we choose the following function to compute the vertices for the Lemma 4: $\floor{{(\sqrt{n}\cdot \varepsilon)-1}}$; therefore we compute the vertices with the following: $\dfrac{C}{\varepsilon}$.\\
 Another design choice include the way we use to choose the 'r' vertices from the graph G. We already discussed how to choose the number of vertices for the various BFS in the approx-number-connected-components. Now we want to discuss how to pick the 'r' vertices.\\
 In our implementation, we use the Fisher-Yates shuffle algorithm. This allows us to compute the 'r' vertices in constant time (i.e. $O(1)$), simply calculating in advance the same vertices. This choice is done to not make the vertices drawing a bottleneck for the algorithm performances, as this is not specified in the paper. 
@@ -150,21 +151,79 @@ For each type of graph we decide to produce a dataset of graphs with the followi
 \\
 \begin{itemize}
 \item n: 5000,30000,55000,80000,105000,130000,155000,180000,205000,230000.
-\item m: 10N, 50N, 100N.
+\item m: 10N, 50N, 100N, where N is the number of vertices.
 \item w: 20, 40, 60, 80.\\
 \end{itemize}
 
 Regarding the $\varepsilon$ parameter, we choose: 0.2, 0.3, 0.4, 0.49999. \\ As mentioned before, the parameters should be selected carefully in order to provide a good approximation very fast. Since the CRT algorithm is a probabilistic algorithm, in which the $\varepsilon$ parameter is crucial either for performances or the accuracy of the estimate MST weight, it does not make sense to choose values too small for this parameter, as the performances could dramatically rise (as, indeed, is expected).
 Given the intrinsically probabilistic nature of the CRT algorithm, we have to launch several runs on the same graph, to have a correct estimate of the CRT running time. For this purpose we decide to launch 10 runs for each graph, and to take the average running time as the estimate of the running time.\\
-As the same paper says, “the algorithm outputs a value $v̂$ that, with probability at least $\dfrac{3}{4}$, differs from $v$ by at most $(\varepsilon \cdot v)$; to evaluate this statement, we decide to take, for each graph, only one of the MST weight computed in the 10 runs cited above. Since, overall, we launch $480$ runs, we decide to evaluate the absolute error in computing the MST weight over this set of runs.
 
-(per i tempi: prendiamo la media dei tempi di 10 run
-per il peso MST weight: prendiamo il peso di uno solo di questi 10. In totale abbiamo fatto 480 run in questo caso e nel 100\% dei casi l’errore assoluto è stato dentro il range 1+epsilon,1-epsilon, tutto ok dal momento in cui Chazelle dice almeno il 75\%)
- 
  
 \section{Main results} 
  
-Following there are some summary tables and some line charts of the main results.
+Following there are some considerations and some line charts regarding the main results.\\
+We know that the CRT running time is $O(dw\varepsilon^{-2} \log{\dfrac{dw}{\varepsilon}})$, where $d$ is the average degree of a graph . Therefore what we expect is that:\\
+\begin{itemize}
+\item Keeping $d$ and $\varepsilon$ unchanged, if we consider an increase in the value of $w$ there must be a worsening of the running time 
+\item Keeping $d$ and $w$ unchanged, if we consider an increase in the value of $\varepsilon$ there must be an improvement of the running time
+\item Keeping $\varepsilon$ and $w$ unchanged, if we consider an increase in the value of $d$ there must be a worsening of the running time\\
+\end{itemize}
+We also know that the aim of the CRT algorithm is to be sublinear in the number of edges (i.e. below $O(m)$, where m is the number of edges of the graph); we want now to show that it really happens, possibly for all the different types of graphs in our dataset.
+ 
+ \begin{figure}[htbp]
+  \centering
+  \includegraphics[scale=0.5]{GAUSSIAN_E_02_W_20_D_10.png}
+  \caption{Gaussian}
+\label{GAUSSIAN_E_02_W_20_D_10}
+ \end{figure}
+
+
+\begin{figure}[htbp]
+  \centering 
+  \includegraphics[scale=0.5]{SCALE_FREE_E_02_W_20_D_10.png}
+  \caption{Scale-Free}
+  \label{SCALE_FREE_E_02_W_20_D_10}
+  \end{figure}
+
+  
+  \begin{figure}[htbp]
+  \centering
+   \includegraphics[scale=0.5]{SMALL_WORLD_E_02_W_20_D_10.png}
+  \caption{Small-World}
+  \label{SMALL_WORLD_E_02_W_20_D_10}
+  \end{figure}
+
+  
+  \begin{figure}[htbp]
+  \centering
+   \includegraphics[scale=0.5]{UNIFORM_E_02_W_20_D_10.png}
+  \caption{Uniform}
+  \label{UNIFORM_E_02_W_20_D_10}
+  \end{figure}
+  
+At first, we can observe that given fixed values of $d$, $w$ and $\varepsilon$ the CRT Algorithm respects the sub-linearity property, for all the different types of graphs in our dataset, as the reader can see in the figures from~\ref{GAUSSIAN_E_02_W_20_D_10} to~\ref{UNIFORM_E_02_W_20_D_10}.\\
+
+Now we want to see what happens if there is an increase in the value of $d$, keeping other values unchanged.
+
+  \begin{figure}[htbp]
+  \centering
+   \includegraphics[scale=0.5]{GAUSSIAN_E_02_W_20_D_100.png}
+  \caption{Gaussian}
+  \label{GAUSSIAN_E_02_W_20_D_100}
+  \end{figure}
+
+  
+   \begin{figure}[htbp]
+  \centering
+   \includegraphics[scale=0.5]{SCALE_FREE_E_02_W_20_D_100.png}
+  \caption{Scale-Free}
+  \label{SCALE_FREE_E_02_W_20_D_100}
+  \end{figure}
+ 
+ 
+While in the corresponding Small-World graph and the corresponding Uniform graph the trend is similar to the Gaussian graph (Fig.~\ref{GAUSSIAN_E_02_W_20_D_100}), in the Scale-Free case the reader can easily see that CRT algorithm takes a little 'more time' to down permanently before Prim execution time (Fig.~\ref{SCALE_FREE_E_02_W_20_D_100}). This can be related to the presence, in this kind of graph, of different nodes that have an high degree, which can make slower the execution. \\ The reader can also may notice that for small instances (few edges) the CRT algorithm is worse than deterministic algorithms, but when increasing the graph size the trend returns to be sub-linear again. \\Also comparing, for example, (Fig.~\ref{GAUSSIAN_E_02_W_20_D_100}) with the corresponding (Fig.~\ref{GAUSSIAN_E_02_W_20_D_10}), one can easily see that the performances become worse, as expected having increased the $d$ value. \\ 
+
+Let us now see what happens if we increase $w$, keeping $d$ and $\varepsilon$ unchanged.
  
  
  \section{Final thoughts} 
@@ -179,12 +238,8 @@ For other $\varepsilon$ values, instead, we prove the good performances of the C
  
  
 \begin{thebibliography}{10} 
-\bibitem{bs} {\sc R.~A. Brualdi and B.~L. Shader}, 
-{\em On sign-nonsingular matrices and the conversion of the
-permanent into the determinant}, in Applied Geometry and
-Discrete Mathematics, The Victor Klee Festschrift, P.
-Gritzmann and B. Sturmfels, eds., American Mathematical
-Society, Providence, RI, 1991, pp. 117--134.
+\bibitem{crt} {\sc B. Chazelle, R. Rubinfeld, and L. Trevisan},Approximating the minimum spanning tree weight in
+sublinear time. SIAM J {\em Computing}, 34, 2005.
 
 
 \end{thebibliography} 
