@@ -4,9 +4,9 @@
 
 #include "FastGraphs.hpp"
 
-
-//class FastSubGraph;
-
+bool operator==(const WeightedEdge& lhs, const WeightedEdge& rhs) {
+    return lhs.source == rhs.source && lhs.target == rhs.target;
+}
 /*
  *  FASTGRAPH
  */
@@ -54,15 +54,15 @@ void FastGraph::addUndirectedEdge(Vertex v1, Vertex v2, Weight w) {
  * @param v1
  * @param v2
  * @param weight
+ * @return true if an insertion has been performed, false otherwise
  */
-void FastGraph::addNoRepeatingUndirectedEdge(Vertex v1, Vertex v2, Weight w) {
-    AdjacencyIterator ai_end = this->adjacencyLists[v1].end();
-
-    for (AdjacencyIterator ai = this->adjacencyLists[v1].begin(); ai != ai_end; ai++)
-        if (ai->second == v2)
-            return;
-
-    this->addUndirectedEdge(v1, v2, w);
+bool FastGraph::addNoRepeatingUndirectedEdge(Vertex v1, Vertex v2, Weight w) {
+    if (this->hasEdge(v1, v2))
+        return false;
+    else {
+        this->addUndirectedEdge(v1, v2, w);
+        return true;
+    }
 }
 
 EdgeList *FastGraph::edges() {
@@ -113,6 +113,61 @@ FastGraph::operator FastSubGraph() const {
     return ret;
 }
 
+bool FastGraph::rewire(vertex_index_t source, AdjacencyIterator& oldTarget, vertex_index_t newTarget) {
+    vertex_index_t iter = newTarget;
+
+    if (source == iter)
+        ++iter;
+
+    if (this->hasEdge(source, iter)) {
+        iter = (iter + 1) % this->numVertices();
+        if (iter == source)
+            ++iter;
+        if (iter == newTarget)
+            return false;
+    }
+
+    this->adjacencyLists[oldTarget->second].remove(AdjacentItem(oldTarget->first, source));
+
+    oldTarget->second = iter;
+
+    this->adjacencyLists[iter].emplace_back(oldTarget->first, source);
+
+    //TODO aggiornare la edgeList
+
+    return true;
+
+//    this->adjacencyLists[source].remove(AdjacentItem(weight, oldTarget));
+//    this->adjacencyLists[oldTarget].remove(AdjacentItem(weight, source));
+//
+//    this->edgeList.remove(WeightedEdge(source, oldTarget, weight));
+//
+//    vertex_index_t iter = newTarget;
+//
+//    if (source == iter)
+//        ++iter;
+//
+//    while (!this->addNoRepeatingUndirectedEdge(source, iter, weight)) {
+//        iter = (iter + 1) % this->numVertices();
+//        if (iter == source)
+//            ++iter;
+//        if (iter == newTarget)
+//            return false;
+//    }
+//
+//    return true;
+}
+
+bool FastGraph::hasEdge(vertex_index_t source, vertex_index_t target) {
+    AdjacencyIterator ai_end = this->adjacencyLists[source].end();
+
+    for (AdjacencyIterator ai = this->adjacencyLists[source].begin(); ai != ai_end; ++ai)
+        if (ai->second == target)
+            return true;
+
+    return false;
+}
+
 
 /*
  *  FASTSUBGRAPH
@@ -148,7 +203,9 @@ void FastSubGraph::printByAdjListLocal() {
     FastGraph::printByAdjList();
 }
 
-void FastSubGraph::addNoRepeatingUndirectedEdge(Vertex v1, Vertex v2, Weight w) {
+bool FastSubGraph::addNoRepeatingUndirectedEdge(Vertex v1, Vertex v2, Weight w) {
     this->adjacencyLists[v1].emplace_back(w, v2);
     this->adjacencyLists[v2].emplace_back(w, v1);
+
+    return true;
 }

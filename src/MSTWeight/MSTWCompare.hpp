@@ -13,6 +13,10 @@
 #include "../Graphs/VertexConverter.hpp"
 #include "../UI/ProgressAnimations.hpp"
 
+#define ONE_OVER_EPS false
+#define ONE_OVER_EPS_SQUARED true
+#define C (65)
+
 //utility for CRT
 //class CRTsubgraphs {
 //private:
@@ -72,6 +76,8 @@ private:
     vertex_index_t computeNumVertices(vertex_index_t n, double eps);
 
     vertex_index_t computeNumVerticesLemma4(vertex_index_t n, double eps);
+
+    inline vertex_index_t computeArity(bool, double);
 
     //void extractGraph(weight_t i);
 

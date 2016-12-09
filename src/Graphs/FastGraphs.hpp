@@ -6,8 +6,8 @@
 #define ALGOWEB_FASTGRAPHS_HPP
 
 #include <iostream>
-#include "../MSTWeight/WeightedEdge.hpp"
 #include "VertexConverter.hpp"
+#include "../MSTWeight/WeightedEdge.hpp"
 
 typedef std::list<WeightedEdge> EdgeList;
 typedef std::list<WeightedEdge>::iterator EdgeIterator;
@@ -38,7 +38,9 @@ public:
 
     virtual void addUndirectedEdge(Vertex v1, Vertex v2, Weight w);
 
-    virtual void addNoRepeatingUndirectedEdge(Vertex v1, Vertex v2, Weight w);
+    virtual bool addNoRepeatingUndirectedEdge(Vertex v1, Vertex v2, Weight w);
+
+    bool hasEdge(vertex_index_t, vertex_index_t);
 
     EdgeList *edges();
 
@@ -47,6 +49,8 @@ public:
     vertex_index_t numEdges();
 
     explicit operator FastSubGraph() const;
+
+    bool rewire(vertex_index_t source, AdjacencyIterator&, vertex_index_t newTarget);
 };
 
 class FastSubGraph : public FastGraph {
@@ -64,7 +68,7 @@ public:
 
     void addUndirectedEdge(Vertex v1, Vertex v2, Weight w);
 
-    void addNoRepeatingUndirectedEdge(Vertex v1, Vertex v2, Weight w);
+    bool addNoRepeatingUndirectedEdge(Vertex v1, Vertex v2, Weight w);
 
     void printByAdjListLocal();
 

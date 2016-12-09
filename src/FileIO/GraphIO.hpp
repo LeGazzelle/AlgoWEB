@@ -1,12 +1,14 @@
 //
-// Created by gabriel on 06/10/16.
+// Created by Gabriele Santi on 06/10/16.
 //
 
 #ifndef ALGOWEB_GRAPHIO_HPP
 #define ALGOWEB_GRAPHIO_HPP
 
 #include <fstream>
-#include "../Graphs/FastGraphs.hpp"
+#include <cmath>
+#include "../Grandom/GraphGen.hpp"
+#include "../UI/ProgressAnimations.hpp"
 
 extern bool __VERB;
 

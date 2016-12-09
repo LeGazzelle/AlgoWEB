@@ -2,9 +2,8 @@
 // Created by Gabriele Santi on 06/10/16.
 //
 
-#include <cmath>
 #include "GraphIO.hpp"
-#include "../UI/ProgressAnimations.hpp"
+
 
 
 /**

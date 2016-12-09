@@ -5,30 +5,12 @@
 #ifndef ALGOWEB_GRAPHGEN_HPP
 #define ALGOWEB_GRAPHGEN_HPP
 
-#include <ctime>
-#include <random>
-#include <unordered_map>
-#include "../Graphs/FastGraphs.hpp"
+#include "GraphModel.hpp"
 
-typedef std::unordered_map<Edge, short, EdgeHash> EdgeMap;
-typedef std::pair<EdgeMap::iterator, bool> EMapIter;
 
 class GraphGen {
 public:
-    static FastGraph generate(vertex_index_t, vertex_index_t, weight_t, unsigned int);
-
-private:
-    static void swap(vertex_index_t *, vertex_index_t *);
-
-    static void permute(vertex_index_t *, vertex_index_t);
-
-    static void initArray(vertex_index_t *, vertex_index_t);
-
-//    static BfsMatrix edgesMatrixInit(const vertex_index_t);
-
-    static inline EMapIter updateEdgesMap(EdgeMap *em, vertex_index_t, vertex_index_t);
-
-    static std::pair<vertex_index_t, bool> findTarget(EdgeMap *, vertex_index_t, vertex_index_t, vertex_index_t);
+    static FastGraph generate(vertex_index_t, vertex_index_t, weight_t, unsigned int, LawType);
 };
 
 #endif //ALGOWEB_GRAPHGEN_HPP

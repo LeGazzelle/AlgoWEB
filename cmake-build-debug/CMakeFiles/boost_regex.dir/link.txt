@@ -1,0 +1,2 @@
+/usr/bin/ar qc libboost_regex.a  
+/usr/bin/ranlib libboost_regex.a

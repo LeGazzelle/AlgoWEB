@@ -6,7 +6,6 @@
 
 class WeightedEdge {
 public:
-    //Edge edge;
     Vertex source;
     Vertex target;
     weight_t weight;
@@ -14,7 +13,6 @@ public:
     WeightedEdge() {}
 
     WeightedEdge(Vertex s, Vertex t, weight_t w) : source(s), target(t), weight(w) {}
-    //WeightedEdge(Edge e, int w) : edge(e), weight(w) {}
 };
 
 class WeightedEdgeComparator {

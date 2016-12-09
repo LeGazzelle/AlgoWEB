@@ -1,0 +1,6 @@
+/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/cmake-build-debug/CMakeFiles/boost_graph.dir
+/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/cmake-build-debug/CMakeFiles/Grandom.dir
+/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/cmake-build-debug/CMakeFiles/boost_regex.dir
+/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/cmake-build-debug/CMakeFiles/AlgoWEB.dir

@@ -8,6 +8,13 @@ using namespace std;
 
 
 int main(int argc, char *argv[]) {
+    /**
+     * ARGS are:
+     * [0] - name of the program
+     * [1] - input graph, a .cwg file
+     * [2] - epsilon
+     * [3] - output directory where to save stats
+     */
     cout << "AlgoWEB 2015-16" << endl;
 
     if (argc != 4) {
@@ -32,7 +39,7 @@ int main(int argc, char *argv[]) {
     diffResults << g->numEdges() << " ";
 
     /*******/
-#if 0
+#if 1
     clock_t krk_begin = clock();
     double krk_ans = algo->KruskalAlgorithm();
     clock_t krk_end = clock();
@@ -70,7 +77,12 @@ int main(int argc, char *argv[]) {
 #endif
     /*******/
 
-    diffResults << std::abs(prm_ans - crt_ans.res) << std::endl;
+    diffResults << prm_ans << " "
+                << crt_ans.res << " "
+                << (1+stod(argv[2]))*prm_ans << " "
+                << (1-stod(argv[2]))*prm_ans << " "
+                << std::abs(prm_ans - crt_ans.res) << " "
+                << std::abs((1+stod(argv[2]))*prm_ans - (1-stod(argv[2]))*prm_ans) << std::endl;
 
 
     return 0;

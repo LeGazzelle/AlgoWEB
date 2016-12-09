@@ -10,7 +10,6 @@
 
 #include "../utilities/optionparser.h"
 #include "../FileIO/GraphIO.hpp"
-#include "../Grandom/GraphGen.hpp"
 #include "../AlgoWEB.hpp"
 
 extern bool __VERB;
@@ -64,6 +63,7 @@ enum OptionIndex {
     MAX_WEIGHT,
     TARGET_DIR,
     SEED,
+    EDGE_LAW,
     VERBOSE,
     HELP
 };
@@ -78,6 +78,8 @@ const option::Descriptor usage[] = {
                                                                  "A correct string is formed by path+filename, e.g. /path/to/dir/graph"},
         {SEED,       0, "s", "seed",       Arg::Numeric, "  -s <num>, \t--seed=<num> \tIf specified, the seed to the random generator (Mersenne Twister);"
                                                                  " otherwise, wall clock is taken into account."},
+        {EDGE_LAW,   0, "l", "edge-law",   Arg::String,  "  -l <UNIFORM|GAUSSIAN|SMALLWORLD|SCALEFREE>, \t--edge-law=<...>  \tDefault value is UNIFORM; the distribution law of the edges."
+                                                                "Small world and Scale Free networks are respectively implemented with the Watts-Strogatz model and Barabàsi-Albert model."},
         {VERBOSE,    0, "v", "verbose",    Arg::None,    "  -v, \t--verbose \tVerbose output."},
         {HELP,       0, "h", "help",       Arg::None,    "  -h, \t--help  \tPrint usage and exit."},
         {UNKNOWN,    0, "",  "",           Arg::None,

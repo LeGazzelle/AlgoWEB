@@ -44,6 +44,13 @@ struct EdgeHash {
     }
 };
 
+enum LawType {
+    UNIFORM,
+    GAUSSIAN,
+    SMALLWORLD,
+    SCALEFREE
+};
+
 typedef struct _result {
     double res;
     double time;

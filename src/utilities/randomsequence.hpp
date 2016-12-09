@@ -5,6 +5,7 @@
 #ifndef ALGOWEB_RANDOMSEQUENCE_HPP
 #define ALGOWEB_RANDOMSEQUENCE_HPP
 
+#include <ctime>
 #include <random>
 #include "../AlgoWEB.hpp"
 
@@ -39,6 +40,7 @@ public:
         this->dis = std::uniform_int_distribution<vertex_index_t>();
         for (vertex_index_t k = 0; k < size; k++)
             this->numbers[k] = k;
+        this->gen.seed((unsigned long) std::time(0));
     }
 
     void seed(vertex_index_t seed) {

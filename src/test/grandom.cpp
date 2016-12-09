@@ -16,7 +16,8 @@ int main(int argc, char *argv[]) {
     //arguments
     unsigned long v, e;
     unsigned int w, s;
-    std::string fileName;
+    std::string fileName, edgeLawStr;
+    LawType edgeLaw;
 
     if (parse.error())
         return -1;
@@ -61,6 +62,24 @@ int main(int argc, char *argv[]) {
         s = 0;
     }
 
+    if (options[EDGE_LAW]) {
+        edgeLawStr = options[EDGE_LAW].arg;
+
+        if (!edgeLawStr.compare("UNIFORM"))
+            edgeLaw = UNIFORM;
+        else if (!edgeLawStr.compare("GAUSSIAN"))
+            edgeLaw = GAUSSIAN;
+        else if (!edgeLawStr.compare("SMALLWORLD"))
+            edgeLaw = SMALLWORLD;
+        else if (!edgeLawStr.compare("SCALEFREE"))
+            edgeLaw = SCALEFREE;
+        else
+            edgeLaw = UNIFORM;
+
+    } else {
+        edgeLaw = UNIFORM;
+    }
+
     if (options[VERBOSE]) {
         std::wcerr << "\n********\nVerbose option currently unavailable" << std::endl;
         //__VERB = true;
@@ -83,7 +102,7 @@ int main(int argc, char *argv[]) {
     }
 
     //Random, weighted, connected, undirected graph generation
-    FastGraph g = GraphGen::generate(v, e, w, s);
+    FastGraph g = GraphGen::generate(v, e, w, s, edgeLaw);
 
     //save file
     GraphIO::writeGraph(fileName, g);

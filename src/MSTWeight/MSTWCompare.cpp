@@ -72,61 +72,6 @@ MSTWCompare::MSTWCompare(FastGraph g, weight_t maxWeight) : graph(g), maxWeight(
 MSTWCompare::~MSTWCompare() {}
 
 /**
- * This method is to be called compulsory prior to a MSTWCompare::LightCRTAlgorithm
- * call. It prepares the data structures needed for a light run. Only for test purposes.
- *
- * @return the time elapsed for the operation
- */
-//long double MSTWCompare::prepareLightRun() {
-//    clock_t start, end;
-//    weight_t k;
-//    vertex_index_t h;
-//
-//    start = clock();
-//    this->copyOfOrderedEdges = std::priority_queue<WeightedEdge, std::vector<WeightedEdge>, WeightedEdgeComparator>(
-//            this->crtOrderedEdges);
-//
-//    this->subgraphs.push_back(FastSubGraph(vertex_index_t(0))); //we discard position '0'
-//    for (k = 1; k <= this->maxWeight; ++k) {
-//        this->subgraphs.push_back(*new FastSubGraph(this->lightExtractGraph((k))));
-//    }
-//    //end = clock();
-//
-//    //restore internal data structure for subsequent calls
-//    //this->g_i;
-//
-//    this->fys.push_back(FisherYatesSequence(1)); //again discard position '0'
-//    for (h = 1; h <= this->num_vert_G; ++h) {
-//        this->fys.push_back(*new FisherYatesSequence(h));
-//    }
-//    end = clock();
-//
-//    return double(end - start);
-//}
-
-/**
- * The base algorithm developed by Chazelle, Rubinfeld and Trevisan
- * for the approximation of the MST weitght in sublinear time.
- * This version uses pre-computed data structures, for test purposes.
- *
- * @param eps the maximum tolerated relative error
- * @return the approximation of the weight of the MST of the given graph
- */
-//double MSTWCompare::LightCRTAlgorithm(double eps) {
-//    if (this->maxWeight == 0)
-//        return -1.0;
-//
-//    double c = 0.0;
-//    unsigned long d = lightApproxGraphAvgDegree(eps); //O(1/eps)
-//
-//    for (weight_t i = 1; i < this->maxWeight; ++i) { //O(w)
-//        c += lightApproxNumConnectedComps(eps, d, i);
-//    }
-//
-//    return this->num_vert_G - this->maxWeight + c;
-//}
-
-/**
  * The base algorithm developed by Chazelle, Rubinfeld and Trevisan
  * for the approximation of the MST weitght in sublinear time.
  *
@@ -187,7 +132,9 @@ long double MSTWCompare::approxNumConnectedComps(double eps, vertex_index_t avgD
     if (!n_i)
         return 0.0;
 
-    //FisherYatesSequence *fys = new FisherYatesSequence(n_i);
+//    vertex_index_t j, r = computeArity(ONE_OVER_EPS_SQUARED, eps);
+//    if (r > n_i)
+//        r = n_i;
     vertex_index_t j, r = (vertex_index_t) std::floor(
             (std::sqrt(n_i / i) * eps - 1) / std::pow(eps, 2)); //computeNumVertices(n_i, eps);
     Vertex u;
@@ -226,14 +173,15 @@ long double MSTWCompare::approxNumConnectedComps(double eps, vertex_index_t avgD
         delete bfs;
     }
 
-    //delete fys;
-
     return (n_i * Beta) / r;
 }
 
 //TODO check that hypothesis for theorem 6 are met
 vertex_index_t MSTWCompare::approxGraphAvgDegree(double eps) {
     vertex_index_t i, deg, maxDegree = 0;
+//    vertex_index_t c = computeArity(ONE_OVER_EPS, eps);
+//    if (c > this->num_vert_G)
+//        c = this->num_vert_G;
     vertex_index_t c = (vertex_index_t) std::floor(
             (std::sqrt(this->num_vert_G) * eps - 1) / eps); //computeNumVerticesLemma4(this->num_vert_G, eps);
     //FisherYatesSequence *fys = new FisherYatesSequence(this->num_vert_G);
@@ -249,71 +197,6 @@ vertex_index_t MSTWCompare::approxGraphAvgDegree(double eps) {
     //delete fys;
     return maxDegree;
 }
-
-//double MSTWCompare::lightApproxNumConnectedComps(double eps, vertex_index_t avgDeg, weight_t i) {
-//    //this->extractGraph(i);
-//    unsigned long n_i = this->subgraphs[i].numVertices();
-//
-//    if (!n_i)
-//        return 0.0;
-//
-//    //RandomVertexExtractor *rve = new RandomVertexExtractor(n_i);
-//    //rve->prepare();
-//    unsigned long j, r = computeNumVertices(n_i, eps); //O(1/eps^2)
-//    Vertex u;
-//    double Beta = 0.0;
-//    BFS *bfs;
-//    bool flipAgain;
-//    int flips;
-//    double threshold = 4 * this->maxWeight;
-//    threshold /= eps;
-//
-//    for (j = 0; j < r; ++j) {
-//        u = this->fys[n_i].next(); //O(1)
-//        flips = 0;
-//
-//        bfs = new BFS(this->subgraphs[i], u, avgDeg); //O(n^2) ???
-//        bfs->firstStep();
-//        flipAgain = true;
-//
-//        while (flipAgain) {
-//            flips++;
-//            flipAgain = Coin::flip() && bfs->getVisitedVertices() < threshold && !bfs->isGreaterThanDstar();
-//            if (flipAgain) {
-//                bfs->nextStep();
-//
-//                if (bfs->isCompleted()) {
-//                    flipAgain = false;
-//                    if (bfs->getVisitedEdges())
-//                        Beta += (bfs->getUDeg() * std::pow(2, flips - 1)) / bfs->getVisitedEdges();
-//                    else
-//                        Beta += 2;
-//                }
-//            }
-//        }
-//
-//        delete bfs;
-//    }
-//
-//
-//    return (this->num_vert_G * Beta) / r;
-//}
-//
-//vertex_index_t MSTWCompare::lightApproxGraphAvgDegree(double eps) {
-//    vertex_index_t i, deg, maxDegree = 0;
-//    unsigned long c = computeNumVerticesLemma4(this->num_vert_G, eps);
-//    Vertex v;
-//
-//    for (i = 0; i < c; ++i) {
-//        v = this->fys[this->num_vert_G].next(); // O(1)
-//        deg = this->graph.degree(v);
-//
-//        if (deg > maxDegree)
-//            maxDegree = deg;
-//    }
-//
-//    return maxDegree;
-//}
 
 vertex_index_t MSTWCompare::computeNumVertices(vertex_index_t n, double eps) {
     unsigned long y;
@@ -352,33 +235,12 @@ void MSTWCompare::extractSubGraph(weight_t i) {
     }
 }
 
-/**
- * Extract the subgraph of G containing edges of weight
- * AT MOST i, light version
- *
- * @param i
- * @return the subgraph
- */
-//FastSubGraph MSTWCompare::lightExtractGraph(weight_t i) {
-//    WeightedEdge minimum = this->copyOfOrderedEdges.top();
-//
-//    if (minimum.weight <= i) {
-//        do {
-//            this->g_i.addUndirectedEdge(minimum.source, minimum.target, minimum.weight);
-//            this->copyOfOrderedEdges.pop();
-//            minimum = this->copyOfOrderedEdges.top();
-//        } while (minimum.weight <= i && !this->copyOfOrderedEdges.empty());
-//    }
-//
-//    return this->g_i;
-//}
-
 double MSTWCompare::KruskalAlgorithm() {
     EdgeList edges = EdgeList(*this->graph.edges());
     double mst_wt = 0.0; // Initialize result
 
     // Sort edges in increasing order on basis of cost
-    edges.sort([](const WeightedEdge &lhs, const WeightedEdge &rhs) { return lhs.weight > rhs.weight; });
+    edges.sort([](const WeightedEdge &lhs, const WeightedEdge &rhs) { return lhs.weight < rhs.weight; });
 
     // Create disjoint sets
     DisjointSets ds(this->graph.numVertices());
@@ -482,47 +344,17 @@ vertex_index_t MSTWCompare::getRandomVertex(vertex_index_t max) {
     return dis(gen);
 }
 
-//void MSTWCompare::extractSubGraphs() {
-//    WeightedEdge minimum;
-//    ProgressAnimations progressAnimations = ProgressAnimations();
-//
-//    std::cout << "Extracting graphs...\n" << std::flush;
-//
-//    //initialization
-//    this->subgraphs[1] = FastSubGraph(this->num_vert_G);
-//    minimum = this->crtOrderedEdges.top();
-//
-//    if (minimum.weight <= 1) {
-//        do {
-//            this->subgraphs[1].addUndirectedEdge(minimum.source, minimum.target, minimum.weight);
-//            this->crtOrderedEdges.pop();
-//            minimum = this->crtOrderedEdges.top();
-//        } while (minimum.weight <= 1 && !this->crtOrderedEdges.empty());
-//    }
-//
-//
-//    //population
-//    for (weight_t i = 2; i <= this->maxWeight; i++) {
-//        progressAnimations.printProgBar((unsigned int) std::ceil(100.0 * i / this->maxWeight));
-//
-//        minimum = this->crtOrderedEdges.top();
-//        this->subgraphs[i] = FastSubGraph(this->subgraphs[i-1]);
-//
-//        if (minimum.weight <= i) {
-//            do {
-//                this->subgraphs[i].addUndirectedEdge(minimum.source, minimum.target, minimum.weight);
-//                this->crtOrderedEdges.pop();
-//                minimum = this->crtOrderedEdges.top();
-//            } while (minimum.weight <= i && !this->crtOrderedEdges.empty());
-//        }
-//    }
-//
-//    std::cout << std::endl;
-//
-//    //conclusion
-//    //this->subgraphs[this->maxWeight] = (FastSubGraph) this->graph;
-//
-//}
+inline vertex_index_t MSTWCompare::computeArity(bool complexity, double eps) {
+    vertex_index_t ans;
+
+    if (complexity)
+        eps = eps * eps;
+
+    ans = (vertex_index_t) (C / eps);
+
+    return ans;
+}
+
 
 DisjointSets::DisjointSets(vertex_index_t n) {
     // Allocate memory
