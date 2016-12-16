@@ -170,18 +170,6 @@ Initially in our opinion, the choice of these parameters must depend on the numb
  
 As the paper says, the only requirement for $r$ is that it is $O(\frac{1}{\varepsilon^{2}})$ and $C \in O(\frac{1}{\varepsilon})$.
 
-The demonstration reported on the original paper bound these values in a way that helped us on choosing the right function to compute them; in fact, we have that
-\[
- r <= \sqrt{\dfrac{n}{w}}
-\]
-hence we choose 
-
-In a similar way, we have for $C$ that
-\[
- C \sqrt{\frac{w}{n}} < \varepsilon < 1/2
-\]
-
-
 Therefore we choose the following function to compute the $r$ parameter: $\floor{\dfrac{{(\sqrt{\dfrac{n}{w}}\cdot \varepsilon)-1}}{\varepsilon^{2}}}$.\\ \\
 Regarding the large constant C, we choose the following function to compute the vertices for the Lemma 4: $\floor{{(\sqrt{n}\cdot \varepsilon)-1}}$; therefore we compute the vertices with the following: $\dfrac{C}{\varepsilon}$.\\
 Another design choice include the way we use to choose the 'r' vertices from the graph G. We already discussed how to choose the number of vertices for the various BFS in the approx-number-connected-components. Now we want to discuss how to pick the 'r' vertices.\\
