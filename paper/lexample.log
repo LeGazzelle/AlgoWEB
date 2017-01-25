@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016/Arch Linux) (preloaded format=pdflatex 2016.11.26)  23 JAN 2017 18:41
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016/Arch Linux) (preloaded format=pdflatex 2017.1.25)  25 JAN 2017 09:36
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -256,38 +256,88 @@ LaTeX Info: Thecontrolsequence`\]'isalreadyrobust on input line 129.
 \l_MT_below_intertext_sep=\dimen128
 \l_MT_above_shortintertext_sep=\dimen129
 \l_MT_below_shortintertext_sep=\dimen130
+)
+(/usr/share/texmf-dist/tex/latex/algorithms/algorithm.sty
+Package: algorithm 2009/08/24 v0.1 Document Style `algorithm' - floating enviro
+nment
+
+(/usr/share/texmf-dist/tex/latex/float/float.sty
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count116
+\float@exts=\toks21
+\float@box=\box28
+\@float@everytoks=\toks22
+\@floatcapt=\box29
+)
+(/usr/share/texmf-dist/tex/latex/base/ifthen.sty
+Package: ifthen 2014/09/29 v1.1c Standard LaTeX ifthen package (DPC)
+)
+\@float@every@algorithm=\toks23
+\c@algorithm=\count117
+)
+(/usr/share/texmf-dist/tex/latex/algorithmicx/algpseudocode.sty
+Package: algpseudocode 
+
+(/usr/share/texmf-dist/tex/latex/algorithmicx/algorithmicx.sty
+Package: algorithmicx 2005/04/27 v1.2 Algorithmicx
+
+Document Style algorithmicx 1.2 - a greatly improved `algorithmic' style
+\c@ALG@line=\count118
+\c@ALG@rem=\count119
+\c@ALG@nested=\count120
+\ALG@tlm=\skip57
+\ALG@thistlm=\skip58
+\c@ALG@Lnr=\count121
+\c@ALG@blocknr=\count122
+\c@ALG@storecount=\count123
+\c@ALG@tmpcounter=\count124
+\ALG@tmplength=\skip59
+)
+Document Style - pseudocode environments for use with the `algorithmicx' style
+) (/usr/share/texmf-dist/tex/latex/soul/soul.sty
+Package: soul 2003/11/17 v2.4 letterspacing/underlining (mf)
+\SOUL@word=\toks24
+\SOUL@lasttoken=\toks25
+\SOUL@cmds=\toks26
+\SOUL@buffer=\toks27
+\SOUL@token=\toks28
+\SOUL@spaceskip=\skip60
+\SOUL@ttwidth=\dimen131
+\SOUL@uldp=\dimen132
+\SOUL@ulht=\dimen133
 ) (./lexample.aux)
 \openout1 = `lexample.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 93.
-LaTeX Font Info:    ... okay on input line 93.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 93.
-LaTeX Font Info:    ... okay on input line 93.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 93.
-LaTeX Font Info:    ... okay on input line 93.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 93.
-LaTeX Font Info:    ... okay on input line 93.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 93.
-LaTeX Font Info:    ... okay on input line 93.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 93.
-LaTeX Font Info:    ... okay on input line 93.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 104.
+LaTeX Font Info:    ... okay on input line 104.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 104.
+LaTeX Font Info:    ... okay on input line 104.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 104.
+LaTeX Font Info:    ... okay on input line 104.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 104.
+LaTeX Font Info:    ... okay on input line 104.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 104.
+LaTeX Font Info:    ... okay on input line 104.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 104.
+LaTeX Font Info:    ... okay on input line 104.
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: subfig package v1.3 is loaded.
+Package caption Info: float package is loaded.
 Package caption Info: End \AtBeginDocument code.
 
 (/usr/share/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count116
-\scratchdimen=\dimen131
-\scratchbox=\box28
-\nofMPsegments=\count117
-\nofMParguments=\count118
-\everyMPshowfont=\toks21
-\MPscratchCnt=\count119
-\MPscratchDim=\dimen132
-\MPnumerator=\count120
-\makeMPintoPDFobject=\count121
-\everyMPtoPDFconversion=\toks22
+\scratchcounter=\count125
+\scratchdimen=\dimen134
+\scratchbox=\box30
+\nofMPsegments=\count126
+\nofMParguments=\count127
+\everyMPshowfont=\toks29
+\MPscratchCnt=\count128
+\MPscratchDim=\dimen135
+\MPnumerator=\count129
+\makeMPintoPDFobject=\count130
+\everyMPtoPDFconversion=\toks30
 ) (/usr/share/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
 Package: pdftexcmds 2016/05/21 v0.22 Utility functions of pdfTeX for LuaTeX (HO
 )
@@ -334,13 +384,13 @@ G,.JBIG2,.JB2,.eps]
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-Underfull \hbox (badness 10000) in paragraph at lines 95--95
+Underfull \hbox (badness 10000) in paragraph at lines 106--106
 [][]\OT1/cmr/m/n/8 Master's De-gree in Com-puter Sci-ence, Uni-ver-sity of Rome
  ``Tor Ver-gata''
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 95--95
+Underfull \hbox (badness 10000) in paragraph at lines 106--106
 [][]\OT1/cmr/m/n/8 Master's De-gree in Com-puter Sci-ence, Uni-ver-sity of Rome
  ``Tor Ver-gata''
  []
@@ -348,13 +398,13 @@ Underfull \hbox (badness 10000) in paragraph at lines 95--95
 [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2]
-Overfull \hbox (1.2912pt too wide) in paragraph at lines 169--170
+Overfull \hbox (1.2912pt too wide) in paragraph at lines 175--176
 []$\OML/cmm/m/it/10 r$\OT1/cmr/m/n/10 , the num-ber of ver-tices uni-formly cho
 osen in the ``approx-number-connected-
  []
 
 [3]
-Underfull \hbox (badness 10000) in paragraph at lines 206--207
+Underfull \hbox (badness 10000) in paragraph at lines 209--210
 
  []
 
@@ -365,10 +415,15 @@ Missing character: There is no ‚ in font cmr10!
 Missing character: There is no Ä in font cmr10!
 Missing character: There is no ù in font cmr10!
 [4] [5]
-Underfull \hbox (badness 10000) in paragraph at lines 263--264
-
+Overfull \hbox (8.19269pt too wide) in paragraph at lines 250--251
+[]\OT1/cmr/m/n/10 this set con-tain-ing in turn a set for each se-lected value 
+of $\OML/cmm/m/it/10 "$ \OT1/cmr/m/n/10 ($0\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 2\
+OML/cmm/m/it/10 ; \OT1/cmr/m/n/10 0\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 3\OML/cmm/
+m/it/10 ; \OT1/cmr/m/n/10 0\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 4\OML/cmm/m/it/10 
+; \OT1/cmr/m/n/10 0\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 49999$); 
  []
 
+[6]
 Package epstopdf Info: Source file: <plots/uniform_03_50_40_time_kruskal.eps>
 (epstopdf)                    date: 2016-12-22 02:53:58
 (epstopdf)                    size: 23072 bytes
@@ -378,16 +433,16 @@ nverted-to.pdf>
 (epstopdf)                    size: 7204 bytes
 (epstopdf)             Command: <repstopdf --outfile=plots/uniform_03_50_40_tim
 e_kruskal-eps-converted-to.pdf plots/uniform_03_50_40_time_kruskal.eps>
-(epstopdf)             \includegraphics on input line 278.
+(epstopdf)             \includegraphics on input line 283.
 Package epstopdf Info: Output file is already uptodate.
 
-<plots/uniform_03_50_40_time_kruskal-eps-converted-to.pdf, id=38, 361.35pt x 25
+<plots/uniform_03_50_40_time_kruskal-eps-converted-to.pdf, id=42, 361.35pt x 25
 2.945pt>
 File: plots/uniform_03_50_40_time_kruskal-eps-converted-to.pdf Graphic file (ty
 pe pdf)
  <use plots/uniform_03_50_40_time_kruskal-eps-converted-to.pdf>
 Package pdftex.def Info: plots/uniform_03_50_40_time_kruskal-eps-converted-to.p
-df used on input line 278.
+df used on input line 283.
 (pdftex.def)             Requested size: 296.30812pt x 207.41624pt.
 Package epstopdf Info: Source file: <plots/uniform_03_50_40_abs.eps>
 (epstopdf)                    date: 2016-12-22 02:56:39
@@ -398,15 +453,15 @@ o.pdf>
 (epstopdf)                    size: 7936 bytes
 (epstopdf)             Command: <repstopdf --outfile=plots/uniform_03_50_40_abs
 -eps-converted-to.pdf plots/uniform_03_50_40_abs.eps>
-(epstopdf)             \includegraphics on input line 280.
+(epstopdf)             \includegraphics on input line 285.
 Package epstopdf Info: Output file is already uptodate.
 
-<plots/uniform_03_50_40_abs-eps-converted-to.pdf, id=39, 361.35pt x 252.945pt>
+<plots/uniform_03_50_40_abs-eps-converted-to.pdf, id=43, 361.35pt x 252.945pt>
 File: plots/uniform_03_50_40_abs-eps-converted-to.pdf Graphic file (type pdf)
 
 <use plots/uniform_03_50_40_abs-eps-converted-to.pdf>
 Package pdftex.def Info: plots/uniform_03_50_40_abs-eps-converted-to.pdf used o
-n input line 280.
+n input line 285.
 (pdftex.def)             Requested size: 166.67154pt x 116.66873pt.
 Package epstopdf Info: Source file: <plots/uniform_03_50_40_rel.eps>
 (epstopdf)                    date: 2016-12-22 02:56:39
@@ -417,16 +472,19 @@ o.pdf>
 (epstopdf)                    size: 7371 bytes
 (epstopdf)             Command: <repstopdf --outfile=plots/uniform_03_50_40_rel
 -eps-converted-to.pdf plots/uniform_03_50_40_rel.eps>
-(epstopdf)             \includegraphics on input line 282.
+(epstopdf)             \includegraphics on input line 287.
 Package epstopdf Info: Output file is already uptodate.
 
-<plots/uniform_03_50_40_rel-eps-converted-to.pdf, id=40, 361.35pt x 252.945pt>
+<plots/uniform_03_50_40_rel-eps-converted-to.pdf, id=44, 361.35pt x 252.945pt>
 File: plots/uniform_03_50_40_rel-eps-converted-to.pdf Graphic file (type pdf)
 
 <use plots/uniform_03_50_40_rel-eps-converted-to.pdf>
 Package pdftex.def Info: plots/uniform_03_50_40_rel-eps-converted-to.pdf used o
-n input line 282.
+n input line 287.
 (pdftex.def)             Requested size: 166.67154pt x 116.66873pt.
+ [7 <./plots/uniform_03_50_40_time_kruskal-eps-converted-to.pdf> <./plots/unifo
+rm_03_50_40_abs-eps-converted-to.pdf> <./plots/uniform_03_50_40_rel-eps-convert
+ed-to.pdf>]
 Package epstopdf Info: Source file: <plots/uniform_03_10_40_time.eps>
 (epstopdf)                    date: 2016-12-22 02:56:39
 (epstopdf)                    size: 23247 bytes
@@ -436,14 +494,14 @@ to.pdf>
 (epstopdf)                    size: 7287 bytes
 (epstopdf)             Command: <repstopdf --outfile=plots/uniform_03_10_40_tim
 e-eps-converted-to.pdf plots/uniform_03_10_40_time.eps>
-(epstopdf)             \includegraphics on input line 299.
+(epstopdf)             \includegraphics on input line 302.
 Package epstopdf Info: Output file is already uptodate.
 
-<plots/uniform_03_10_40_time-eps-converted-to.pdf, id=41, 361.35pt x 252.945pt>
+<plots/uniform_03_10_40_time-eps-converted-to.pdf, id=64, 361.35pt x 252.945pt>
 File: plots/uniform_03_10_40_time-eps-converted-to.pdf Graphic file (type pdf)
 <use plots/uniform_03_10_40_time-eps-converted-to.pdf>
 Package pdftex.def Info: plots/uniform_03_10_40_time-eps-converted-to.pdf used 
-on input line 299.
+on input line 302.
 (pdftex.def)             Requested size: 240.74716pt x 168.5228pt.
 Package epstopdf Info: Source file: <plots/uniform_03_50_40_time.eps>
 (epstopdf)                    date: 2016-12-22 02:56:39
@@ -454,14 +512,14 @@ to.pdf>
 (epstopdf)                    size: 7085 bytes
 (epstopdf)             Command: <repstopdf --outfile=plots/uniform_03_50_40_tim
 e-eps-converted-to.pdf plots/uniform_03_50_40_time.eps>
-(epstopdf)             \includegraphics on input line 301.
+(epstopdf)             \includegraphics on input line 304.
 Package epstopdf Info: Output file is already uptodate.
 
-<plots/uniform_03_50_40_time-eps-converted-to.pdf, id=42, 361.35pt x 252.945pt>
+<plots/uniform_03_50_40_time-eps-converted-to.pdf, id=65, 361.35pt x 252.945pt>
 File: plots/uniform_03_50_40_time-eps-converted-to.pdf Graphic file (type pdf)
 <use plots/uniform_03_50_40_time-eps-converted-to.pdf>
 Package pdftex.def Info: plots/uniform_03_50_40_time-eps-converted-to.pdf used 
-on input line 301.
+on input line 304.
 (pdftex.def)             Requested size: 240.74716pt x 168.5228pt.
 Package epstopdf Info: Source file: <plots/uniform_03_100_40_time.eps>
 (epstopdf)                    date: 2016-12-22 02:56:39
@@ -472,20 +530,20 @@ Package epstopdf Info: Source file: <plots/uniform_03_100_40_time.eps>
 (epstopdf)                    size: 6974 bytes
 (epstopdf)             Command: <repstopdf --outfile=plots/uniform_03_100_40_ti
 me-eps-converted-to.pdf plots/uniform_03_100_40_time.eps>
-(epstopdf)             \includegraphics on input line 303.
+(epstopdf)             \includegraphics on input line 306.
 Package epstopdf Info: Output file is already uptodate.
 
-<plots/uniform_03_100_40_time-eps-converted-to.pdf, id=43, 361.35pt x 252.945pt
+<plots/uniform_03_100_40_time-eps-converted-to.pdf, id=66, 361.35pt x 252.945pt
 >
 File: plots/uniform_03_100_40_time-eps-converted-to.pdf Graphic file (type pdf)
 
  <use plots/uniform_03_100_40_time-eps-converted-to.pdf>
 Package pdftex.def Info: plots/uniform_03_100_40_time-eps-converted-to.pdf used
- on input line 303.
+ on input line 306.
 (pdftex.def)             Requested size: 240.74716pt x 168.5228pt.
 
 
-LaTeX Warning: Float too large for page by 3.84085pt on input line 306.
+LaTeX Warning: Float too large for page by 3.84085pt on input line 309.
 
 Package epstopdf Info: Source file: <plots/uniform_03_10_40_rel.eps>
 (epstopdf)                    date: 2016-12-22 02:56:39
@@ -496,15 +554,15 @@ o.pdf>
 (epstopdf)                    size: 7206 bytes
 (epstopdf)             Command: <repstopdf --outfile=plots/uniform_03_10_40_rel
 -eps-converted-to.pdf plots/uniform_03_10_40_rel.eps>
-(epstopdf)             \includegraphics on input line 315.
+(epstopdf)             \includegraphics on input line 316.
 Package epstopdf Info: Output file is already uptodate.
 
-<plots/uniform_03_10_40_rel-eps-converted-to.pdf, id=44, 361.35pt x 252.945pt>
+<plots/uniform_03_10_40_rel-eps-converted-to.pdf, id=67, 361.35pt x 252.945pt>
 File: plots/uniform_03_10_40_rel-eps-converted-to.pdf Graphic file (type pdf)
 
 <use plots/uniform_03_10_40_rel-eps-converted-to.pdf>
 Package pdftex.def Info: plots/uniform_03_10_40_rel-eps-converted-to.pdf used o
-n input line 315.
+n input line 316.
 (pdftex.def)             Requested size: 240.74716pt x 168.5228pt.
 Package epstopdf Info: Source file: <plots/uniform_03_50_40_rel.eps>
 (epstopdf)                    date: 2016-12-22 02:56:39
@@ -515,13 +573,13 @@ o.pdf>
 (epstopdf)                    size: 7371 bytes
 (epstopdf)             Command: <repstopdf --outfile=plots/uniform_03_50_40_rel
 -eps-converted-to.pdf plots/uniform_03_50_40_rel.eps>
-(epstopdf)             \includegraphics on input line 317.
+(epstopdf)             \includegraphics on input line 318.
 Package epstopdf Info: Output file is already uptodate.
 File: plots/uniform_03_50_40_rel-eps-converted-to.pdf Graphic file (type pdf)
 
 <use plots/uniform_03_50_40_rel-eps-converted-to.pdf>
 Package pdftex.def Info: plots/uniform_03_50_40_rel-eps-converted-to.pdf used o
-n input line 317.
+n input line 318.
 (pdftex.def)             Requested size: 240.74716pt x 168.5228pt.
 Package epstopdf Info: Source file: <plots/uniform_03_100_40_rel.eps>
 (epstopdf)                    date: 2016-12-22 02:56:39
@@ -532,27 +590,334 @@ to.pdf>
 (epstopdf)                    size: 7359 bytes
 (epstopdf)             Command: <repstopdf --outfile=plots/uniform_03_100_40_re
 l-eps-converted-to.pdf plots/uniform_03_100_40_rel.eps>
-(epstopdf)             \includegraphics on input line 319.
+(epstopdf)             \includegraphics on input line 320.
 Package epstopdf Info: Output file is already uptodate.
 
-<plots/uniform_03_100_40_rel-eps-converted-to.pdf, id=45, 361.35pt x 252.945pt>
+<plots/uniform_03_100_40_rel-eps-converted-to.pdf, id=68, 361.35pt x 252.945pt>
 File: plots/uniform_03_100_40_rel-eps-converted-to.pdf Graphic file (type pdf)
 <use plots/uniform_03_100_40_rel-eps-converted-to.pdf>
 Package pdftex.def Info: plots/uniform_03_100_40_rel-eps-converted-to.pdf used 
-on input line 319.
+on input line 320.
 (pdftex.def)             Requested size: 240.74716pt x 168.5228pt.
 
 
-LaTeX Warning: Float too large for page by 3.84085pt on input line 322.
+LaTeX Warning: Float too large for page by 3.84085pt on input line 323.
 
-[6] [7 <./plots/uniform_03_50_40_time_kruskal-eps-converted-to.pdf> <./plots/un
-iform_03_50_40_abs-eps-converted-to.pdf> <./plots/uniform_03_50_40_rel-eps-conv
-erted-to.pdf>] [8 <./plots/uniform_03_10_40_time-eps-converted-to.pdf> <./plots
-/uniform_03_50_40_time-eps-converted-to.pdf> <./plots/uniform_03_100_40_time-ep
-s-converted-to.pdf>] [9 <./plots/uniform_03_10_40_rel-eps-converted-to.pdf> <./
-plots/uniform_03_100_40_rel-eps-converted-to.pdf>]
+Package epstopdf Info: Source file: <plots/gaussian_03_10_40_time.eps>
+(epstopdf)                    date: 2016-12-22 02:56:41
+(epstopdf)                    size: 23474 bytes
+(epstopdf)             Output file: <plots/gaussian_03_10_40_time-eps-converted
+-to.pdf>
+(epstopdf)                    date: 2017-01-25 07:40:07
+(epstopdf)                    size: 7319 bytes
+(epstopdf)             Command: <repstopdf --outfile=plots/gaussian_03_10_40_ti
+me-eps-converted-to.pdf plots/gaussian_03_10_40_time.eps>
+(epstopdf)             \includegraphics on input line 332.
+Package epstopdf Info: Output file is already uptodate.
+
+<plots/gaussian_03_10_40_time-eps-converted-to.pdf, id=69, 361.35pt x 252.945pt
+>
+File: plots/gaussian_03_10_40_time-eps-converted-to.pdf Graphic file (type pdf)
+
+ <use plots/gaussian_03_10_40_time-eps-converted-to.pdf>
+Package pdftex.def Info: plots/gaussian_03_10_40_time-eps-converted-to.pdf used
+ on input line 332.
+(pdftex.def)             Requested size: 240.74716pt x 168.5228pt.
+Package epstopdf Info: Source file: <plots/smallworld_03_10_40_time.eps>
+(epstopdf)                    date: 2016-12-22 02:56:43
+(epstopdf)                    size: 23251 bytes
+(epstopdf)             Output file: <plots/smallworld_03_10_40_time-eps-convert
+ed-to.pdf>
+(epstopdf)                    date: 2017-01-25 07:40:07
+(epstopdf)                    size: 7289 bytes
+(epstopdf)             Command: <repstopdf --outfile=plots/smallworld_03_10_40_
+time-eps-converted-to.pdf plots/smallworld_03_10_40_time.eps>
+(epstopdf)             \includegraphics on input line 334.
+Package epstopdf Info: Output file is already uptodate.
+
+<plots/smallworld_03_10_40_time-eps-converted-to.pdf, id=70, 361.35pt x 252.945
+pt>
+File: plots/smallworld_03_10_40_time-eps-converted-to.pdf Graphic file (type pd
+f)
+ <use plots/smallworld_03_10_40_time-eps-converted-to.pdf>
+Package pdftex.def Info: plots/smallworld_03_10_40_time-eps-converted-to.pdf us
+ed on input line 334.
+(pdftex.def)             Requested size: 240.74716pt x 168.5228pt.
+
+Overfull \hbox (111.11058pt too wide) in paragraph at lines 332--334
+ [][][] 
+ []
+
+Package epstopdf Info: Source file: <plots/gaussian_03_50_40_time.eps>
+(epstopdf)                    date: 2016-12-22 02:56:41
+(epstopdf)                    size: 22652 bytes
+(epstopdf)             Output file: <plots/gaussian_03_50_40_time-eps-converted
+-to.pdf>
+(epstopdf)                    date: 2017-01-25 07:40:08
+(epstopdf)                    size: 7092 bytes
+(epstopdf)             Command: <repstopdf --outfile=plots/gaussian_03_50_40_ti
+me-eps-converted-to.pdf plots/gaussian_03_50_40_time.eps>
+(epstopdf)             \includegraphics on input line 336.
+Package epstopdf Info: Output file is already uptodate.
+
+<plots/gaussian_03_50_40_time-eps-converted-to.pdf, id=71, 361.35pt x 252.945pt
+>
+File: plots/gaussian_03_50_40_time-eps-converted-to.pdf Graphic file (type pdf)
+
+ <use plots/gaussian_03_50_40_time-eps-converted-to.pdf>
+Package pdftex.def Info: plots/gaussian_03_50_40_time-eps-converted-to.pdf used
+ on input line 336.
+(pdftex.def)             Requested size: 240.74716pt x 168.5228pt.
+Package epstopdf Info: Source file: <plots/smallworld_03_50_40_time.eps>
+(epstopdf)                    date: 2016-12-22 02:56:43
+(epstopdf)                    size: 22654 bytes
+(epstopdf)             Output file: <plots/smallworld_03_50_40_time-eps-convert
+ed-to.pdf>
+(epstopdf)                    date: 2017-01-25 07:40:08
+(epstopdf)                    size: 7088 bytes
+(epstopdf)             Command: <repstopdf --outfile=plots/smallworld_03_50_40_
+time-eps-converted-to.pdf plots/smallworld_03_50_40_time.eps>
+(epstopdf)             \includegraphics on input line 338.
+Package epstopdf Info: Output file is already uptodate.
+
+<plots/smallworld_03_50_40_time-eps-converted-to.pdf, id=72, 361.35pt x 252.945
+pt>
+File: plots/smallworld_03_50_40_time-eps-converted-to.pdf Graphic file (type pd
+f)
+ <use plots/smallworld_03_50_40_time-eps-converted-to.pdf>
+Package pdftex.def Info: plots/smallworld_03_50_40_time-eps-converted-to.pdf us
+ed on input line 338.
+(pdftex.def)             Requested size: 240.74716pt x 168.5228pt.
+
+Overfull \hbox (111.11058pt too wide) in paragraph at lines 336--338
+ [][][] 
+ []
+
+Package epstopdf Info: Source file: <plots/gaussian_03_100_40_time.eps>
+(epstopdf)                    date: 2016-12-22 02:56:41
+(epstopdf)                    size: 22608 bytes
+(epstopdf)             Output file: <plots/gaussian_03_100_40_time-eps-converte
+d-to.pdf>
+(epstopdf)                    date: 2017-01-25 07:40:08
+(epstopdf)                    size: 6974 bytes
+(epstopdf)             Command: <repstopdf --outfile=plots/gaussian_03_100_40_t
+ime-eps-converted-to.pdf plots/gaussian_03_100_40_time.eps>
+(epstopdf)             \includegraphics on input line 340.
+Package epstopdf Info: Output file is already uptodate.
+
+<plots/gaussian_03_100_40_time-eps-converted-to.pdf, id=73, 361.35pt x 252.945p
+t>
+File: plots/gaussian_03_100_40_time-eps-converted-to.pdf Graphic file (type pdf
+)
+ <use plots/gaussian_03_100_40_time-eps-converted-to.pdf>
+Package pdftex.def Info: plots/gaussian_03_100_40_time-eps-converted-to.pdf use
+d on input line 340.
+(pdftex.def)             Requested size: 240.74716pt x 168.5228pt.
+Package epstopdf Info: Source file: <plots/smallworld_03_100_40_time.eps>
+(epstopdf)                    date: 2016-12-22 02:56:43
+(epstopdf)                    size: 22390 bytes
+(epstopdf)             Output file: <plots/smallworld_03_100_40_time-eps-conver
+ted-to.pdf>
+(epstopdf)                    date: 2017-01-25 07:40:08
+(epstopdf)                    size: 6949 bytes
+(epstopdf)             Command: <repstopdf --outfile=plots/smallworld_03_100_40
+_time-eps-converted-to.pdf plots/smallworld_03_100_40_time.eps>
+(epstopdf)             \includegraphics on input line 342.
+Package epstopdf Info: Output file is already uptodate.
+
+<plots/smallworld_03_100_40_time-eps-converted-to.pdf, id=74, 361.35pt x 252.94
+5pt>
+File: plots/smallworld_03_100_40_time-eps-converted-to.pdf Graphic file (type p
+df)
+ <use plots/smallworld_03_100_40_time-eps-converted-to.pdf>
+Package pdftex.def Info: plots/smallworld_03_100_40_time-eps-converted-to.pdf u
+sed on input line 342.
+(pdftex.def)             Requested size: 240.74716pt x 168.5228pt.
+
+Overfull \hbox (111.11058pt too wide) in paragraph at lines 340--343
+ [][][] 
+ []
+
+
+LaTeX Warning: Float too large for page by 13.84085pt on input line 345.
+
+Package epstopdf Info: Source file: <plots/gaussian_03_10_40_rel.eps>
+(epstopdf)                    date: 2016-12-22 02:56:41
+(epstopdf)                    size: 23163 bytes
+(epstopdf)             Output file: <plots/gaussian_03_10_40_rel-eps-converted-
+to.pdf>
+(epstopdf)                    date: 2017-01-25 07:23:38
+(epstopdf)                    size: 7198 bytes
+(epstopdf)             Command: <repstopdf --outfile=plots/gaussian_03_10_40_re
+l-eps-converted-to.pdf plots/gaussian_03_10_40_rel.eps>
+(epstopdf)             \includegraphics on input line 354.
+Package epstopdf Info: Output file is already uptodate.
+
+<plots/gaussian_03_10_40_rel-eps-converted-to.pdf, id=75, 361.35pt x 252.945pt>
+File: plots/gaussian_03_10_40_rel-eps-converted-to.pdf Graphic file (type pdf)
+<use plots/gaussian_03_10_40_rel-eps-converted-to.pdf>
+Package pdftex.def Info: plots/gaussian_03_10_40_rel-eps-converted-to.pdf used 
+on input line 354.
+(pdftex.def)             Requested size: 240.74716pt x 168.5228pt.
+Package epstopdf Info: Source file: <plots/smallworld_03_10_40_rel.eps>
+(epstopdf)                    date: 2016-12-22 02:56:43
+(epstopdf)                    size: 23167 bytes
+(epstopdf)             Output file: <plots/smallworld_03_10_40_rel-eps-converte
+d-to.pdf>
+(epstopdf)                    date: 2017-01-25 07:23:38
+(epstopdf)                    size: 7209 bytes
+(epstopdf)             Command: <repstopdf --outfile=plots/smallworld_03_10_40_
+rel-eps-converted-to.pdf plots/smallworld_03_10_40_rel.eps>
+(epstopdf)             \includegraphics on input line 356.
+Package epstopdf Info: Output file is already uptodate.
+
+<plots/smallworld_03_10_40_rel-eps-converted-to.pdf, id=76, 361.35pt x 252.945p
+t>
+File: plots/smallworld_03_10_40_rel-eps-converted-to.pdf Graphic file (type pdf
+)
+ <use plots/smallworld_03_10_40_rel-eps-converted-to.pdf>
+Package pdftex.def Info: plots/smallworld_03_10_40_rel-eps-converted-to.pdf use
+d on input line 356.
+(pdftex.def)             Requested size: 240.74716pt x 168.5228pt.
+
+Overfull \hbox (111.11058pt too wide) in paragraph at lines 354--356
+ [][][] 
+ []
+
+Package epstopdf Info: Source file: <plots/gaussian_03_50_40_rel.eps>
+(epstopdf)                    date: 2016-12-22 02:56:41
+(epstopdf)                    size: 23461 bytes
+(epstopdf)             Output file: <plots/gaussian_03_50_40_rel-eps-converted-
+to.pdf>
+(epstopdf)                    date: 2017-01-25 07:23:38
+(epstopdf)                    size: 7398 bytes
+(epstopdf)             Command: <repstopdf --outfile=plots/gaussian_03_50_40_re
+l-eps-converted-to.pdf plots/gaussian_03_50_40_rel.eps>
+(epstopdf)             \includegraphics on input line 358.
+Package epstopdf Info: Output file is already uptodate.
+
+<plots/gaussian_03_50_40_rel-eps-converted-to.pdf, id=77, 361.35pt x 252.945pt>
+File: plots/gaussian_03_50_40_rel-eps-converted-to.pdf Graphic file (type pdf)
+<use plots/gaussian_03_50_40_rel-eps-converted-to.pdf>
+Package pdftex.def Info: plots/gaussian_03_50_40_rel-eps-converted-to.pdf used 
+on input line 358.
+(pdftex.def)             Requested size: 240.74716pt x 168.5228pt.
+Package epstopdf Info: Source file: <plots/smallworld_03_50_40_rel.eps>
+(epstopdf)                    date: 2016-12-22 02:56:43
+(epstopdf)                    size: 23451 bytes
+(epstopdf)             Output file: <plots/smallworld_03_50_40_rel-eps-converte
+d-to.pdf>
+(epstopdf)                    date: 2017-01-25 07:23:38
+(epstopdf)                    size: 7410 bytes
+(epstopdf)             Command: <repstopdf --outfile=plots/smallworld_03_50_40_
+rel-eps-converted-to.pdf plots/smallworld_03_50_40_rel.eps>
+(epstopdf)             \includegraphics on input line 360.
+Package epstopdf Info: Output file is already uptodate.
+
+<plots/smallworld_03_50_40_rel-eps-converted-to.pdf, id=78, 361.35pt x 252.945p
+t>
+File: plots/smallworld_03_50_40_rel-eps-converted-to.pdf Graphic file (type pdf
+)
+ <use plots/smallworld_03_50_40_rel-eps-converted-to.pdf>
+Package pdftex.def Info: plots/smallworld_03_50_40_rel-eps-converted-to.pdf use
+d on input line 360.
+(pdftex.def)             Requested size: 240.74716pt x 168.5228pt.
+
+Overfull \hbox (111.11058pt too wide) in paragraph at lines 358--360
+ [][][] 
+ []
+
+Package epstopdf Info: Source file: <plots/gaussian_03_100_40_rel.eps>
+(epstopdf)                    date: 2016-12-22 02:56:41
+(epstopdf)                    size: 23186 bytes
+(epstopdf)             Output file: <plots/gaussian_03_100_40_rel-eps-converted
+-to.pdf>
+(epstopdf)                    date: 2017-01-25 07:23:39
+(epstopdf)                    size: 7391 bytes
+(epstopdf)             Command: <repstopdf --outfile=plots/gaussian_03_100_40_r
+el-eps-converted-to.pdf plots/gaussian_03_100_40_rel.eps>
+(epstopdf)             \includegraphics on input line 362.
+Package epstopdf Info: Output file is already uptodate.
+
+<plots/gaussian_03_100_40_rel-eps-converted-to.pdf, id=79, 361.35pt x 252.945pt
+>
+File: plots/gaussian_03_100_40_rel-eps-converted-to.pdf Graphic file (type pdf)
+
+ <use plots/gaussian_03_100_40_rel-eps-converted-to.pdf>
+Package pdftex.def Info: plots/gaussian_03_100_40_rel-eps-converted-to.pdf used
+ on input line 362.
+(pdftex.def)             Requested size: 240.74716pt x 168.5228pt.
+Package epstopdf Info: Source file: <plots/smallworld_03_100_40_rel.eps>
+(epstopdf)                    date: 2016-12-22 02:56:43
+(epstopdf)                    size: 22957 bytes
+(epstopdf)             Output file: <plots/smallworld_03_100_40_rel-eps-convert
+ed-to.pdf>
+(epstopdf)                    date: 2017-01-25 07:23:39
+(epstopdf)                    size: 7378 bytes
+(epstopdf)             Command: <repstopdf --outfile=plots/smallworld_03_100_40
+_rel-eps-converted-to.pdf plots/smallworld_03_100_40_rel.eps>
+(epstopdf)             \includegraphics on input line 364.
+Package epstopdf Info: Output file is already uptodate.
+
+<plots/smallworld_03_100_40_rel-eps-converted-to.pdf, id=80, 361.35pt x 252.945
+pt>
+File: plots/smallworld_03_100_40_rel-eps-converted-to.pdf Graphic file (type pd
+f)
+ <use plots/smallworld_03_100_40_rel-eps-converted-to.pdf>
+Package pdftex.def Info: plots/smallworld_03_100_40_rel-eps-converted-to.pdf us
+ed on input line 364.
+(pdftex.def)             Requested size: 240.74716pt x 168.5228pt.
+
+Overfull \hbox (111.11058pt too wide) in paragraph at lines 362--365
+ [][][] 
+ []
+
+
+LaTeX Warning: Float too large for page by 13.84085pt on input line 367.
+
+Package epstopdf Info: Source file: <plots/uniform_04_50_20_time.eps>
+(epstopdf)                    date: 2016-12-22 02:56:40
+(epstopdf)                    size: 22418 bytes
+(epstopdf)             Output file: <plots/uniform_04_50_20_time-eps-converted-
+to.pdf>
+(epstopdf)                    date: 2017-01-25 08:13:14
+(epstopdf)                    size: 6933 bytes
+(epstopdf)             Command: <repstopdf --outfile=plots/uniform_04_50_20_tim
+e-eps-converted-to.pdf plots/uniform_04_50_20_time.eps>
+(epstopdf)             \includegraphics on input line 377.
+Package epstopdf Info: Output file is already uptodate.
+
+<plots/uniform_04_50_20_time-eps-converted-to.pdf, id=81, 361.35pt x 252.945pt>
+File: plots/uniform_04_50_20_time-eps-converted-to.pdf Graphic file (type pdf)
+<use plots/uniform_04_50_20_time-eps-converted-to.pdf>
+Package pdftex.def Info: plots/uniform_04_50_20_time-eps-converted-to.pdf used 
+on input line 377.
+(pdftex.def)             Requested size: 240.74716pt x 168.5228pt.
+Package epstopdf Info: Source file: <plots/uniform_04_50_40_time.eps>
+(epstopdf)                    date: 2016-12-22 02:56:40
+(epstopdf)                    size: 22645 bytes
+(epstopdf)             Output file: <plots/uniform_04_50_40_time-eps-converted-
+to.pdf>
+(epstopdf)                    date: 2017-01-25 08:13:14
+(epstopdf)                    size: 6963 bytes
+(epstopdf)             Command: <repstopdf --outfile=plots/uniform_04_50_40_tim
+e-eps-converted-to.pdf plots/uniform_04_50_40_time.eps>
+(epstopdf)             \includegraphics on input line 379.
+Package epstopdf Info: Output file is already uptodate.
+
+<plots/uniform_04_50_40_time-eps-converted-to.pdf, id=82, 361.35pt x 252.945pt>
+File: plots/uniform_04_50_40_time-eps-converted-to.pdf Graphic file (type pdf)
+<use plots/uniform_04_50_40_time-eps-converted-to.pdf>
+Package pdftex.def Info: plots/uniform_04_50_40_time-eps-converted-to.pdf used 
+on input line 379.
+(pdftex.def)             Requested size: 240.74716pt x 168.5228pt.
+
+Overfull \hbox (111.11058pt too wide) in paragraph at lines 377--379
+ [][][] 
+ []
+
 Package epstopdf Info: Source file: <plots/uniform_04_50_60_time.eps>
-(epstopdf)                    date: 2016-12-23 20:14:56
+(epstopdf)                    date: 2016-12-22 02:56:40
 (epstopdf)                    size: 22649 bytes
 (epstopdf)             Output file: <plots/uniform_04_50_60_time-eps-converted-
 to.pdf>
@@ -560,15 +925,417 @@ to.pdf>
 (epstopdf)                    size: 6963 bytes
 (epstopdf)             Command: <repstopdf --outfile=plots/uniform_04_50_60_tim
 e-eps-converted-to.pdf plots/uniform_04_50_60_time.eps>
-(epstopdf)             \includegraphics on input line 333.
+(epstopdf)             \includegraphics on input line 381.
 Package epstopdf Info: Output file is already uptodate.
 
-<plots/uniform_04_50_60_time-eps-converted-to.pdf, id=101, 361.35pt x 252.945pt
->
+<plots/uniform_04_50_60_time-eps-converted-to.pdf, id=83, 361.35pt x 252.945pt>
 File: plots/uniform_04_50_60_time-eps-converted-to.pdf Graphic file (type pdf)
- <use plots/uniform_04_50_60_time-eps-converted-to.pdf>
+<use plots/uniform_04_50_60_time-eps-converted-to.pdf>
 Package pdftex.def Info: plots/uniform_04_50_60_time-eps-converted-to.pdf used 
-on input line 333.
+on input line 381.
+(pdftex.def)             Requested size: 240.74716pt x 168.5228pt.
+Package epstopdf Info: Source file: <plots/uniform_04_50_80_time.eps>
+(epstopdf)                    date: 2016-12-22 02:56:40
+(epstopdf)                    size: 22650 bytes
+(epstopdf)             Output file: <plots/uniform_04_50_80_time-eps-converted-
+to.pdf>
+(epstopdf)                    date: 2017-01-25 08:13:15
+(epstopdf)                    size: 6966 bytes
+(epstopdf)             Command: <repstopdf --outfile=plots/uniform_04_50_80_tim
+e-eps-converted-to.pdf plots/uniform_04_50_80_time.eps>
+(epstopdf)             \includegraphics on input line 383.
+Package epstopdf Info: Output file is already uptodate.
+
+<plots/uniform_04_50_80_time-eps-converted-to.pdf, id=84, 361.35pt x 252.945pt>
+File: plots/uniform_04_50_80_time-eps-converted-to.pdf Graphic file (type pdf)
+<use plots/uniform_04_50_80_time-eps-converted-to.pdf>
+Package pdftex.def Info: plots/uniform_04_50_80_time-eps-converted-to.pdf used 
+on input line 383.
+(pdftex.def)             Requested size: 240.74716pt x 168.5228pt.
+
+Overfull \hbox (111.11058pt too wide) in paragraph at lines 381--384
+ [][][] 
+ []
+
+
+Overfull \hbox (2.97617pt too wide) in paragraph at lines 388--389
+\OT1/cmr/m/n/10 the fact that ev-ery it-er-a-tion of the sub-rou-tine \OT1/cmtt
+/m/n/10 approx-number-connected-components
+ []
+
+Package epstopdf Info: Source file: <plots/uniform_04_50_20_rel.eps>
+(epstopdf)                    date: 2016-12-22 02:56:40
+(epstopdf)                    size: 23675 bytes
+(epstopdf)             Output file: <plots/uniform_04_50_20_rel-eps-converted-t
+o.pdf>
+(epstopdf)                    date: 2017-01-25 08:21:32
+(epstopdf)                    size: 7285 bytes
+(epstopdf)             Command: <repstopdf --outfile=plots/uniform_04_50_20_rel
+-eps-converted-to.pdf plots/uniform_04_50_20_rel.eps>
+(epstopdf)             \includegraphics on input line 393.
+Package epstopdf Info: Output file is already uptodate.
+
+<plots/uniform_04_50_20_rel-eps-converted-to.pdf, id=85, 361.35pt x 252.945pt>
+File: plots/uniform_04_50_20_rel-eps-converted-to.pdf Graphic file (type pdf)
+
+<use plots/uniform_04_50_20_rel-eps-converted-to.pdf>
+Package pdftex.def Info: plots/uniform_04_50_20_rel-eps-converted-to.pdf used o
+n input line 393.
+(pdftex.def)             Requested size: 240.74716pt x 168.5228pt.
+Package epstopdf Info: Source file: <plots/uniform_04_50_40_rel.eps>
+(epstopdf)                    date: 2016-12-22 02:56:40
+(epstopdf)                    size: 22539 bytes
+(epstopdf)             Output file: <plots/uniform_04_50_40_rel-eps-converted-t
+o.pdf>
+(epstopdf)                    date: 2017-01-25 08:21:32
+(epstopdf)                    size: 7153 bytes
+(epstopdf)             Command: <repstopdf --outfile=plots/uniform_04_50_40_rel
+-eps-converted-to.pdf plots/uniform_04_50_40_rel.eps>
+(epstopdf)             \includegraphics on input line 395.
+Package epstopdf Info: Output file is already uptodate.
+
+<plots/uniform_04_50_40_rel-eps-converted-to.pdf, id=86, 361.35pt x 252.945pt>
+File: plots/uniform_04_50_40_rel-eps-converted-to.pdf Graphic file (type pdf)
+
+<use plots/uniform_04_50_40_rel-eps-converted-to.pdf>
+Package pdftex.def Info: plots/uniform_04_50_40_rel-eps-converted-to.pdf used o
+n input line 395.
+(pdftex.def)             Requested size: 240.74716pt x 168.5228pt.
+
+Overfull \hbox (111.11058pt too wide) in paragraph at lines 393--395
+ [][][] 
+ []
+
+Package epstopdf Info: Source file: <plots/uniform_04_50_60_rel.eps>
+(epstopdf)                    date: 2016-12-22 02:56:40
+(epstopdf)                    size: 22546 bytes
+(epstopdf)             Output file: <plots/uniform_04_50_60_rel-eps-converted-t
+o.pdf>
+(epstopdf)                    date: 2016-12-23 20:19:09
+(epstopdf)                    size: 7153 bytes
+(epstopdf)             Command: <repstopdf --outfile=plots/uniform_04_50_60_rel
+-eps-converted-to.pdf plots/uniform_04_50_60_rel.eps>
+(epstopdf)             \includegraphics on input line 397.
+Package epstopdf Info: Output file is already uptodate.
+
+<plots/uniform_04_50_60_rel-eps-converted-to.pdf, id=87, 361.35pt x 252.945pt>
+File: plots/uniform_04_50_60_rel-eps-converted-to.pdf Graphic file (type pdf)
+
+<use plots/uniform_04_50_60_rel-eps-converted-to.pdf>
+Package pdftex.def Info: plots/uniform_04_50_60_rel-eps-converted-to.pdf used o
+n input line 397.
+(pdftex.def)             Requested size: 240.74716pt x 168.5228pt.
+Package epstopdf Info: Source file: <plots/uniform_04_50_80_rel.eps>
+(epstopdf)                    date: 2016-12-22 02:56:40
+(epstopdf)                    size: 22778 bytes
+(epstopdf)             Output file: <plots/uniform_04_50_80_rel-eps-converted-t
+o.pdf>
+(epstopdf)                    date: 2017-01-25 08:21:32
+(epstopdf)                    size: 7184 bytes
+(epstopdf)             Command: <repstopdf --outfile=plots/uniform_04_50_80_rel
+-eps-converted-to.pdf plots/uniform_04_50_80_rel.eps>
+(epstopdf)             \includegraphics on input line 399.
+Package epstopdf Info: Output file is already uptodate.
+
+<plots/uniform_04_50_80_rel-eps-converted-to.pdf, id=88, 361.35pt x 252.945pt>
+File: plots/uniform_04_50_80_rel-eps-converted-to.pdf Graphic file (type pdf)
+
+<use plots/uniform_04_50_80_rel-eps-converted-to.pdf>
+Package pdftex.def Info: plots/uniform_04_50_80_rel-eps-converted-to.pdf used o
+n input line 399.
+(pdftex.def)             Requested size: 240.74716pt x 168.5228pt.
+
+Overfull \hbox (111.11058pt too wide) in paragraph at lines 397--400
+ [][][] 
+ []
+
+[8] [9 <./plots/uniform_03_10_40_time-eps-converted-to.pdf> <./plots/uniform_03
+_50_40_time-eps-converted-to.pdf> <./plots/uniform_03_100_40_time-eps-converted
+-to.pdf>] [10 <./plots/uniform_03_10_40_rel-eps-converted-to.pdf> <./plots/unif
+orm_03_100_40_rel-eps-converted-to.pdf>] [11 <./plots/gaussian_03_10_40_time-ep
+s-converted-to.pdf> <./plots/smallworld_03_10_40_time-eps-converted-to.pdf> <./
+plots/gaussian_03_50_40_time-eps-converted-to.pdf> <./plots/smallworld_03_50_40
+_time-eps-converted-to.pdf> <./plots/gaussian_03_100_40_time-eps-converted-to.p
+df> <./plots/smallworld_03_100_40_time-eps-converted-to.pdf>] [12 <./plots/gaus
+sian_03_10_40_rel-eps-converted-to.pdf> <./plots/smallworld_03_10_40_rel-eps-co
+nverted-to.pdf> <./plots/gaussian_03_50_40_rel-eps-converted-to.pdf> <./plots/s
+mallworld_03_50_40_rel-eps-converted-to.pdf> <./plots/gaussian_03_100_40_rel-ep
+s-converted-to.pdf> <./plots/smallworld_03_100_40_rel-eps-converted-to.pdf>]
+Package epstopdf Info: Source file: <plots/uniform_02_50_40_time.eps>
+(epstopdf)                    date: 2016-12-22 02:56:39
+(epstopdf)                    size: 22651 bytes
+(epstopdf)             Output file: <plots/uniform_02_50_40_time-eps-converted-
+to.pdf>
+(epstopdf)                    date: 2017-01-25 09:14:32
+(epstopdf)                    size: 6956 bytes
+(epstopdf)             Command: <repstopdf --outfile=plots/uniform_02_50_40_tim
+e-eps-converted-to.pdf plots/uniform_02_50_40_time.eps>
+(epstopdf)             \includegraphics on input line 413.
+Package epstopdf Info: Output file is already uptodate.
+
+<plots/uniform_02_50_40_time-eps-converted-to.pdf, id=191, 361.35pt x 252.945pt
+>
+File: plots/uniform_02_50_40_time-eps-converted-to.pdf Graphic file (type pdf)
+ <use plots/uniform_02_50_40_time-eps-converted-to.pdf>
+Package pdftex.def Info: plots/uniform_02_50_40_time-eps-converted-to.pdf used 
+on input line 413.
+(pdftex.def)             Requested size: 240.74716pt x 168.5228pt.
+Package epstopdf Info: Source file: <plots/uniform_03_50_40_time.eps>
+(epstopdf)                    date: 2016-12-22 02:56:39
+(epstopdf)                    size: 22644 bytes
+(epstopdf)             Output file: <plots/uniform_03_50_40_time-eps-converted-
+to.pdf>
+(epstopdf)                    date: 2016-12-22 03:03:54
+(epstopdf)                    size: 7085 bytes
+(epstopdf)             Command: <repstopdf --outfile=plots/uniform_03_50_40_tim
+e-eps-converted-to.pdf plots/uniform_03_50_40_time.eps>
+(epstopdf)             \includegraphics on input line 415.
+Package epstopdf Info: Output file is already uptodate.
+File: plots/uniform_03_50_40_time-eps-converted-to.pdf Graphic file (type pdf)
+
+<use plots/uniform_03_50_40_time-eps-converted-to.pdf>
+Package pdftex.def Info: plots/uniform_03_50_40_time-eps-converted-to.pdf used 
+on input line 415.
+(pdftex.def)             Requested size: 240.74716pt x 168.5228pt.
+
+Overfull \hbox (111.11058pt too wide) in paragraph at lines 413--415
+ [][][] 
+ []
+
+Package epstopdf Info: Source file: <plots/uniform_04_50_40_time.eps>
+(epstopdf)                    date: 2016-12-22 02:56:40
+(epstopdf)                    size: 22645 bytes
+(epstopdf)             Output file: <plots/uniform_04_50_40_time-eps-converted-
+to.pdf>
+(epstopdf)                    date: 2017-01-25 08:13:14
+(epstopdf)                    size: 6963 bytes
+(epstopdf)             Command: <repstopdf --outfile=plots/uniform_04_50_40_tim
+e-eps-converted-to.pdf plots/uniform_04_50_40_time.eps>
+(epstopdf)             \includegraphics on input line 417.
+Package epstopdf Info: Output file is already uptodate.
+File: plots/uniform_04_50_40_time-eps-converted-to.pdf Graphic file (type pdf)
+<use plots/uniform_04_50_40_time-eps-converted-to.pdf>
+Package pdftex.def Info: plots/uniform_04_50_40_time-eps-converted-to.pdf used 
+on input line 417.
+(pdftex.def)             Requested size: 240.74716pt x 168.5228pt.
+Package epstopdf Info: Source file: <plots/uniform_049999_50_40_time.eps>
+(epstopdf)                    date: 2016-12-22 02:56:40
+(epstopdf)                    size: 22660 bytes
+(epstopdf)             Output file: <plots/uniform_049999_50_40_time-eps-conver
+ted-to.pdf>
+(epstopdf)                    date: 2017-01-25 09:16:12
+(epstopdf)                    size: 7096 bytes
+(epstopdf)             Command: <repstopdf --outfile=plots/uniform_049999_50_40
+_time-eps-converted-to.pdf plots/uniform_049999_50_40_time.eps>
+(epstopdf)             \includegraphics on input line 419.
+Package epstopdf Info: Output file is already uptodate.
+
+<plots/uniform_049999_50_40_time-eps-converted-to.pdf, id=192, 361.35pt x 252.9
+45pt>
+File: plots/uniform_049999_50_40_time-eps-converted-to.pdf Graphic file (type p
+df)
+ <use plots/uniform_049999_50_40_time-eps-converted-to.pdf>
+Package pdftex.def Info: plots/uniform_049999_50_40_time-eps-converted-to.pdf u
+sed on input line 419.
+(pdftex.def)             Requested size: 240.74716pt x 168.5228pt.
+
+Overfull \hbox (111.11058pt too wide) in paragraph at lines 417--420
+ [][][] 
+ []
+
+[13 <./plots/uniform_04_50_20_time-eps-converted-to.pdf> <./plots/uniform_04_50
+_40_time-eps-converted-to.pdf> <./plots/uniform_04_50_60_time-eps-converted-to.
+pdf> <./plots/uniform_04_50_80_time-eps-converted-to.pdf>] [14 <./plots/uniform
+_04_50_20_rel-eps-converted-to.pdf> <./plots/uniform_04_50_40_rel-eps-converted
+-to.pdf> <./plots/uniform_04_50_60_rel-eps-converted-to.pdf> <./plots/uniform_0
+4_50_80_rel-eps-converted-to.pdf>] [15 <./plots/uniform_02_50_40_time-eps-conve
+rted-to.pdf> <./plots/uniform_049999_50_40_time-eps-converted-to.pdf>]
+Package epstopdf Info: Source file: <plots/uniform_02_50_40_rel.eps>
+(epstopdf)                    date: 2016-12-22 02:56:39
+(epstopdf)                    size: 22769 bytes
+(epstopdf)             Output file: <plots/uniform_02_50_40_rel-eps-converted-t
+o.pdf>
+(epstopdf)                    date: 2017-01-25 09:24:16
+(epstopdf)                    size: 7182 bytes
+(epstopdf)             Command: <repstopdf --outfile=plots/uniform_02_50_40_rel
+-eps-converted-to.pdf plots/uniform_02_50_40_rel.eps>
+(epstopdf)             \includegraphics on input line 431.
+Package epstopdf Info: Output file is already uptodate.
+
+<plots/uniform_02_50_40_rel-eps-converted-to.pdf, id=253, 361.35pt x 252.945pt>
+File: plots/uniform_02_50_40_rel-eps-converted-to.pdf Graphic file (type pdf)
+<use plots/uniform_02_50_40_rel-eps-converted-to.pdf>
+Package pdftex.def Info: plots/uniform_02_50_40_rel-eps-converted-to.pdf used o
+n input line 431.
+(pdftex.def)             Requested size: 240.74716pt x 168.5228pt.
+Package epstopdf Info: Source file: <plots/uniform_03_50_40_rel.eps>
+(epstopdf)                    date: 2016-12-22 02:56:39
+(epstopdf)                    size: 23223 bytes
+(epstopdf)             Output file: <plots/uniform_03_50_40_rel-eps-converted-t
+o.pdf>
+(epstopdf)                    date: 2016-12-22 03:03:54
+(epstopdf)                    size: 7371 bytes
+(epstopdf)             Command: <repstopdf --outfile=plots/uniform_03_50_40_rel
+-eps-converted-to.pdf plots/uniform_03_50_40_rel.eps>
+(epstopdf)             \includegraphics on input line 433.
+Package epstopdf Info: Output file is already uptodate.
+File: plots/uniform_03_50_40_rel-eps-converted-to.pdf Graphic file (type pdf)
+
+<use plots/uniform_03_50_40_rel-eps-converted-to.pdf>
+Package pdftex.def Info: plots/uniform_03_50_40_rel-eps-converted-to.pdf used o
+n input line 433.
+(pdftex.def)             Requested size: 240.74716pt x 168.5228pt.
+Package epstopdf Info: Source file: <plots/uniform_04_50_40_rel.eps>
+(epstopdf)                    date: 2016-12-22 02:56:40
+(epstopdf)                    size: 22539 bytes
+(epstopdf)             Output file: <plots/uniform_04_50_40_rel-eps-converted-t
+o.pdf>
+(epstopdf)                    date: 2017-01-25 08:21:32
+(epstopdf)                    size: 7153 bytes
+(epstopdf)             Command: <repstopdf --outfile=plots/uniform_04_50_40_rel
+-eps-converted-to.pdf plots/uniform_04_50_40_rel.eps>
+(epstopdf)             \includegraphics on input line 435.
+Package epstopdf Info: Output file is already uptodate.
+File: plots/uniform_04_50_40_rel-eps-converted-to.pdf Graphic file (type pdf)
+
+<use plots/uniform_04_50_40_rel-eps-converted-to.pdf>
+Package pdftex.def Info: plots/uniform_04_50_40_rel-eps-converted-to.pdf used o
+n input line 435.
+(pdftex.def)             Requested size: 240.74716pt x 168.5228pt.
+Package epstopdf Info: Source file: <plots/uniform_049999_50_40_rel.eps>
+(epstopdf)                    date: 2016-12-22 02:56:40
+(epstopdf)                    size: 22789 bytes
+(epstopdf)             Output file: <plots/uniform_049999_50_40_rel-eps-convert
+ed-to.pdf>
+(epstopdf)                    date: 2017-01-25 09:24:17
+(epstopdf)                    size: 7312 bytes
+(epstopdf)             Command: <repstopdf --outfile=plots/uniform_049999_50_40
+_rel-eps-converted-to.pdf plots/uniform_049999_50_40_rel.eps>
+(epstopdf)             \includegraphics on input line 437.
+Package epstopdf Info: Output file is already uptodate.
+
+<plots/uniform_049999_50_40_rel-eps-converted-to.pdf, id=254, 361.35pt x 252.94
+5pt>
+File: plots/uniform_049999_50_40_rel-eps-converted-to.pdf Graphic file (type pd
+f)
+ <use plots/uniform_049999_50_40_rel-eps-converted-to.pdf>
+Package pdftex.def Info: plots/uniform_049999_50_40_rel-eps-converted-to.pdf us
+ed on input line 437.
+(pdftex.def)             Requested size: 240.74716pt x 168.5228pt.
+
+Overfull \hbox (366.76115pt too wide) in paragraph at lines 431--437
+ [][][][][] 
+ []
+
+Package epstopdf Info: Source file: <plots/uniform_02_50_40_abs.eps>
+(epstopdf)                    date: 2016-12-22 02:56:39
+(epstopdf)                    size: 23613 bytes
+(epstopdf)             Output file: <plots/uniform_02_50_40_abs-eps-converted-t
+o.pdf>
+(epstopdf)                    date: 2017-01-25 09:31:27
+(epstopdf)                    size: 7943 bytes
+(epstopdf)             Command: <repstopdf --outfile=plots/uniform_02_50_40_abs
+-eps-converted-to.pdf plots/uniform_02_50_40_abs.eps>
+(epstopdf)             \includegraphics on input line 439.
+Package epstopdf Info: Output file is already uptodate.
+
+<plots/uniform_02_50_40_abs-eps-converted-to.pdf, id=255, 361.35pt x 252.945pt>
+File: plots/uniform_02_50_40_abs-eps-converted-to.pdf Graphic file (type pdf)
+<use plots/uniform_02_50_40_abs-eps-converted-to.pdf>
+Package pdftex.def Info: plots/uniform_02_50_40_abs-eps-converted-to.pdf used o
+n input line 439.
+(pdftex.def)             Requested size: 240.74716pt x 168.5228pt.
+Package epstopdf Info: Source file: <plots/uniform_03_50_40_abs.eps>
+(epstopdf)                    date: 2016-12-22 02:56:39
+(epstopdf)                    size: 23613 bytes
+(epstopdf)             Output file: <plots/uniform_03_50_40_abs-eps-converted-t
+o.pdf>
+(epstopdf)                    date: 2016-12-22 03:03:54
+(epstopdf)                    size: 7936 bytes
+(epstopdf)             Command: <repstopdf --outfile=plots/uniform_03_50_40_abs
+-eps-converted-to.pdf plots/uniform_03_50_40_abs.eps>
+(epstopdf)             \includegraphics on input line 441.
+Package epstopdf Info: Output file is already uptodate.
+File: plots/uniform_03_50_40_abs-eps-converted-to.pdf Graphic file (type pdf)
+
+<use plots/uniform_03_50_40_abs-eps-converted-to.pdf>
+Package pdftex.def Info: plots/uniform_03_50_40_abs-eps-converted-to.pdf used o
+n input line 441.
+(pdftex.def)             Requested size: 240.74716pt x 168.5228pt.
+Package epstopdf Info: Source file: <plots/uniform_04_50_40_abs.eps>
+(epstopdf)                    date: 2016-12-22 02:56:40
+(epstopdf)                    size: 23843 bytes
+(epstopdf)             Output file: <plots/uniform_04_50_40_abs-eps-converted-t
+o.pdf>
+(epstopdf)                    date: 2017-01-25 09:31:27
+(epstopdf)                    size: 7970 bytes
+(epstopdf)             Command: <repstopdf --outfile=plots/uniform_04_50_40_abs
+-eps-converted-to.pdf plots/uniform_04_50_40_abs.eps>
+(epstopdf)             \includegraphics on input line 443.
+Package epstopdf Info: Output file is already uptodate.
+
+<plots/uniform_04_50_40_abs-eps-converted-to.pdf, id=256, 361.35pt x 252.945pt>
+File: plots/uniform_04_50_40_abs-eps-converted-to.pdf Graphic file (type pdf)
+<use plots/uniform_04_50_40_abs-eps-converted-to.pdf>
+Package pdftex.def Info: plots/uniform_04_50_40_abs-eps-converted-to.pdf used o
+n input line 443.
+(pdftex.def)             Requested size: 240.74716pt x 168.5228pt.
+Package epstopdf Info: Source file: <plots/uniform_049999_50_40_abs.eps>
+(epstopdf)                    date: 2016-12-22 02:56:40
+(epstopdf)                    size: 23863 bytes
+(epstopdf)             Output file: <plots/uniform_049999_50_40_abs-eps-convert
+ed-to.pdf>
+(epstopdf)                    date: 2017-01-25 09:32:22
+(epstopdf)                    size: 8098 bytes
+(epstopdf)             Command: <repstopdf --outfile=plots/uniform_049999_50_40
+_abs-eps-converted-to.pdf plots/uniform_049999_50_40_abs.eps>
+(epstopdf)             \includegraphics on input line 445.
+Package epstopdf Info: Output file is already uptodate.
+
+<plots/uniform_049999_50_40_abs-eps-converted-to.pdf, id=257, 361.35pt x 252.94
+5pt>
+File: plots/uniform_049999_50_40_abs-eps-converted-to.pdf Graphic file (type pd
+f)
+ <use plots/uniform_049999_50_40_abs-eps-converted-to.pdf>
+Package pdftex.def Info: plots/uniform_049999_50_40_abs-eps-converted-to.pdf us
+ed on input line 445.
+(pdftex.def)             Requested size: 240.74716pt x 168.5228pt.
+
+Overfull \hbox (366.76115pt too wide) in paragraph at lines 439--445
+ [][][][][] 
+ []
+
+
+LaTeX Warning: Float too large for page by 46.66182pt on input line 448.
+
+[16 <./plots/uniform_02_50_40_rel-eps-converted-to.pdf> <./plots/uniform_049999
+_50_40_rel-eps-converted-to.pdf> <./plots/uniform_02_50_40_abs-eps-converted-to
+.pdf> <./plots/uniform_04_50_40_abs-eps-converted-to.pdf> <./plots/uniform_0499
+99_50_40_abs-eps-converted-to.pdf>]
+Missing character: There is no √ in font cmr10!
+Missing character: There is no © in font cmr10!
+Missing character: There is no √ in font cmr10!
+Missing character: There is no ® in font cmr10!
+ [17
+
+
+]
+Package epstopdf Info: Source file: <plots/uniform_04_50_60_time.eps>
+(epstopdf)                    date: 2016-12-22 02:56:40
+(epstopdf)                    size: 22649 bytes
+(epstopdf)             Output file: <plots/uniform_04_50_60_time-eps-converted-
+to.pdf>
+(epstopdf)                    date: 2016-12-23 20:19:09
+(epstopdf)                    size: 6963 bytes
+(epstopdf)             Command: <repstopdf --outfile=plots/uniform_04_50_60_tim
+e-eps-converted-to.pdf plots/uniform_04_50_60_time.eps>
+(epstopdf)             \includegraphics on input line 461.
+Package epstopdf Info: Output file is already uptodate.
+File: plots/uniform_04_50_60_time-eps-converted-to.pdf Graphic file (type pdf)
+
+<use plots/uniform_04_50_60_time-eps-converted-to.pdf>
+Package pdftex.def Info: plots/uniform_04_50_60_time-eps-converted-to.pdf used 
+on input line 461.
 (pdftex.def)             Requested size: 152.22604pt x 106.55652pt.
 Package epstopdf Info: Source file: <plots/gaussian_04_50_60_time.eps>
 (epstopdf)                    date: 2016-12-23 20:14:56
@@ -579,16 +1346,16 @@ Package epstopdf Info: Source file: <plots/gaussian_04_50_60_time.eps>
 (epstopdf)                    size: 6973 bytes
 (epstopdf)             Command: <repstopdf --outfile=plots/gaussian_04_50_60_ti
 me-eps-converted-to.pdf plots/gaussian_04_50_60_time.eps>
-(epstopdf)             \includegraphics on input line 335.
+(epstopdf)             \includegraphics on input line 463.
 Package epstopdf Info: Output file is already uptodate.
 
-<plots/gaussian_04_50_60_time-eps-converted-to.pdf, id=102, 361.35pt x 252.945p
+<plots/gaussian_04_50_60_time-eps-converted-to.pdf, id=289, 361.35pt x 252.945p
 t>
 File: plots/gaussian_04_50_60_time-eps-converted-to.pdf Graphic file (type pdf)
 
  <use plots/gaussian_04_50_60_time-eps-converted-to.pdf>
 Package pdftex.def Info: plots/gaussian_04_50_60_time-eps-converted-to.pdf used
- on input line 335.
+ on input line 463.
 (pdftex.def)             Requested size: 152.22604pt x 106.55652pt.
 Package epstopdf Info: Source file: <plots/smallworld_04_50_60_time.eps>
 (epstopdf)                    date: 2016-12-23 20:14:56
@@ -599,16 +1366,16 @@ ed-to.pdf>
 (epstopdf)                    size: 7123 bytes
 (epstopdf)             Command: <repstopdf --outfile=plots/smallworld_04_50_60_
 time-eps-converted-to.pdf plots/smallworld_04_50_60_time.eps>
-(epstopdf)             \includegraphics on input line 337.
+(epstopdf)             \includegraphics on input line 465.
 Package epstopdf Info: Output file is already uptodate.
 
-<plots/smallworld_04_50_60_time-eps-converted-to.pdf, id=103, 361.35pt x 252.94
+<plots/smallworld_04_50_60_time-eps-converted-to.pdf, id=290, 361.35pt x 252.94
 5pt>
 File: plots/smallworld_04_50_60_time-eps-converted-to.pdf Graphic file (type pd
 f)
  <use plots/smallworld_04_50_60_time-eps-converted-to.pdf>
 Package pdftex.def Info: plots/smallworld_04_50_60_time-eps-converted-to.pdf us
-ed on input line 337.
+ed on input line 465.
 (pdftex.def)             Requested size: 152.22604pt x 106.55652pt.
 Package epstopdf Info: Source file: <plots/scalefree_04_50_60_time.eps>
 (epstopdf)                    date: 2016-12-23 20:14:56
@@ -619,24 +1386,24 @@ d-to.pdf>
 (epstopdf)                    size: 7157 bytes
 (epstopdf)             Command: <repstopdf --outfile=plots/scalefree_04_50_60_t
 ime-eps-converted-to.pdf plots/scalefree_04_50_60_time.eps>
-(epstopdf)             \includegraphics on input line 339.
+(epstopdf)             \includegraphics on input line 467.
 Package epstopdf Info: Output file is already uptodate.
 
-<plots/scalefree_04_50_60_time-eps-converted-to.pdf, id=104, 361.35pt x 252.945
+<plots/scalefree_04_50_60_time-eps-converted-to.pdf, id=291, 361.35pt x 252.945
 pt>
 File: plots/scalefree_04_50_60_time-eps-converted-to.pdf Graphic file (type pdf
 )
  <use plots/scalefree_04_50_60_time-eps-converted-to.pdf>
 Package pdftex.def Info: plots/scalefree_04_50_60_time-eps-converted-to.pdf use
-d on input line 339.
+d on input line 467.
 (pdftex.def)             Requested size: 152.22604pt x 106.55652pt.
 
-Overfull \hbox (12.67668pt too wide) in paragraph at lines 333--339
+Overfull \hbox (12.67668pt too wide) in paragraph at lines 461--467
  [][][][][] 
  []
 
 Package epstopdf Info: Source file: <plots/uniform_04_50_60_rel.eps>
-(epstopdf)                    date: 2016-12-23 20:15:36
+(epstopdf)                    date: 2016-12-22 02:56:40
 (epstopdf)                    size: 22546 bytes
 (epstopdf)             Output file: <plots/uniform_04_50_60_rel-eps-converted-t
 o.pdf>
@@ -644,14 +1411,12 @@ o.pdf>
 (epstopdf)                    size: 7153 bytes
 (epstopdf)             Command: <repstopdf --outfile=plots/uniform_04_50_60_rel
 -eps-converted-to.pdf plots/uniform_04_50_60_rel.eps>
-(epstopdf)             \includegraphics on input line 341.
+(epstopdf)             \includegraphics on input line 469.
 Package epstopdf Info: Output file is already uptodate.
-
-<plots/uniform_04_50_60_rel-eps-converted-to.pdf, id=105, 361.35pt x 252.945pt>
 File: plots/uniform_04_50_60_rel-eps-converted-to.pdf Graphic file (type pdf)
 <use plots/uniform_04_50_60_rel-eps-converted-to.pdf>
 Package pdftex.def Info: plots/uniform_04_50_60_rel-eps-converted-to.pdf used o
-n input line 341.
+n input line 469.
 (pdftex.def)             Requested size: 152.22604pt x 106.55652pt.
 Package epstopdf Info: Source file: <plots/gaussian_04_50_60_rel.eps>
 (epstopdf)                    date: 2016-12-23 20:15:36
@@ -662,15 +1427,15 @@ to.pdf>
 (epstopdf)                    size: 7184 bytes
 (epstopdf)             Command: <repstopdf --outfile=plots/gaussian_04_50_60_re
 l-eps-converted-to.pdf plots/gaussian_04_50_60_rel.eps>
-(epstopdf)             \includegraphics on input line 343.
+(epstopdf)             \includegraphics on input line 471.
 Package epstopdf Info: Output file is already uptodate.
 
-<plots/gaussian_04_50_60_rel-eps-converted-to.pdf, id=106, 361.35pt x 252.945pt
+<plots/gaussian_04_50_60_rel-eps-converted-to.pdf, id=292, 361.35pt x 252.945pt
 >
 File: plots/gaussian_04_50_60_rel-eps-converted-to.pdf Graphic file (type pdf)
  <use plots/gaussian_04_50_60_rel-eps-converted-to.pdf>
 Package pdftex.def Info: plots/gaussian_04_50_60_rel-eps-converted-to.pdf used 
-on input line 343.
+on input line 471.
 (pdftex.def)             Requested size: 152.22604pt x 106.55652pt.
 Package epstopdf Info: Source file: <plots/smallworld_04_50_60_rel.eps>
 (epstopdf)                    date: 2016-12-23 20:15:36
@@ -681,16 +1446,16 @@ d-to.pdf>
 (epstopdf)                    size: 7199 bytes
 (epstopdf)             Command: <repstopdf --outfile=plots/smallworld_04_50_60_
 rel-eps-converted-to.pdf plots/smallworld_04_50_60_rel.eps>
-(epstopdf)             \includegraphics on input line 345.
+(epstopdf)             \includegraphics on input line 473.
 Package epstopdf Info: Output file is already uptodate.
 
-<plots/smallworld_04_50_60_rel-eps-converted-to.pdf, id=107, 361.35pt x 252.945
+<plots/smallworld_04_50_60_rel-eps-converted-to.pdf, id=293, 361.35pt x 252.945
 pt>
 File: plots/smallworld_04_50_60_rel-eps-converted-to.pdf Graphic file (type pdf
 )
  <use plots/smallworld_04_50_60_rel-eps-converted-to.pdf>
 Package pdftex.def Info: plots/smallworld_04_50_60_rel-eps-converted-to.pdf use
-d on input line 345.
+d on input line 473.
 (pdftex.def)             Requested size: 152.22604pt x 106.55652pt.
 Package epstopdf Info: Source file: <plots/scalefree_04_50_60_rel.eps>
 (epstopdf)                    date: 2016-12-23 20:15:36
@@ -701,74 +1466,73 @@ Package epstopdf Info: Source file: <plots/scalefree_04_50_60_rel.eps>
 (epstopdf)                    size: 7191 bytes
 (epstopdf)             Command: <repstopdf --outfile=plots/scalefree_04_50_60_r
 el-eps-converted-to.pdf plots/scalefree_04_50_60_rel.eps>
-(epstopdf)             \includegraphics on input line 347.
+(epstopdf)             \includegraphics on input line 475.
 Package epstopdf Info: Output file is already uptodate.
 
-<plots/scalefree_04_50_60_rel-eps-converted-to.pdf, id=108, 361.35pt x 252.945p
+<plots/scalefree_04_50_60_rel-eps-converted-to.pdf, id=294, 361.35pt x 252.945p
 t>
 File: plots/scalefree_04_50_60_rel-eps-converted-to.pdf Graphic file (type pdf)
 
  <use plots/scalefree_04_50_60_rel-eps-converted-to.pdf>
 Package pdftex.def Info: plots/scalefree_04_50_60_rel-eps-converted-to.pdf used
- on input line 347.
+ on input line 475.
 (pdftex.def)             Requested size: 152.22604pt x 106.55652pt.
 
-Overfull \hbox (12.67668pt too wide) in paragraph at lines 341--348
+Overfull \hbox (12.67668pt too wide) in paragraph at lines 469--476
  [][][][][] 
  []
 
-[10
+[18
 
- <./plots/uniform_04_50_60_time-eps-converted-to.pdf> <./plots/gaussian_04_50_6
-0_time-eps-converted-to.pdf> <./plots/smallworld_04_50_60_time-eps-converted-to
-.pdf> <./plots/scalefree_04_50_60_time-eps-converted-to.pdf> <./plots/uniform_0
-4_50_60_rel-eps-converted-to.pdf> <./plots/gaussian_04_50_60_rel-eps-converted-
-to.pdf> <./plots/smallworld_04_50_60_rel-eps-converted-to.pdf> <./plots/scalefr
-ee_04_50_60_rel-eps-converted-to.pdf>]
+ <./plots/gaussian_04_50_60_time-eps-converted-to.pdf> <./plots/smallworld_04_5
+0_60_time-eps-converted-to.pdf> <./plots/scalefree_04_50_60_time-eps-converted-
+to.pdf> <./plots/gaussian_04_50_60_rel-eps-converted-to.pdf> <./plots/smallworl
+d_04_50_60_rel-eps-converted-to.pdf> <./plots/scalefree_04_50_60_rel-eps-conver
+ted-to.pdf>]
 
-LaTeX Warning: Reference `GAUSSIAN_E_02_W_20_D_100' on page 11 undefined on inp
-ut line 354.
-
-
-LaTeX Warning: Reference `SCALE_FREE_E_02_W_20_D_100' on page 11 undefined on i
-nput line 354.
+LaTeX Warning: Reference `GAUSSIAN_E_02_W_20_D_100' on page 19 undefined on inp
+ut line 482.
 
 
-LaTeX Warning: Reference `GAUSSIAN_E_02_W_20_D_100' on page 11 undefined on inp
-ut line 354.
+LaTeX Warning: Reference `SCALE_FREE_E_02_W_20_D_100' on page 19 undefined on i
+nput line 482.
 
 
-LaTeX Warning: Reference `GAUSSIAN_E_02_W_20_D_10' on page 11 undefined on inpu
-t line 354.
+LaTeX Warning: Reference `GAUSSIAN_E_02_W_20_D_100' on page 19 undefined on inp
+ut line 482.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 354--355
-
- []
-
-
-LaTeX Warning: Reference `GAUSSIAN_E_02_W_80_D_100' on page 11 undefined on inp
-ut line 360.
+LaTeX Warning: Reference `GAUSSIAN_E_02_W_20_D_10' on page 19 undefined on inpu
+t line 482.
 
 
-LaTeX Warning: Reference `SMALL_WORLD_E_02_W_80_D_100' on page 11 undefined on 
-input line 360.
-
-
-LaTeX Warning: Reference `UNIFORM_BIG_RUN_EPS' on page 11 undefined on input li
-ne 368.
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 368--370
+Underfull \hbox (badness 10000) in paragraph at lines 482--483
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 371--372
+LaTeX Warning: Reference `GAUSSIAN_E_02_W_80_D_100' on page 19 undefined on inp
+ut line 488.
+
+
+LaTeX Warning: Reference `SMALL_WORLD_E_02_W_80_D_100' on page 19 undefined on 
+input line 488.
+
+
+LaTeX Warning: Reference `UNIFORM_BIG_RUN_EPS' on page 19 undefined on input li
+ne 496.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 496--498
 
  []
 
-[11
+
+Underfull \hbox (badness 10000) in paragraph at lines 499--500
+
+ []
+
+[19
 
 ]
 Package epstopdf Info: Source file: <plots/same_gap.eps>
@@ -779,14 +1543,14 @@ Package epstopdf Info: Source file: <plots/same_gap.eps>
 (epstopdf)                    size: 6489 bytes
 (epstopdf)             Command: <repstopdf --outfile=plots/same_gap-eps-convert
 ed-to.pdf plots/same_gap.eps>
-(epstopdf)             \includegraphics on input line 407.
+(epstopdf)             \includegraphics on input line 564.
 Package epstopdf Info: Output file is already uptodate.
- <plots/same_gap-eps-converted-to.pdf, id=155, 361.35pt x 252.945pt>
+ <plots/same_gap-eps-converted-to.pdf, id=333, 361.35pt x 252.945pt>
 File: plots/same_gap-eps-converted-to.pdf Graphic file (type pdf)
 
 <use plots/same_gap-eps-converted-to.pdf>
 Package pdftex.def Info: plots/same_gap-eps-converted-to.pdf used on input line
- 407.
+ 564.
 (pdftex.def)             Requested size: 194.4492pt x 136.11353pt.
 Package epstopdf Info: Source file: <plots/diff_gap.eps>
 (epstopdf)                    date: 2017-01-23 15:47:43
@@ -796,33 +1560,23 @@ Package epstopdf Info: Source file: <plots/diff_gap.eps>
 (epstopdf)                    size: 6579 bytes
 (epstopdf)             Command: <repstopdf --outfile=plots/diff_gap-eps-convert
 ed-to.pdf plots/diff_gap.eps>
-(epstopdf)             \includegraphics on input line 409.
+(epstopdf)             \includegraphics on input line 566.
 Package epstopdf Info: Output file is already uptodate.
 
-<plots/diff_gap-eps-converted-to.pdf, id=156, 361.35pt x 252.945pt>
+<plots/diff_gap-eps-converted-to.pdf, id=334, 361.35pt x 252.945pt>
 File: plots/diff_gap-eps-converted-to.pdf Graphic file (type pdf)
 
 <use plots/diff_gap-eps-converted-to.pdf>
 Package pdftex.def Info: plots/diff_gap-eps-converted-to.pdf used on input line
- 409.
+ 566.
 (pdftex.def)             Requested size: 194.4492pt x 136.11353pt.
 
-Overfull \hbox (18.51466pt too wide) in paragraph at lines 407--410
+Overfull \hbox (18.51466pt too wide) in paragraph at lines 564--567
  [][][] 
  []
 
-
-LaTeX Warning: Citation `same_gap' on page 12 undefined on input line 414.
-
-
-LaTeX Warning: Citation `diff_gap' on page 12 undefined on input line 414.
-
-
-LaTeX Warning: Citation `gaps' on page 12 undefined on input line 416.
-
-[12 <./plots/same_gap-eps-converted-to.pdf> <./plots/diff_gap-eps-converted-to.
-pdf>]
-Underfull \hbox (badness 10000) in paragraph at lines 429--430
+[20]
+Underfull \hbox (badness 10000) in paragraph at lines 588--589
 []\OT1/cmr/m/sc/8 Beman Dawes, David Abra-hams, Rene Rivera\OT1/cmr/m/n/8 , Boo
 st C++ Li-braries.
  []
@@ -830,19 +1584,20 @@ st C++ Li-braries.
 Missing character: There is no ‚ in font cmti8!
 Missing character: There is no Ä in font cmti8!
 Missing character: There is no ì in font cmti8!
-[13] (./lexample.aux)
+[21 <./plots/same_gap-eps-converted-to.pdf> <./plots/diff_gap-eps-converted-to.
+pdf>] (./lexample.aux)
 
 LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 4997 strings out of 493013
- 76429 string characters out of 6139316
- 147032 words of memory out of 5000000
- 8434 multiletter control sequences out of 15000+600000
- 8624 words of font info for 32 fonts, out of 8000000 for 9000
+ 5986 strings out of 493013
+ 94677 string characters out of 6139317
+ 168366 words of memory out of 5000000
+ 9371 multiletter control sequences out of 15000+600000
+ 10375 words of font info for 38 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 68i,12n,98p,1230b,483s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 68i,12n,98p,1282b,582s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/
 texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb></usr/share/texmf-dist/font
 s/type1/public/amsfonts/cm/cmcsc10.pfb></usr/share/texmf-dist/fonts/type1/publi
@@ -851,21 +1606,24 @@ cmmi10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></us
 r/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texmf-d
 ist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texmf-dist/fonts/type1
 /public/amsfonts/cm/cmmi8.pfb></usr/share/texmf-dist/fonts/type1/public/amsfont
-s/cm/cmr10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb><
-/usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/texmf
--dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texmf-dist/fonts/type
-1/public/amsfonts/cm/cmr8.pfb></usr/share/texmf-dist/fonts/type1/public/amsfont
-s/cm/cmss10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pf
-b></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/share/t
-exmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texmf-dist/fonts
-/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texmf-dist/fonts/type1/public/a
-msfonts/cm/cmti10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmt
-i8.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/s
-hare/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb>
-Output written on lexample.pdf (13 pages, 364656 bytes).
+s/cm/cmmi9.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb>
+</usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/share/texm
+f-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/texmf-dist/fonts/typ
+e1/public/amsfonts/cm/cmr7.pfb></usr/share/texmf-dist/fonts/type1/public/amsfon
+ts/cm/cmr8.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb><
+/usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/share/tex
+mf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf-dist/fonts/
+type1/public/amsfonts/cm/cmsy6.pfb></usr/share/texmf-dist/fonts/type1/public/am
+sfonts/cm/cmsy7.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8
+.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/shar
+e/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texmf-dist/f
+onts/type1/public/amsfonts/cm/cmti8.pfb></usr/share/texmf-dist/fonts/type1/publ
+ic/amsfonts/cm/cmtt10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm
+/cmtt8.pfb>
+Output written on lexample.pdf (21 pages, 517082 bytes).
 PDF statistics:
- 248 PDF objects out of 1000 (max. 8388607)
- 172 compressed objects within 2 object streams
+ 436 PDF objects out of 1000 (max. 8388607)
+ 298 compressed objects within 3 object streams
  0 named destinations out of 1000 (max. 500000)
- 91 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 216 words of extra memory for PDF output out of 10000 (max. 10000000)
 

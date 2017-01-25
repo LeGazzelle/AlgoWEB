@@ -8,6 +8,8 @@
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.1}Random Graphs Generator}{2}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.2}Graph Data Structures}{2}}
 \citation{crt}
+\citation{bbs}
+\citation{cafd}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.3}Tuning the algorithm}{3}}
 \citation{fys}
 \citation{fysc}
@@ -16,11 +18,10 @@
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Random Graphs Models}{4}}
 \@writefile{toc}{\contentsline {section}{\numberline {4}Tests}{5}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Dataset}{5}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Runs}{5}}
+\citation{sta}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Runs}{6}}
+\newlabel{sec:results}{{5}{6}}
 \@writefile{toc}{\contentsline {section}{\numberline {5}Results}{6}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Variations of crucial parameters}{6}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.1.1}Average degree}{6}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Variations of graph model}{6}}
 \providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
 \newlabel{U_03_50_40_time_kruskal}{{5.1a}{7}}
 \newlabel{sub@U_03_50_40_time_kruskal}{{(a)}{a}}
@@ -30,54 +31,139 @@
 \newlabel{sub@U_03_50_40_rel}{{(c)}{c}}
 \@writefile{lof}{\contentsline {figure}{\numberline {5.1}{\ignorespaces Sublinearity of the CRT algorithm.\relax }}{7}}
 \newlabel{is_sublin}{{5.1}{7}}
-\newlabel{U_03_10_40_time}{{5.2a}{8}}
-\newlabel{sub@U_03_10_40_time}{{(a)}{a}}
-\newlabel{U_03_50_40_time}{{5.2b}{8}}
-\newlabel{sub@U_03_50_40_time}{{(b)}{b}}
-\newlabel{U_03_100_40_time}{{5.2c}{8}}
-\newlabel{sub@U_03_100_40_time}{{(c)}{c}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.2}{\ignorespaces Behaviour for the increase of $d$.\relax }}{8}}
-\newlabel{d_increase}{{5.2}{8}}
-\newlabel{U_03_10_40_rel}{{5.3a}{9}}
-\newlabel{sub@U_03_10_40_rel}{{(a)}{a}}
-\newlabel{U_03_50_40_rel2}{{5.3b}{9}}
-\newlabel{sub@U_03_50_40_rel2}{{(b)}{b}}
-\newlabel{U_03_100_40_rel}{{5.3c}{9}}
-\newlabel{sub@U_03_100_40_rel}{{(c)}{c}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.3}{\ignorespaces Behaviour for the increase of $d$.\relax }}{9}}
-\newlabel{d_increase_rel}{{5.3}{9}}
-\newlabel{U_04_50_60_time}{{5.4a}{10}}
-\newlabel{sub@U_04_50_60_time}{{(a)}{a}}
-\newlabel{G_04_50_60_time}{{5.4b}{10}}
-\newlabel{sub@G_04_50_60_time}{{(b)}{b}}
-\newlabel{SW_04_60_40_time}{{5.4c}{10}}
-\newlabel{sub@SW_04_60_40_time}{{(c)}{c}}
-\newlabel{SF_04_60_40_time}{{5.4d}{10}}
-\newlabel{sub@SF_04_60_40_time}{{(d)}{d}}
-\newlabel{U_04_50_60_rel}{{5.4e}{10}}
-\newlabel{sub@U_04_50_60_rel}{{(e)}{e}}
-\newlabel{G_04_50_60_rel}{{5.4f}{10}}
-\newlabel{sub@G_04_50_60_rel}{{(f)}{f}}
-\newlabel{SW_04_50_60_rel}{{5.4g}{10}}
-\newlabel{sub@SW_04_50_60_rel}{{(g)}{g}}
-\newlabel{SF_04_50_60_rel}{{5.4h}{10}}
-\newlabel{sub@SF_04_50_60_rel}{{(h)}{h}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.4}{\ignorespaces Different behaviours for different graph models; fixed values are $\varepsilon = 0.4$, $\mathaccentV {bar}016{d} = 50$, $w_\textup  {max} = 60$.\relax }}{10}}
-\newlabel{model_variation}{{5.4}{10}}
-\@writefile{toc}{\contentsline {section}{\numberline {6}Final thoughts}{11}}
 \citation{crt}
-\citation{same_gap}
-\citation{diff_gap}
-\citation{gaps}
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}Parallel implementation}{12}}
-\@writefile{toc}{\contentsline {section}{\numberline {7}Future prospects}{12}}
-\newlabel{same_gap}{{7.1a}{12}}
-\newlabel{sub@same_gap}{{(a)}{a}}
-\newlabel{diff_gap}{{7.1b}{12}}
-\newlabel{sub@diff_gap}{{(b)}{b}}
-\@writefile{lof}{\contentsline {figure}{\numberline {7.1}{\ignorespaces Expected behaviour with different laws for the distribution of weights.\relax }}{12}}
-\newlabel{gaps}{{7.1}{12}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Variations of crucial parameters}{8}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.1.1}Average degree $d$}{8}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Maximum weight $w$}{8}}
+\newlabel{U_03_10_40_time}{{5.2a}{9}}
+\newlabel{sub@U_03_10_40_time}{{(a)}{a}}
+\newlabel{U_03_50_40_time}{{5.2b}{9}}
+\newlabel{sub@U_03_50_40_time}{{(b)}{b}}
+\newlabel{U_03_100_40_time}{{5.2c}{9}}
+\newlabel{sub@U_03_100_40_time}{{(c)}{c}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.2}{\ignorespaces Behaviour for the increase of $d$. ({\sf  Uniform model})\relax }}{9}}
+\newlabel{d_increase_time}{{5.2}{9}}
+\newlabel{U_03_10_40_rel}{{5.3a}{10}}
+\newlabel{sub@U_03_10_40_rel}{{(a)}{a}}
+\newlabel{U_03_50_40_rel2}{{5.3b}{10}}
+\newlabel{sub@U_03_50_40_rel2}{{(b)}{b}}
+\newlabel{U_03_100_40_rel}{{5.3c}{10}}
+\newlabel{sub@U_03_100_40_rel}{{(c)}{c}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.3}{\ignorespaces Error behaviour for the increase of $d$. ({\sf  Uniform model})\relax }}{10}}
+\newlabel{d_increase_rel}{{5.3}{10}}
+\newlabel{G_03_10_40_time}{{5.4a}{11}}
+\newlabel{sub@G_03_10_40_time}{{(a)}{a}}
+\newlabel{SM_03_10_40_time}{{5.4b}{11}}
+\newlabel{sub@SM_03_10_40_time}{{(b)}{b}}
+\newlabel{G_03_50_40_time}{{5.4c}{11}}
+\newlabel{sub@G_03_50_40_time}{{(c)}{c}}
+\newlabel{SM_03_50_40_time}{{5.4d}{11}}
+\newlabel{sub@SM_03_50_40_time}{{(d)}{d}}
+\newlabel{G_03_100_40_time}{{5.4e}{11}}
+\newlabel{sub@G_03_100_40_time}{{(e)}{e}}
+\newlabel{SM_03_100_40_time}{{5.4f}{11}}
+\newlabel{sub@SM_03_100_40_time}{{(f)}{f}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.4}{\ignorespaces Behaviour for the increase of $d$, different models.\relax }}{11}}
+\newlabel{d_increase_time2}{{5.4}{11}}
+\newlabel{G_03_10_40_rel}{{5.5a}{12}}
+\newlabel{sub@G_03_10_40_rel}{{(a)}{a}}
+\newlabel{SM_03_10_40_rel}{{5.5b}{12}}
+\newlabel{sub@SM_03_10_40_rel}{{(b)}{b}}
+\newlabel{G_03_50_40_rel}{{5.5c}{12}}
+\newlabel{sub@G_03_50_40_rel}{{(c)}{c}}
+\newlabel{SM_03_50_40_rel}{{5.5d}{12}}
+\newlabel{sub@SM_03_50_40_rel}{{(d)}{d}}
+\newlabel{G_03_100_40_rel}{{5.5e}{12}}
+\newlabel{sub@G_03_100_40_rel}{{(e)}{e}}
+\newlabel{SM_03_100_40_rel}{{5.5f}{12}}
+\newlabel{sub@SM_03_100_40_rel}{{(f)}{f}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.5}{\ignorespaces Error behaviour for the increase of $d$, different models.\relax }}{12}}
+\newlabel{d_increase_rel2}{{5.5}{12}}
+\newlabel{U_04_50_20_time}{{5.6a}{13}}
+\newlabel{sub@U_04_50_20_time}{{(a)}{a}}
+\newlabel{U_04_50_40_time}{{5.6b}{13}}
+\newlabel{sub@U_04_50_40_time}{{(b)}{b}}
+\newlabel{U_04_50_60_time2}{{5.6c}{13}}
+\newlabel{sub@U_04_50_60_time2}{{(c)}{c}}
+\newlabel{U_04_50_80_time}{{5.6d}{13}}
+\newlabel{sub@U_04_50_80_time}{{(d)}{d}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.6}{\ignorespaces Behaviour for the increase of $w$. ({\sf  Uniform model})\relax }}{13}}
+\newlabel{w_increase_time}{{5.6}{13}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}Error tolerance $\varepsilon $}{13}}
+\newlabel{U_04_50_20_rel}{{5.7a}{14}}
+\newlabel{sub@U_04_50_20_rel}{{(a)}{a}}
+\newlabel{U_04_50_40_rel}{{5.7b}{14}}
+\newlabel{sub@U_04_50_40_rel}{{(b)}{b}}
+\newlabel{U_04_50_60_rel2}{{5.7c}{14}}
+\newlabel{sub@U_04_50_60_rel2}{{(c)}{c}}
+\newlabel{U_04_50_80_rel}{{5.7d}{14}}
+\newlabel{sub@U_04_50_80_rel}{{(d)}{d}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.7}{\ignorespaces Error behaviour for the increase of $w$. ({\sf  Uniform model})\relax }}{14}}
+\newlabel{w_increase_rel}{{5.7}{14}}
+\newlabel{U_02_50_40_time}{{5.8a}{15}}
+\newlabel{sub@U_02_50_40_time}{{(a)}{a}}
+\newlabel{U_03_50_40_time2}{{5.8b}{15}}
+\newlabel{sub@U_03_50_40_time2}{{(b)}{b}}
+\newlabel{U_04_50_40_time2}{{5.8c}{15}}
+\newlabel{sub@U_04_50_40_time2}{{(c)}{c}}
+\newlabel{U_049999_50_40_time}{{5.8d}{15}}
+\newlabel{sub@U_049999_50_40_time}{{(d)}{d}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.8}{\ignorespaces Behaviour for the increase of $\varepsilon $. ({\sf  Uniform model})\relax }}{15}}
+\newlabel{e_increase_time}{{5.8}{15}}
+\newlabel{U_02_50_40_rel}{{5.9a}{16}}
+\newlabel{sub@U_02_50_40_rel}{{(a)}{a}}
+\newlabel{U_03_50_40_rel3}{{5.9b}{16}}
+\newlabel{sub@U_03_50_40_rel3}{{(b)}{b}}
+\newlabel{U_04_50_40_rel2}{{5.9c}{16}}
+\newlabel{sub@U_04_50_40_rel2}{{(c)}{c}}
+\newlabel{U_049999_50_40_rel}{{5.9d}{16}}
+\newlabel{sub@U_049999_50_40_rel}{{(d)}{d}}
+\newlabel{U_02_50_40_abs}{{5.9e}{16}}
+\newlabel{sub@U_02_50_40_abs}{{(e)}{e}}
+\newlabel{U_03_50_40_abs2}{{5.9f}{16}}
+\newlabel{sub@U_03_50_40_abs2}{{(f)}{f}}
+\newlabel{U_04_50_40_abs}{{5.9g}{16}}
+\newlabel{sub@U_04_50_40_abs}{{(g)}{g}}
+\newlabel{U_049999_50_40_abs}{{5.9h}{16}}
+\newlabel{sub@U_049999_50_40_abs}{{(h)}{h}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.9}{\ignorespaces Absolute and relative value of the error in a {\sf  Uniform} dataset, as $\varepsilon $ changes; fixed values are $\mathaccentV {bar}016{d} = 50$, $w_\textup  {max} = 40$.\relax }}{16}}
+\newlabel{e_increase_rel}{{5.9}{16}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.4}Variations of graph model}{17}}
+\newlabel{U_04_50_60_time}{{5.10a}{18}}
+\newlabel{sub@U_04_50_60_time}{{(a)}{a}}
+\newlabel{G_04_50_60_time}{{5.10b}{18}}
+\newlabel{sub@G_04_50_60_time}{{(b)}{b}}
+\newlabel{SW_04_60_40_time}{{5.10c}{18}}
+\newlabel{sub@SW_04_60_40_time}{{(c)}{c}}
+\newlabel{SF_04_60_40_time}{{5.10d}{18}}
+\newlabel{sub@SF_04_60_40_time}{{(d)}{d}}
+\newlabel{U_04_50_60_rel}{{5.10e}{18}}
+\newlabel{sub@U_04_50_60_rel}{{(e)}{e}}
+\newlabel{G_04_50_60_rel}{{5.10f}{18}}
+\newlabel{sub@G_04_50_60_rel}{{(f)}{f}}
+\newlabel{SW_04_50_60_rel}{{5.10g}{18}}
+\newlabel{sub@SW_04_50_60_rel}{{(g)}{g}}
+\newlabel{SF_04_50_60_rel}{{5.10h}{18}}
+\newlabel{sub@SF_04_50_60_rel}{{(h)}{h}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.10}{\ignorespaces Different behaviours for different graph models; fixed values are $\varepsilon = 0.4$, $\mathaccentV {bar}016{d} = 50$, $w_\textup  {max} = 60$.\relax }}{18}}
+\newlabel{model_variation}{{5.10}{18}}
+\@writefile{toc}{\contentsline {section}{\numberline {6}Final thoughts}{19}}
+\citation{crt}
+\citation{crt}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}Parallel implementation}{20}}
+\@writefile{loa}{\contentsline {algorithm}{\numberline {1}{\ignorespaces First level parallelism for the CRT algorithm\relax }}{20}}
+\newlabel{alg}{{1}{20}}
+\@writefile{toc}{\contentsline {section}{\numberline {7}Future prospects}{20}}
 \bibcite{crt}{1}
-\bibcite{bst}{2}
-\bibcite{fys}{3}
-\bibcite{fysc}{4}
+\bibcite{sta}{2}
+\bibcite{bst}{3}
+\bibcite{fys}{4}
+\bibcite{bbs}{5}
+\bibcite{cafd}{6}
+\bibcite{fysc}{7}
+\newlabel{same_gap}{{7.1a}{21}}
+\newlabel{sub@same_gap}{{(a)}{a}}
+\newlabel{diff_gap}{{7.1b}{21}}
+\newlabel{sub@diff_gap}{{(b)}{b}}
+\@writefile{lof}{\contentsline {figure}{\numberline {7.1}{\ignorespaces Expected behaviour with different laws for the distribution of weights.\relax }}{21}}
+\newlabel{gaps}{{7.1}{21}}
