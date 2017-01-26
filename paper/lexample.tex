@@ -67,6 +67,8 @@
 \usepackage{soul}
 \usepackage{color}
 
+\usepackage{varioref}
+
 \newcommand{\hlgray}[1]{{\sethlcolor{lightgray}\hl{#1}}}
 	
 \newcommand{\pe}{\psi}
@@ -91,7 +93,7 @@
 \def\bfE{\mbox{\boldmath$E$}}
 \def\bfG{\mbox{\boldmath$G$}}
 
-\title{Evaluating a sublinear-time algorithm for the minimum spanning tree weight problem}
+\title{Evaluating a sublinear-time algorithm \\ for the minimum spanning tree weight problem}
 
 % The thanks line in the title should be filled in if there is
 % any support acknowledgement for the overall work to be included
@@ -225,13 +227,18 @@ In order to give exhaustive results, we designed \texttt{grandom} to produce 4 c
 \item Watts-Strogatz model, that builds random graphs with \emph{small-world} properties and $d \approx \frac{2m}{n}$.
 \end{itemize}
 
-We want to emphasize here the fact that for the Barab\'{a}si-Albert model the average degree results to be different respect to the other models; this is due to the algorithm the scientific literature offers to build such graphs. For the other models is always possible to add an arbitrary number of edges keeping the theoretical properties valid; having, on the contrary, for the Barab\'{a}si-Albert model a certain probability $p_k$ at each step to successfully add an edge, this is not possible. But then again, the theory states that if the algorithm starts with a complete graph of $m_0$ vertices (hence $m_0 - 1$ edges), it will produce a Barab\'{a}si-Albert graph whose average degree is scaled by this quantity. Our initial complete graph has $m_0 = 2$ vertices, so we will have $d \approx \frac{2m}{m_0 n} = \frac{m}{n}$. This has to be bore in mind when reading the test results, because when comparing the performances over a Barab\'{a}si-Albert graph with $n$ vertices and $m$ edges and any other one of a different model and same number of vertices and edges, we will have different average degrees. Since the CRT algorithm is designed to only depend on the latter and not $m$ nor $n$, a multiplicative factor of $2$ is to be taken into account.
+\label{ddd}
+We want to emphasize here the fact that for the Barab\'{a}si-Albert model the average degree results to be different respect to the other models; this is due to the algorithm the scientific literature offers to build such graphs. For the other models is always possible to add an arbitrary number of edges keeping the theoretical properties valid; having, on the contrary, for the Barab\'{a}si-Albert model a certain probability $p_k$ at each step to successfully add an edge, it is not possible to build a graph with an arbitrary number of edges; the user can solely give the number of vertices. But then again, the theory states that if the algorithm starts with a complete graph of $m_0$ vertices (hence $m_0 - 1$ edges), it will produce a Barab\'{a}si-Albert graph whose average degree is scaled by this quantity. Our initial complete graph has $m_0 = 2$ vertices, so we will have $d \approx \frac{2m}{m_0 n} = \frac{m}{n}$. A little insight on the proof is the following: the distribution of the degree in the Barab\'{a}si-Albert model is a power law with a cubic exponent. Fortunately, in that case this distribution has a well defined mean. Applying a little of arithmetic we can easily see the truthfulness of what stated previously.
+
+This difference in the models has to be bore in mind when reading the test results, because when comparing the performances over a Barab\'{a}si-Albert graph with $n$ vertices and $m$ edges and any other one of a different model with same number of vertices and edges, we will have different average degrees. Since the CRT algorithm is designed to only depend on the latter and not on $m$ nor $n$, a multiplicative factor of $2$ is to be taken into account.
+
+Our implementation provide a \emph{memory-aware}\footnote{it calculates the average using the \emph{progressive mean} technique, avoiding arithmetic overflow} subroutine that calculates the exact value of $d$ at each run; the values obtained so far agree with the statements above.
 
 \section{Tests}
 The following section reports the results we had launching the algorithm over a variegate dataset of graphs, as described in the next paragraph.
 
 \subsection{Dataset}
-For each random graph model listed in the previous section we decided to produce a dataset; each dataset has a ``family'' of graphs that differs one from each other following a pattern for the parameters. Precisely, this is how the dataset is composed following the rules:
+For each random graph model listed in the previous section we decided to produce a dataset; each dataset has a ``family'' of graphs that differs one from each other following a pattern for the parameters. Precisely, we composed the dataset grouping sets of graphs based on the value of the parameters, following the rules:
 \begin{itemize}
 \item build one set of graphs for each model (\textsf{Uniform, Gaussian, Small-World, Scale-Free});
 \item every set contains in turn other sets, one for each selected value of $n$, i.e. the number of nodes ($5000$, $30000$, $55000$, $80000$, $105000$, $130000$, $155000$, $180000$, $205000$, $230000$);
@@ -252,22 +259,22 @@ Using the dataset just described, we used a pattern for the runs, in order to ha
  \item finally a set for each selected value of $w$.
 \end{itemize}
 
-The first two plots report the absolute and relative error of the CRT result compared to the correct one, calculated with Prim's algorithm; the third report the trend of the used time. As we mentioned, we indeed used Kruskal too but it's not reported here for it was not faster than Prim's times and unuseful for the computation of the MST weight, since already done with Prim's method.
+The first two plots report the absolute and relative error of the CRT result compared to the correct one, calculated with Prim's algorithm; the third report the trend of the used time. As we mentioned, we indeed used Kruskal too but it's not reported here for it was not faster respect to Prim's times and unuseful for the computation of the MST weight, since already done with Prim's method.
 
-We had this way a total of $3 \cdot 4 \cdot 3 \cdot 4 = 144$ plots, or better $48$ different cases of study. A comparision between those cases we consider meaningful finally concludes our work, as reported  below in section~\ref{sec:results}.
+We had this way a total of $3 \cdot 4 \cdot 3 \cdot 4 = 144$ plots, or better $48$ different cases of study. A comparison between those cases we consider meaningful finally concludes our work, as reported  below in section~\ref{sec:results}.
 
 As mentioned before, the parameters should be selected carefully in order to provide a good approximation very fast. In this sense $\varepsilon$ plays a crucial role here: since the CRT algorithm is a probabilistic algorithm and $\varepsilon$ is indeed the driver parameter either for performances and for the accuracy of the estimate MST weight, it does not make sense to choose values too small for this parameter, as the performances could dramatically degrades (as, indeed, is expected).
-So, although it could be of interest to study the right limit of $1/2$, we empirically noted that values of $\varepsilon$ below $0.2$ shows undesired behaviour of the CRT algorithm, for the computed MST weights and for the running times either.
+So, although it could be of interest to study the right limit of $1/2$, we empirically noted that values of $\varepsilon$ below $0.2$ shows undesired behaviour of the CRT algorithm, either for the computed MST weights and for the running times.
 This is not unusual dealing with theoretical algorithms that shows \emph{asymptotical} properties; the class this algorithm belongs to is known as \emph{property testing algorithms}, whose requirement is to have a query complexity much smaller than the instance size of the problem. Given that and the fact that the algorithm is not required to compute an \emph{exact} value, but to \emph{estimate} a value \emph{probabilistically near} to the correct one\footnote{iff the property we are looking for is a \emph{probabilistically checkable proof}, see~\cite{sta}}, we are not surprised that if the instance of the problem is small, the algorithm shows worse performances respect to a ``deterministic'' method. Because of this, results for $\varepsilon < 0.2$ were not comprehensive nor interesting and are not reported.
 
-Given the intrinsically probabilistic nature of the CRT algorithm, we had to launch several runs on the same graph to have a good estimate of the CRT running time. For this purpose we decided to launch 10 runs for each graph of the dataset, and to take the average running time as the estimate of the running time; this number has been decided as a compromise between having a low variance between mode and mean values, and keeping a restrained amount of tests to do over the whole dataset. For the output value of the approximated MST weight we instead toke one over the ones computed, randomly, to preserve the information on the tolerance of the estimate.
+Given the intrinsically probabilistic nature of the CRT algorithm, we had to launch several runs on the same graph to have a good estimate of the CRT running time. For this purpose we decided to launch 10 runs for each graph of the dataset, and to take the average running time as the estimate of the running time; the amount of runs has been decided as a compromise between having a low variance between execution time's mode and mean values, and keeping a restrained amount of tests to do over the whole dataset. For the output value of the approximated MST weight we instead took one over the ones computed, randomly, to preserve the information on the tolerance of the estimate.
 
  
 \section{Results}\label{sec:results}
  
 Following there are considerations about the meaningful line charts regarding the results.
 
-We know that the CRT time complexity is $O(dw\varepsilon^{-2} \log{\dfrac{dw}{\varepsilon}})$, where $d$ is the average degree of a graph; indeed we know that the accuracy depends on $\varepsilon$ also, so we expect an inversely proportional relation with the running time. Therefore what we expect is that:
+We know that the CRT time complexity is $O(dw\varepsilon^{-2} \log{\dfrac{dw}{\varepsilon}})$, where $d$ is the average degree of a graph; on the other hand, we know that the accuracy depends on $\varepsilon$ also, so we expect an inversely proportional relation with the running time. Therefore what we expect is that:
 \begin{itemize}
 \item by increasing one or more of the parameters $d$, $w$, there should be a worsening of the average running time;
 \item keeping all the other parameters unchanged, if we consider an increase in the value of $\varepsilon$ there must be an improvement of the running time (as well as a worsening of the result, though);
@@ -275,7 +282,11 @@ We know that the CRT time complexity is $O(dw\varepsilon^{-2} \log{\dfrac{dw}{\v
 \end{itemize}
 Let us call the above \emph{crucial parameters}.
 
-First thing to show is that the CRT algorithm is sublinear in the number of edges, hence is better than any other \emph{exact} algorithm. This can be easily seen in figures from~\ref{U_03_50_40_time_kruskal} to~\ref{U_03_50_40_rel}. For the rest of the plots listed from now on, it is possibile to see the values of the parameters for the presented run above the graph.
+What we still need to know is what happens to the error; we should expect a direct proportion with the running times, so the above considerations could be also valid for the error. On the contrary, we'll see that this is not exactly respected.
+
+First thing to show is that the CRT algorithm is sublinear in the number of edges, hence is better than any other \emph{exact} algorithm. This can be easily seen in figures from~\ref{U_03_50_40_time_kruskal} to~\ref{U_03_50_40_rel}. For the rest of the plots listed from now on it is possibile to see, above each graph, the values of the parameters for the presented run.
+
+It is interesting to note that the correct value, computed with Prim's algorithm, it's linear in the number of edges (figure~\ref{U_03_50_40_abs}); we want to stress the fact that this is not the general case, and that this trend is due to the uniform distribution of the weights over the edges. We will dissect this point more in section~\ref{rtn}.
 
 \begin{figure}[htbp]
  \centering
@@ -285,7 +296,7 @@ First thing to show is that the CRT algorithm is sublinear in the number of edge
  {\includegraphics[width=.45\textwidth]{plots/uniform_03_50_40_abs}\label{U_03_50_40_abs}} \quad
  \subfloat[][\emph{Absolute error}.]
  {\includegraphics[width=.45\textwidth]{plots/uniform_03_50_40_rel}\label{U_03_50_40_rel}}
- \caption{Sublinearity of the CRT algorithm.}
+ \caption{Sublinearity of the CRT algorithm and related error trends.}
  \label{is_sublin}
 \end{figure}
 
@@ -309,6 +320,7 @@ Let us now see the behaviour for the variation of $d$; we will initially concent
 \end{figure}
 
 As we can see in figures~\ref{U_03_10_40_time} to~\ref{U_03_100_40_time}, there is a worsening in the performance \emph{for small instances}: an increase of the average degree $d$ is somewhat correlated to a loss of performances to the point that our property testing algorithm needs more time that the deterministic one; still, that seems to be true \emph{under} a certain dimension of the instance of the graph, so that we don't lose the truthfulness of the theoretical time complexity because for a fixed $d^*$ it will always be possibile to find empirically a certain number of edges $m^* \propto d^*$ beyond which the running time function is always below $C \cdot dw\varepsilon^{-2} \log{\dfrac{dw}{\varepsilon}}$ for a certain $C$.\footnote{that comes directly from the definition of \emph{asymptotic complexity}}
+We want here to highlight the crucial fact that the algorithm behaves better on \emph{big} instances, where with ``\emph{big}'' we refer to the parameters the performances depend on, namely $d$, $w$. Almost all the trends reported in this paper, in fact, show this initial ``bad'' curve and, from a certain value onward, a sublinear behaviour. We will discuss further about this in section~\vref{gbb}.
 
 \begin{figure}[htbp]
  \centering
@@ -322,7 +334,9 @@ As we can see in figures~\ref{U_03_10_40_time} to~\ref{U_03_100_40_time}, there 
  \label{d_increase_rel}
 \end{figure}
 
-We would speculate that the error could be related to this. Indeed in figure~\ref{d_increase_rel} we can see that to an increase of $d$ corresponds a dramatic annihilation of the error, highlighting the fact that the algorithm behaves better on big instances, where with \emph{big} we refer to the parameters the performances depend on, namely $d$, $\varepsilon$ and $w$. We see in fact, from all the results showed in this paper, that the performances of the CRT are completely untied from the number of vertices $n$ and from the number of edges $m$ of the input graph; this suggests us also that the error is in turn driven solely by the first parameters, as the results that follow are in fact going to prove.
+We would speculate that the error could be related to this. Indeed in figure~\ref{d_increase_rel} we can see that to an increase of $d$ corresponds a dramatic annihilation of the error; to explain this point we use a simplified example. Let us consider a minimal complete graph\footnote{a connected graph with the least number of edges, i.e. $n-1$}; the algorithm launches some BFSes on a \emph{strict subset} of the graph, in more steps that could be interrupted according to certain rules, based in part on a stochastic process. It is easily provable that in this kind of graphs we have a worst case of $n-1$ hops between to vertices $u$ and $v$; if we add a random edge to this graph, the length of this path decrease \emph{at least} of one hop. By induction we can hence prove that the \emph{diameter} of the graph decreases as $\left| E(G) \right|$ grows. In other words having a stronger connection within the graph (i.e. a greater probability to visit a vertex $v$ from $u$ in $k$ hops of a random walk) increases the probability to have a complete view of the graph, that is more \emph{information} about the MST weight.
+
+Moreover, we saw in our study of all the results showed in this paper, that the performances of the CRT are completely untied from the number of vertices $n$ and from the number of edges $m$ of the input graph; this suggests us also that the error is in turn driven solely by the parameters responsible of the algorithm's complexity, as the results that follow are in fact going to prove.
 
 In figure~\ref{d_increase_time2} we summarize the results for the Gaussian and Small-World models, noticing that they equate the one we showed about the uniform model. This suggests that the algorithm complexity does not depend on the dimension and clustering coefficient of the graphs, being those the main differences from one model to another.
 
@@ -340,13 +354,13 @@ In figure~\ref{d_increase_time2} we summarize the results for the Gaussian and S
  {\includegraphics[width=.65\textwidth]{plots/gaussian_03_100_40_time}\label{G_03_100_40_time}}
  \subfloat[][small-world, $d \simeq 200$]
  {\includegraphics[width=.65\textwidth]{plots/smallworld_03_100_40_time}\label{SM_03_100_40_time}}
- \caption{Behaviour for the increase of $d$, different models.}
+ \caption{Execution times behaviour for the increase of $d$, different models.}
  \label{d_increase_time2}
 \end{figure}
 
 In figure~\ref{d_increase_rel2} we summarize instead the trend of the relative error; we see here a slightly different evolution. We cannot conclude, as we did for the time complexity, that the error doesn't suffer from the different graph model. The error in fact depends on the clustering coefficient, because it is going to grow dependently on the number of not accomplished BFSes: each one of them cause in fact a loss of information. The algorithm, as well explained in~\cite{crt}, during the BFSes phase avoid to explore nodes that shows a high degree and even stops when encounters hubs.
 
-In other words, having equals values of $d$ in two different runs of the algorithm, we see that its time complexity trend remain the same; this tells us that the time complexity is bound to the \emph{average} of the degrees of the $n$ vertices of the graph. Since we instead have a growth of the error for graphs that contains hubs, we conclude that the relative error is bound to the \emph{variance} of all the degrees.
+In other words, having equals values of $d$ in two different runs of the algorithm, we see that its time complexity trend remain the same; assuming that $\delta$ is the sample mean of the vertices degree, this tells us that the time complexity is bound to the \emph{average} of $\delta$ and, since we have a growth of the error on graphs that contains hubs, we also conclude that the relative error is bound to the \emph{variance} of $\delta$.
 
 \begin{figure}[htbp]
  \centering
@@ -385,7 +399,9 @@ Here we will manipulate the value of $w$, similarly to what we have already done
  \label{w_increase_time}
 \end{figure}
 
-This time we see the error growing as $w$ increase. So we see a \emph{direct} proportion with the maximum weight, unlike the \emph{inverse} proportion we had with $d$. This is due to the fact that every iteration of the subroutine \texttt{approx-number-connected-components} that you can find in the original paper and remembered in pseudocode~\ref{alg}, add a further approximation to the final result, because approximate the addend $\hat{c}$ that contributes to the total approximation, that is, the final error.
+This time we see the error growing as $w$ increase. So we see here a \emph{direct} proportion of the execution time with the maximum weight, unlike the \emph{inverse} proportion it had with $d$. This is due to the fact that every iteration of the subroutine \texttt{approx-number-connected-components} that the reader can find in the original paper and remembered in pseudocode~\ref{alg}, adds a further approximation to the final result, because approximates the addend $\hat{c}$ that contributes to the total approximation, that is, the final error.
+
+We see also that the dimension of the initial curve described here so far, grows proportionally to the worsening of the excution time's trend. This evidence also is observable in all the trends studied.
 
 \begin{figure}[htbp]
  \centering
@@ -421,37 +437,43 @@ We will test our algorithm for the values of $\varepsilon = 0.2, 0.3, 0.4, 0.499
  \label{e_increase_time}
 \end{figure}
 
-As expected, we do note that the time trends tend to decrease as $\varepsilon$ increase, since we tolerate a higher error for the result, so the algorithm is less aggressive on computation.
+As expected, we do note that the time trends tend to decrease as $\varepsilon$ increases, since we tolerate a higher error for the computed value, so the algorithm is less aggressive on computation and takes less time.
 
 \begin{landscape}
 
 \begin{figure}[htbp]
  \centering
  \subfloat[][$\varepsilon = 0.2$]
- {\includegraphics[width=.65\textwidth]{plots/uniform_02_50_40_rel}\label{U_02_50_40_rel}}
+ {\includegraphics[width=.411\textwidth]{plots/uniform_02_50_40_rel}\label{U_02_50_40_rel}}
  \subfloat[][$\varepsilon = 0.3$]
- {\includegraphics[width=.65\textwidth]{plots/uniform_03_50_40_rel}\label{U_03_50_40_rel3}}
+ {\includegraphics[width=.411\textwidth]{plots/uniform_03_50_40_rel}\label{U_03_50_40_rel3}}
  \subfloat[][$\varepsilon = 0.4$]
- {\includegraphics[width=.65\textwidth]{plots/uniform_04_50_40_rel}\label{U_04_50_40_rel2}}
+ {\includegraphics[width=.411\textwidth]{plots/uniform_04_50_40_rel}\label{U_04_50_40_rel2}}
  \subfloat[][$\varepsilon = 0.49999$]
- {\includegraphics[width=.65\textwidth]{plots/uniform_049999_50_40_rel}\label{U_049999_50_40_rel}} \\
+ {\includegraphics[width=.411\textwidth]{plots/uniform_049999_50_40_rel}\label{U_049999_50_40_rel}} \\
   \subfloat[][$\varepsilon = 0.2$]
- {\includegraphics[width=.65\textwidth]{plots/uniform_02_50_40_abs}\label{U_02_50_40_abs}}
+ {\includegraphics[width=.411\textwidth]{plots/uniform_02_50_40_abs}\label{U_02_50_40_abs}}
  \subfloat[][$\varepsilon = 0.3$]
- {\includegraphics[width=.65\textwidth]{plots/uniform_03_50_40_abs}\label{U_03_50_40_abs2}}
+ {\includegraphics[width=.411\textwidth]{plots/uniform_03_50_40_abs}\label{U_03_50_40_abs2}}
  \subfloat[][$\varepsilon = 0.4$]
- {\includegraphics[width=.65\textwidth]{plots/uniform_04_50_40_abs}\label{U_04_50_40_abs}}
+ {\includegraphics[width=.411\textwidth]{plots/uniform_04_50_40_abs}\label{U_04_50_40_abs}}
  \subfloat[][$\varepsilon = 0.49999$]
- {\includegraphics[width=.65\textwidth]{plots/uniform_049999_50_40_abs}\label{U_049999_50_40_abs}} \\
+ {\includegraphics[width=.411\textwidth]{plots/uniform_049999_50_40_abs}\label{U_049999_50_40_abs}} \\
  \caption{Absolute and relative value of the error in a {\sf Uniform} dataset, as $\varepsilon$ changes; fixed values are $\bar{d} = 50$, $w_\textup{max} = 40$.}
  \label{e_increase_rel}
 \end{figure}
 
 \end{landscape}
 
-sembra che non torni invece torna perché cambia la scala, questa è una cosa da dire
+For the error trend instead we note an increase, still as expected; figures from~\ref{U_02_50_40_rel} to~\ref{U_049999_50_40_rel} has to be read with attention because every function graph has a different scale. The reader must not confuse the apparent lowering of the error since it is not the case. Looking at the other graphs about the absolute error, from~\ref{U_02_50_40_abs} to~\ref{U_049999_50_40_abs}, we see an expansion of the tolerance cone (light blue and ochre yellow lines) as increasing $\varepsilon$ means admitting an higher deviation from the correct MST weight value. Here too the different scaling must not confuse about the increasing trend of the error.
+
+We see that the result is coherent with the theoretical model as the error increases with $\varepsilon$, but his variation is, after all, contained.
 
 \subsection{Variations of graph model}
+
+As a last comparison, instead of varying one by one the crucial parameters and see the time and error trends, we fix all of them and try to change the model the graph belongs to. Figures~\vref{model_variation} show those results. We see here that both uniform and small-world models keep the same trend for the error, but the small-world one behaves slightly better on small instances. On the contrary, the gaussian show the same time trend respect to the uniform case, but his error has a higher growth curve. The scale-free model seems to be the worse case both regarding time and error trend, but we might remember, as observed earlier at~\vref{ddd}, that a real term of comparison requires to considerate a scale factor of $2$ as done in figure~\vref{model_variation_part}. We see in fact that, compared to the uniform case, the scale-free model has even a better behaviour, looking carefully at the function graph scale: but after all, both of them show sublinear complexity for instances of more than $10^7$ edges, so have both the same transients as the same steady state trend.
+
+Another thing we note is that a bad trend in execution times are always bond to an explosion of the error, as we can see in the charts so far. This means that using more time to compute the value doesn't mean it will be nearer to the correct one.
 
 \begin{landscape}
 
@@ -478,55 +500,50 @@ sembra che non torni invece torna perché cambia la scala, questa è una cosa da
 \end{figure}
 
 \end{landscape}
- 
-While in the corresponding Small-World graph and the corresponding Uniform graph the trend is similar to the Gaussian graph (Fig.~\ref{GAUSSIAN_E_02_W_20_D_100}), in the Scale-Free case the reader can easily see that CRT algorithm takes a little 'more time' to down permanently under Prim execution time (Fig.~\ref{SCALE_FREE_E_02_W_20_D_100}). This can be related to the presence, in this kind of graph, of different nodes that have an high degree, which can make slower the execution. \\ The reader can also may notice that for small instances (few edges) the CRT algorithm is worse than deterministic algorithms, but when increasing the graph size the trend returns to be sub-linear again. \\Also comparing, for example, (Fig.~\ref{GAUSSIAN_E_02_W_20_D_100}) with the corresponding (Fig.~\ref{GAUSSIAN_E_02_W_20_D_10}), one can easily see that the performances become worse, as expected having increased the $d$ value. \\ 
 
-Let us now see what happens if we increase $w$, keeping $d$ and $\varepsilon$ unchanged.
- 
-
- 
-As expected, the CRT running time is higher than before. To be precise, what happens is that for the Gaussian, for the Scale-Free and for the Uniform the trend is about the same (Fig.~\ref{GAUSSIAN_E_02_W_80_D_100}), while for the Small-World case the reader can observe (Fig.~\ref{SMALL_WORLD_E_02_W_80_D_100}) that for large graph instances the trend becomes sublinear. We can imagine that the same happens for even larger instances also in the previous three kinds of graph.
- 
-To see if this is true we create an ad-hoc graphs dataset, that is an extension of our previously discussed dataset.\\
-We generate an extension in the Uniform graphs dataset, adding larger instances (i.e. in terms of nodes and edges), and we want to see if the CRT algorithm becomes sub-linear, as expected, onwards from a certain point.
-
-
+\begin{figure}[htbp]
+ \centering
+ \subfloat[][{\sf uniform}, $\bar{d} = 100$]
+ {\includegraphics[width=.65\textwidth]{plots/uniform_04_100_60_time}\label{U_04_100_60_time}}
+ \subfloat[][{\sf scale free}, $\bar{d} = 50$]
+ {\includegraphics[width=.65\textwidth]{plots/scalefree_04_50_60_time}\label{SF_04_50_60_time2}}
+ \caption{A more correct comparison between the general case and scale-free graphs ($\varepsilon = 0.4$, $w_\textup{max} = 60$.)}
+ \label{model_variation_part}
+\end{figure}
  
 
-As the reader can see in Fig.~\ref{UNIFORM_BIG_RUN_EPS}, for larger instances the CRT algorithm really becomes sub-linear and its performances are better than, for example, Prim Algorithm.
-\\
+ 
+\section{A specific case of study}\label{gbb}
 
-This is in agreement with the definition of the $O$ notation, that, for large arguments, indicates that the asymptotic behavior is of a certain type.\\
+At this point, all of our graphs show a bad initial curve every time we burden the input instance; in a specific case of study this anomalous curve was so persistent that all the function graph was more than linear; we decided to deepen this special case of study, performing a longer run to see the tail of this particular trend. The results are reported on figure~\vref{long_run}.
 
-To conclude the discussion on the consistency of the execution time, we want now to see what happens in the case we increase $\varepsilon$, keeping $d$ and $w$ unchanged. \\Since the $\varepsilon$ parameter is a denominator for the estimated running time, what is expected is that an increase of this value corresponds to improved performances.
+\begin{figure}[htbp]
+ \centering
+ \subfloat[][Heavy case of \textsf{uniform}, $\varepsilon = 0.3$, $d \simeq 200$, $w = 80$]
+ {\includegraphics[width=.5\textwidth]{plots/uniform_03_100_80_time}\label{U_03_100_80_time}}
+ \subfloat[][Long run, up to 50 millions edges]
+ {\includegraphics[width=.7\textwidth]{plots/bg_time}\label{bg_time}} \\
+ \subfloat[][Long run, error trend]
+ {\includegraphics[width=.75\textwidth]{plots/bg_err}\label{bg_err}}
+ \caption{Long run results; figure (a) shows the original case of study, while (b) his extension.}
+ \label{long_run}
+\end{figure}
 
-We can compare, for example, the performances of the CRT algorithm on two Small-World graphs with the following parameters: 
-\begin{itemize}
-\item $d=10$ 
-\item $w=20$
-\item and compare what happens for $\varepsilon=0.2$ and $\varepsilon=0.4$
-\end{itemize}
- 
- 
- 
- 
-The reader can easily see that the CRT trend has decreased.
- 
- 
- 
- \section{Final thoughts}
-
-Given $\dot{d}$ the random variable of the degree of the vertices of the graph
-time complexity does not depend on $d$, i.e. the \emph{average} of $\dot{d}$
-relative error depends on the \emph{variance} of $\dot{d}$
-more iterations of \texttt{approx-number-connected-components} add approximation to the final results, hence a higher total approximation; the number of iterations is directly driven by $w$
-
-
+We can see that the original case of study hinted a sublinear trend beyond 20 millions edges instances, but we considered to investigate further, and figure~\ref{bg_time} confirms the sublinearity. We have a good behaviour on the error trend (figure~\ref{bg_err}).
 
  
+\section{Conclusions and final thoughts}
+
 As expected, a probabilistic algorithm like the CRT allows us to compute an approximation of the Minimum Spanning Tree weight in sublinear time on the number of edges, under certain conditions.
 Tunable parameters, that depends on $\varepsilon$, allows us to perform either a better or a worse approximation, implying respectively a very slow and a very fast computation. The choice of a small value of $\varepsilon$ can lead to terrible running times, and for these values it does not make sense to compare the CRT algorithm with any other deterministic algorithm.\\
 For other $\varepsilon$ values, instead, we prove the good performances of the CRT. The reader can easily view the better performances of CRT algorithm versus Prim algorithm or Kruskal algorithm watching the line charts in the previous section of this paper.
+
+More in general, we see that execution time and error depend on the number of BFSes successfully completed during the computation The more BFSes are completed, the more information the algorithm has to predict a correct value for the MST weight, but on the other hand, completing the BFSes takes time. If instead we have a lot of interrupted BFSes, we waste a large amount of time without gathering information, hence resulting in both high execution time and error.
+
+We considered so far different theoretical graph models, and we conclude that a high \emph{clustering coefficient} tends to increase the probability to have interrupted BFSes. This because one of the reasons the algorithm has to interrupt the search is having encountered a hub, i.e. a vertex with a high degree. We saw in fact that when changing the model there is a slight perturbation of the trend, although it remains sublinear. The key concept is the ``distance'' from the hubs of the graph of the root vertex from which our BFS starts.
+
+Generally we also concluded that increasing the average degree let our algorithm gather more information, because there is a growing of the probability to visit the generic node $u$ of our graph. On the other side, increasing the maximum weight correspond to an increase in the number of iterations our algorithm does, that leads to summing more intermediate approximated results that imply a higher final approximation.
+
  
 \subsection{Parallel implementation}
 We observe that the CRT algorithm lends itself very well to a parallel implementation. Indeed the majority of the algorithm's code is organized into independent sections, and in most cases they don't need to comunicate to each other. We also observe that three levels of paralellism can be achieved within the code. In the first level we parallelize each of the $w$ independent calls to \texttt{approx-number-connected-components}, as depicted in pseudocode~\ref{alg}, below; every of this calls internally performs $r$ independent BFSes from $r$ different roots, that could in turn run in parallel, achieving a second level of parallelism. Moreover, considering that in the academic world there already exist different parallel implementations of the BFS algorithm, we can use one of them to perform an additional third level of paralellism.
@@ -554,7 +571,7 @@ We observe that the CRT algorithm lends itself very well to a parallel implement
 
 To make it even more simpler, the number of different flows is known a priori, so a static pre-instantiation and a smart scheduling of the threads can be performed. At the first and second levels a \emph{master-slave} model can be used in a \emph{fork-join} structure, while in the third level a shared variable is needed between the different BFSes. As a final remark, parallelizing the BFSes could have too much overhead given that the algorithm is optimized to run them very fast and to stop the ones that seem to cost too much.
 
-\section{Future prospects}
+\section{Future prospects}\label{rtn}
 
 During an e-mail exchange with one of the original authors of \cite{crt}, Dr. Ronitt Rubinfeld, another topic of discussion and study has emerged, about the distribution of the weight on the edges.
 
