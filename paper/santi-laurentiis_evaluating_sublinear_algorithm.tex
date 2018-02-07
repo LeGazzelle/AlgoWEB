@@ -126,11 +126,11 @@ minimum spanning tree, sublinear time algorithms, randomized algorithm, approxim
 
 \pagestyle{myheadings}
 \thispagestyle{plain}
-\markboth{GABRIELE SANTI AND LEONARDO DE LAURENTIIS}{EVALUATING A SUBLINEAR-TIME ALGORITHM FOR THE MST WEIGHT PROBLEM}
+\markboth{\scriptsize GABRIELE SANTI AND LEONARDO DE LAURENTIIS}{\scriptsize EVALUATING A SUBLINEAR-TIME ALGORITHM FOR THE MST WEIGHT PROBLEM}
 
 
 \section{Introduction}
-We would discuss here some preliminary observations and assumptions. First of all, we observe that we need a set of graphs that satisfies the following points:
+We will discuss here some preliminary observations and assumptions. First of all, we observe that we need a set of graphs that satisfies the following points:
 \begin{itemize}
  \item they should be finite and should not be multigraphs;
  \item they should be undirected;
@@ -141,11 +141,11 @@ We would discuss here some preliminary observations and assumptions. First of al
  \item they should be represented with adjacency lists;
  \item they should be represented in the same manner (we need an unvarying file format).
 \end{itemize}
-Unfortunately, the graphs and their representations which can easily be found on the Internet doesn't accomplish all of this requirements at the same time, although many standards for the file format are available.
+Unfortunately, the graphs and their representations, which can easily be found on the Internet, don't accomplish all of this requirements at the same time, although many standards for the file format are available.
 
 Given this observation, our choice was to use randomly generated graphs, hence to implement our own graphs generator. This gives us the opportunity to generate a wide set of connected graphs, with tunable parameters, carefully chosen looking forward to the tests; these parameters include the number of nodes, the number of edges and the edges weight, nonetheless the distribution law for the edges. The edges between the nodes are step-by-step randomly constructed, respecting the connection requirement. The different types of graphs that we use in our experimental evaluation are presented afterwards.
 
-After studying the paper we made some assumptions. One of the problem we encountered is that the theoretical algorithm assume to have in input the graph $G$ and to have direct access to the family of graphs $G_i$\footnote{we recall that $G_i$ is an induced subgraph of $G$ such that the maximum weight on his edges is $i$ (e.g. $G_w$ is exactly $G$)}; with ``direct'' we intend that no computation is required to extract $G_i$, which is not true. In fact, we can show easily that a lower bound for the extraction of all the family is, at least, $O(m)$ (i.e. is linear on the number of edges). A na\"{\i}ve approach would cost $O(m)$ for the extraction of $G_i$ for a given $i$, hence $O(w m)$ for the whole family; a better approach could order the edges in $O(m \log m)$ and build the family in a single pass on the edges, achieving $O(m + m \log m)$. Having in input only $G$, it would seem that the algorithm is responsible for the extraction of the family, but this is not desirable due to this lower bound that would sabotage the overall performance. We decided finally to consider this cost a part of the construction of the data structure of the graph, to be done prior to the call of the algorithm.
+After studying the paper we made some assumptions. One of the problem we encountered is that the theoretical algorithm assumes to have as input only graph $G$ and to have direct access to the family of graphs $G_i$\footnote{we recall that $G_i$ is an induced subgraph of $G$ such that the maximum weight on his edges is $i$ (e.g. $G_w$ is exactly $G$)}; with ``direct'' we intend that no computation is required to extract $G_i$, which is not true. In fact, we can show easily that a lower bound for the extraction of all the family is, at least, $O(m)$ (i.e. is linear on the number of edges). A na\"{\i}ve approach would cost $O(m)$ for the extraction of $G_i$ for a given $i$, hence $O(w m)$ for the whole family; a better approach could order the edges in $O(m \log m)$ and build the family in a single pass on the edges, achieving $O(m + m \log m)$. Having as input only $G$, it would seem that the algorithm is responsible for the extraction of the family, but this is not desirable due to this lower bound that would sabotage the overall performance. Finally we decided to consider this cost as a part of the construction of the data structure of the graph, to be done prior to the call of the algorithm.
 
 
  
@@ -160,11 +160,11 @@ As mentioned before, our choice is to implement our own graphs generator. The ai
 \end{itemize}
 note that every time we add an edge, a weight is associated to it, with a value uniformly choosen in $\left[ 1, w \right]$.
 
-We even decided to use a custom file format to save the data, wich is a \texttt{.ssv} file, which stands for \emph{space separated values}: every line of the file corresponds to two edges, reporting the values $<v_s, v_t, w>$ that means source and target nodes, edge weight. Being the graph undirected, it is implicit that the edge $<v_t, v_s, w>$ also exists.
+We even decided to use a custom file format to save the data, which is a \texttt{.ssv} file, standing for \emph{space separated values}: every line of the file corresponds to two edges, reporting the values $<v_s, v_t, w>$ that means source and target nodes, edge weight. Being the graph undirected, it is implicit that the edge $<v_t, v_s, w>$ also exists.
 
 
 \subsection{Graph Data Structures}
-We implemented two versions of the algorithm: the first using the well-known \emph{Boost}'s BGL\footnote{\texttt{Boost Graph Libray}, \cite{bst}} for the graphs data structures and efficient implementations of Kruskal's and Prim's algorithms; the latter uses our own implementation of both the structures and all the side algorithms. We decided to do so because we wanted more control over the code, for testing purposes, and because at the moment (version \texttt{1.61.0}) the BGL subgraphs framework presents some still unfixed bug.
+We implemented two versions of the algorithm: the first time using the well-known \emph{Boost}'s BGL\footnote{\texttt{Boost Graph Libray}, \cite{bst}} for the graphs data structures and efficient implementations of Kruskal's and Prim's algorithms; the latter instead embodies our own implementation of both the structures and all the side algorithms. We decided to do so in order to obtain more control over the code for testing purposes and because, at the moment (version \texttt{1.61.0}), the BGL subgraphs framework presents some still unfixed bug.
 
 Unfortunately, our Kruskal algorithm, although using \emph{union-find} structures with path compression\footnote{it is known that the Kruskal algorithm time complexity is $O(m \log m)$, but can be improved to $O(m \log n)$ using union find structures with some euristic conveniently applied}, is not as fine-tuned as that proposed by the Boost's libraries; we didn't take further time on this because on the other side, our version of Prim's algorithm shows the \emph{same exact performances} of the Boost version and it counts as a theoretical lower bound, being an optimal algorithm and way better than the Kruskal's solution. Our data structures have been called FastGraph for their optimization over the operation required for the test. In any way our data structures \emph{can} nor \emph{do} ``help'' the CRT\footnote{Short for B. Chazelle, R. Rubinfeld, and L. Trevisan.\cite{crt}} algorithm in improving his time complexity.
 
