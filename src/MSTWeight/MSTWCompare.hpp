@@ -5,52 +5,41 @@
 #define ALGOWEB_CRT_MSTW_HPP
 
 #include <algorithm>
+#include <ctime>
 
-#include "../AlgoWEB.hpp"
 #include "../utilities/randomsequence.hpp"
 #include "../BFS/BFS.hpp"
-#include "WeightedEdge.hpp"
-#include <boost/graph/random.hpp>
-#include <boost/graph/kruskal_min_spanning_tree.hpp>
-#include <boost/graph/prim_minimum_spanning_tree.hpp>
+#include "../Graphs/FastGraphs.hpp"
+#include "../Graphs/VertexConverter.hpp"
+#include "../UI/ProgressAnimations.hpp"
 
-class VertexConverter {
-private:
-    long long next;
-    long long *vertices;
+#define ONE_OVER_EPS false
+#define ONE_OVER_EPS_SQUARED true
+#define C (65)
 
-public:
-    VertexConverter();
-
-    void init(unsigned long dim);
-
-    long long getVertexIndex(long long globalIndex);
-};
-
-/*class RandomVertexExtractor {
-private:
-    Vertex *vindexes;
-    unsigned long size;
-
-    void scramble();
-
-public:
-    RandomVertexExtractor(unsigned long dim);
-
-    Vertex extractRandomVertex();
-
-    void prepare();
-};*/
+//utility for CRT
+//class CRTsubgraphs {
+//private:
+//    std::vector<FastSubGraph> mSub;
+//
+//public:
+//    FastSubGraph& operator[](weight_t idx)       { return mSub[idx-1]; }
+//    const FastSubGraph& operator[](weight_t idx) const { return mSub[idx-1]; }
+//
+//    CRTsubgraphs(weight_t i) {
+//        this->mSub = std::vector<FastSubGraph>(i);
+//    }
+//};
 
 class MSTWCompare {
 public:
-    MSTWCompare(UndirectedGraph g, int maxWeight);
+    MSTWCompare(FastGraph g, weight_t maxWeight);
 
-    double CRTAlgorithm(double eps);
+    CRTresult CRTAlgorithm(double eps);
 
-    long double prepareLightRun();
-
-    double LightCRTAlgorithm(double eps);
+//    long double prepareLightRun();
+//
+//    double LightCRTAlgorithm(double eps);
 
     double KruskalAlgorithm();
 
@@ -61,34 +50,60 @@ public:
     ~MSTWCompare();
 
 private:
-    UndirectedGraph graph;
-    int maxWeight;
-    //management
-    boost::random::mt19937 generator;
-    UndirectedGraph g_i;
-    NumVertices num_vert_G;
-    std::priority_queue<WeightedEdge, std::vector<WeightedEdge>, WeightedEdgeComparator> orderedEdges;
-    VertexConverter vc;
-    //management for light runs
-    std::vector<UndirectedGraph> subgraphs;
-    std::vector<FisherYatesSequence> fys;
-    std::priority_queue<WeightedEdge, std::vector<WeightedEdge>, WeightedEdgeComparator> copyOfOrderedEdges;
+    FastGraph graph;
+    //CRT management
+    weight_t maxWeight;
+    FastSubGraph g_i;
+    vertex_index_t num_vert_G;
+    std::priority_queue<WeightedEdge, std::vector<WeightedEdge>, WeightedEdgeComparator> crtOrderedEdges;
+    //CRT management (needed structures)
+    //CRTsubgraphs subgraphs; //list of graphs, containint G_i at position i (transparently mapped to positions [0, w-1])
+    //std::vector<FisherYatesSequence> fys;
+    FisherYatesSequence *fys;
+    //std::priority_queue<WeightedEdge, std::vector<WeightedEdge>, WeightedEdgeComparator> copyOfOrderedEdges;
+    //Prim management
+    std::priority_queue<WeightedEdge, std::vector<WeightedEdge>, WeightedEdgeComparator> primOrderedEdges;
+    StatefulVertices visited;
 
-    double approxNumConnectedComps(double eps, unsigned long avgDeg, int i);
+    long double approxNumConnectedComps(double eps, vertex_index_t avgDeg, weight_t i);
 
-    unsigned long approxGraphAvgDegree(double eps);
+    vertex_index_t approxGraphAvgDegree(double eps);
 
-    double lightApproxNumConnectedComps(double eps, unsigned long avgDeg, int i);
+//    double lightApproxNumConnectedComps(double eps, vertex_index_t avgDeg, weight_t i);
+//
+//    vertex_index_t lightApproxGraphAvgDegree(double eps);
 
-    unsigned long lightApproxGraphAvgDegree(double eps);
+    vertex_index_t computeNumVertices(vertex_index_t n, double eps);
 
-    unsigned long computeNumVertices(unsigned long n, double eps);
+    vertex_index_t computeNumVerticesLemma4(vertex_index_t n, double eps);
 
-    unsigned long computeNumVerticesLemma4(unsigned long n, double eps);
+    inline vertex_index_t computeArity(bool, double);
 
-    void extractGraph(int i);
+    //void extractGraph(weight_t i);
 
-    UndirectedGraph lightExtractGraph(int i);
+//    FastSubGraph lightExtractGraph(weight_t i);
+
+    vertex_index_t getRandomVertex(vertex_index_t);
+
+    void extractSubGraph(weight_t);
+};
+
+//utility for Kruskal
+class DisjointSets {
+private:
+    vertex_index_t *parent, *rnk;
+    vertex_index_t n;
+
+public:
+    // Constructor.
+    DisjointSets(vertex_index_t n);
+
+    // Find the parent of a node 'u'
+    // Path Compression
+    vertex_index_t find(vertex_index_t u);
+
+    // Union by rank
+    void merge(vertex_index_t x, vertex_index_t y);
 };
 
 #endif //ALGOWEB_CRT_MSTW_HPP

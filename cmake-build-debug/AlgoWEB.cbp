@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="AlgoWEB"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="boost_graph">
+				<Option output="/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/cmake-build-debug/libboost_graph.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/src/utilities"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-linux-gnu/6.2.1/../../../../include/c++/6.2.1"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-linux-gnu/6.2.1/../../../../include/c++/6.2.1/x86_64-pc-linux-gnu"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-linux-gnu/6.2.1/../../../../include/c++/6.2.1/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-linux-gnu/6.2.1/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-linux-gnu/6.2.1/include-fixed"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/cmake-build-debug/Makefile&quot;  VERBOSE=1 boost_graph"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="boost_graph/fast">
+				<Option output="/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/cmake-build-debug/libboost_graph.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/src/utilities"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-linux-gnu/6.2.1/../../../../include/c++/6.2.1"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-linux-gnu/6.2.1/../../../../include/c++/6.2.1/x86_64-pc-linux-gnu"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-linux-gnu/6.2.1/../../../../include/c++/6.2.1/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-linux-gnu/6.2.1/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-linux-gnu/6.2.1/include-fixed"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/cmake-build-debug/Makefile&quot;  VERBOSE=1 boost_graph/fast"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Grandom">
+				<Option output="/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/cmake-build-debug/Grandom" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/src/utilities"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-linux-gnu/6.2.1/../../../../include/c++/6.2.1"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-linux-gnu/6.2.1/../../../../include/c++/6.2.1/x86_64-pc-linux-gnu"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-linux-gnu/6.2.1/../../../../include/c++/6.2.1/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-linux-gnu/6.2.1/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-linux-gnu/6.2.1/include-fixed"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/cmake-build-debug/Makefile&quot;  VERBOSE=1 Grandom"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Grandom/fast">
+				<Option output="/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/cmake-build-debug/Grandom" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/src/utilities"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-linux-gnu/6.2.1/../../../../include/c++/6.2.1"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-linux-gnu/6.2.1/../../../../include/c++/6.2.1/x86_64-pc-linux-gnu"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-linux-gnu/6.2.1/../../../../include/c++/6.2.1/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-linux-gnu/6.2.1/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-linux-gnu/6.2.1/include-fixed"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/cmake-build-debug/Makefile&quot;  VERBOSE=1 Grandom/fast"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="boost_regex">
+				<Option output="/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/cmake-build-debug/libboost_regex.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/src/utilities"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-linux-gnu/6.2.1/../../../../include/c++/6.2.1"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-linux-gnu/6.2.1/../../../../include/c++/6.2.1/x86_64-pc-linux-gnu"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-linux-gnu/6.2.1/../../../../include/c++/6.2.1/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-linux-gnu/6.2.1/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-linux-gnu/6.2.1/include-fixed"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/cmake-build-debug/Makefile&quot;  VERBOSE=1 boost_regex"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="boost_regex/fast">
+				<Option output="/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/cmake-build-debug/libboost_regex.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/src/utilities"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-linux-gnu/6.2.1/../../../../include/c++/6.2.1"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-linux-gnu/6.2.1/../../../../include/c++/6.2.1/x86_64-pc-linux-gnu"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-linux-gnu/6.2.1/../../../../include/c++/6.2.1/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-linux-gnu/6.2.1/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-linux-gnu/6.2.1/include-fixed"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/cmake-build-debug/Makefile&quot;  VERBOSE=1 boost_regex/fast"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="AlgoWEB">
+				<Option output="/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/cmake-build-debug/AlgoWEB" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/src/utilities"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-linux-gnu/6.2.1/../../../../include/c++/6.2.1"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-linux-gnu/6.2.1/../../../../include/c++/6.2.1/x86_64-pc-linux-gnu"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-linux-gnu/6.2.1/../../../../include/c++/6.2.1/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-linux-gnu/6.2.1/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-linux-gnu/6.2.1/include-fixed"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/cmake-build-debug/Makefile&quot;  VERBOSE=1 AlgoWEB"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="AlgoWEB/fast">
+				<Option output="/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/cmake-build-debug/AlgoWEB" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/src/utilities"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-linux-gnu/6.2.1/../../../../include/c++/6.2.1"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-linux-gnu/6.2.1/../../../../include/c++/6.2.1/x86_64-pc-linux-gnu"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-linux-gnu/6.2.1/../../../../include/c++/6.2.1/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-linux-gnu/6.2.1/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-linux-gnu/6.2.1/include-fixed"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/cmake-build-debug/Makefile&quot;  VERBOSE=1 AlgoWEB/fast"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/src/AlgoWEB.hpp">
+			<Option target="Grandom"/>
+			<Option target="AlgoWEB"/>
+		</Unit>
+		<Unit filename="/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/src/BFS/BFS.cpp">
+			<Option target="AlgoWEB"/>
+		</Unit>
+		<Unit filename="/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/src/BFS/BFS.hpp">
+			<Option target="AlgoWEB"/>
+		</Unit>
+		<Unit filename="/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/src/FileIO/GraphIO.cpp">
+			<Option target="Grandom"/>
+			<Option target="AlgoWEB"/>
+		</Unit>
+		<Unit filename="/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/src/FileIO/GraphIO.hpp">
+			<Option target="Grandom"/>
+			<Option target="AlgoWEB"/>
+		</Unit>
+		<Unit filename="/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/src/Grandom/GraphGen.cpp">
+			<Option target="Grandom"/>
+		</Unit>
+		<Unit filename="/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/src/Grandom/GraphGen.hpp">
+			<Option target="Grandom"/>
+		</Unit>
+		<Unit filename="/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/src/Grandom/GraphModel.cpp">
+			<Option target="Grandom"/>
+		</Unit>
+		<Unit filename="/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/src/Grandom/GraphModel.hpp">
+			<Option target="Grandom"/>
+		</Unit>
+		<Unit filename="/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/src/Graphs/FastGraphs.cpp">
+			<Option target="Grandom"/>
+			<Option target="AlgoWEB"/>
+		</Unit>
+		<Unit filename="/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/src/Graphs/FastGraphs.hpp">
+			<Option target="Grandom"/>
+			<Option target="AlgoWEB"/>
+		</Unit>
+		<Unit filename="/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/src/Graphs/VertexConverter.cpp">
+			<Option target="Grandom"/>
+			<Option target="AlgoWEB"/>
+		</Unit>
+		<Unit filename="/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/src/Graphs/VertexConverter.hpp">
+			<Option target="Grandom"/>
+			<Option target="AlgoWEB"/>
+		</Unit>
+		<Unit filename="/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/src/MSTWeight/MSTWCompare.cpp">
+			<Option target="AlgoWEB"/>
+		</Unit>
+		<Unit filename="/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/src/MSTWeight/MSTWCompare.hpp">
+			<Option target="AlgoWEB"/>
+		</Unit>
+		<Unit filename="/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/src/MSTWeight/WeightedEdge.hpp">
+			<Option target="AlgoWEB"/>
+		</Unit>
+		<Unit filename="/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/src/UI/ProgressAnimations.hpp">
+			<Option target="AlgoWEB"/>
+		</Unit>
+		<Unit filename="/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/src/test/AlgoWEB.cpp">
+			<Option target="AlgoWEB"/>
+		</Unit>
+		<Unit filename="/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/src/test/grandom.cpp">
+			<Option target="Grandom"/>
+		</Unit>
+		<Unit filename="/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/src/test/grandom.hpp">
+			<Option target="Grandom"/>
+		</Unit>
+		<Unit filename="/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/src/utilities/randomsequence.hpp">
+			<Option target="AlgoWEB"/>
+		</Unit>
+		<Unit filename="/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/src/utilities/static/libboost_graph.a">
+			<Option target="boost_graph"/>
+		</Unit>
+		<Unit filename="/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/src/utilities/static/libboost_regex.a">
+			<Option target="boost_regex"/>
+		</Unit>
+		<Unit filename="/home/gabriel/Workspaces/JetBrainWorkspace/CLion/AlgoWEB/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

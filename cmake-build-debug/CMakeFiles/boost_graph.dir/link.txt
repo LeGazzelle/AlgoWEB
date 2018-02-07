@@ -1,0 +1,2 @@
+/usr/bin/ar qc libboost_graph.a  
+/usr/bin/ranlib libboost_graph.a

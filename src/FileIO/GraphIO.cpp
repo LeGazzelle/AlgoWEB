@@ -4,17 +4,43 @@
 
 #include "GraphIO.hpp"
 
-bool GraphIO::readGraph(std::string fileName, UndirectedGraph *g, int *maxWeight) {
+
+
+/**
+ * Assume no duplicate edges
+ *
+ * @param fileName
+ * @param maxWeight
+ * @return
+ */
+FastGraph *GraphIO::readGraph(std::string fileName, weight_t *maxWeight) {
+    FastGraph *fg;
+    ProgressAnimations progressAnimations = ProgressAnimations();
     std::ifstream inFile(fileName);
     std::string edge, tmp;
     std::string::size_type pt;
-    unsigned long u, v;
-    int w;
+    vertex_index_t vertices, lines, u, v, i = 0;
+    weight_t w;
 
     *maxWeight = 0;
 
+    std::cout << "Reading graph from file " << fileName << "...\n" << std::flush;
+
     if (inFile.is_open()) {
-        getline(inFile, edge); //skip dimension
+
+        if (getline(inFile, edge)) {
+            vertices = std::stoul(edge);
+            fg = new FastGraph(vertices);
+
+            if (getline(inFile, edge)) {
+                lines = std::stoul(edge);
+                lines += 2; //number of lines of the file
+            } else {
+                return nullptr;
+            }
+        } else {
+            return nullptr;
+        }
 
         while (getline(inFile, edge)) {
             u = std::stoul(edge, &pt);
@@ -22,35 +48,54 @@ bool GraphIO::readGraph(std::string fileName, UndirectedGraph *g, int *maxWeight
             tmp = edge.substr(pt);
             v = std::stoul(tmp, &pt);
             pt++;
-            w = std::stoi(tmp.substr(pt));
+            w = (weight_t) std::stoul(tmp.substr(pt));
 
             if (w > *maxWeight)
                 *maxWeight = w;
 
-            if (__VERB)
-                std::cout << "adding edge (" << u << "," << v << ") with weight " << w << std::endl;
+            fg->addUndirectedEdge(u, v, w);
 
-            add_edge(vertex(u, *g), vertex(v, *g), Weight(w), *g);
+            i++;
+            if (!(i % 150)) //avoids to process too much output to std cout
+                progressAnimations.printProgBar((unsigned) std::ceil(100.0 * i / lines));
         }
 
         inFile.close();
-        return true;
+        std::cout << " DONE\n" << std::flush;
+        return fg;
     } else {
-        return false;
+        std::cout << " ERROR\n";
+        return nullptr;
     }
 }
 
-bool GraphIO::writeGraph(std::string fileName, const UndirectedGraph g) {
+/**
+ * This new version avoid to add duplicate edges!
+ *
+ * @param fileName
+ * @param g
+ * @return
+ */
+bool GraphIO::writeGraph(std::string fileName, FastGraph g) {
     std::ofstream outFile(fileName, std::ios::out);
-    ConstWeightMap weight= get(edge_weight, g);
-    EdgeIterator ei, eend;
+    AdjacencyList *al;
+    AdjacencyIterator ai;
 
     if (outFile.is_open()) {
-        for (boost::tie(ei, eend) = edges(g); ei != eend; ++ei) {
-            outFile << get(vertex_index, g)[source(*ei, g)] << " "
-                    << get(vertex_index, g)[target(*ei, g)] << " "
-                    << get(weight, *ei) << "\n";
+        outFile << g.numVertices() << "\n";
+        outFile << g.numEdges();
+
+        for (vertex_index_t v = 0ULL; v < g.numVertices(); v++) {
+            al = g.adjacentVertices(v);
+
+            for (ai = al->begin(); ai != al->end(); ai++)
+                if (ai->second > v) { //if ai->second < v it has been added already when v was equal to ai->second
+                    outFile << "\n" << v << " "
+                            << ai->second << " "
+                            << ai->first;
+                }
         }
+        //no empty line at the end of the file
 
         outFile.close();
         return true;

@@ -1,20 +1,22 @@
 //
-// Created by gabriel on 06/10/16.
+// Created by Gabriele Santi on 06/10/16.
 //
 
 #ifndef ALGOWEB_GRAPHIO_HPP
 #define ALGOWEB_GRAPHIO_HPP
 
 #include <fstream>
-#include "../AlgoWEB.hpp"
+#include <cmath>
+#include "../Grandom/GraphGen.hpp"
+#include "../UI/ProgressAnimations.hpp"
 
 extern bool __VERB;
 
 class GraphIO {
 public:
-    static bool readGraph(std::string, UndirectedGraph *, int *);
+    static FastGraph *readGraph(std::string, weight_t *);
 
-    static bool writeGraph(std::string, const UndirectedGraph);
+    static bool writeGraph(std::string, const FastGraph);
 };
 
 #endif //ALGOWEB_GRAPHIO_HPP

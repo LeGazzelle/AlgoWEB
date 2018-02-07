@@ -4,38 +4,6 @@
 
 #include "GraphGen.hpp"
 
-class RandomGenerator {
-public:
-    RandomGenerator() {}
-
-    void init(int max) {
-        generator.seed((const uint32_t &) std::time(0));
-        this->dist = boost::random::uniform_int_distribution<>(1, max);
-    }
-
-    void init(int max, unsigned int seed) {
-        generator.seed(seed);
-        this->dist = boost::random::uniform_int_distribution<>(1, max);
-    }
-
-    int rand() {
-        return this->dist(generator);
-    }
-
-    int rand(int max) {
-        boost::random::uniform_int_distribution<> tmpDist(0, max);
-        return tmpDist(generator);
-    }
-
-private:
-    //int seed;
-    static boost::random::mt19937 generator;
-    boost::random::uniform_int_distribution<> dist;
-};
-
-boost::random::mt19937 RandomGenerator::generator;
-RandomGenerator *rg = new RandomGenerator();
-
 /**
  * This function generates a random connected simple graph with
  * v vertices and max(v-1,e) edges.  The graph can be weighted
@@ -58,87 +26,26 @@ RandomGenerator *rg = new RandomGenerator();
  *
  * @param v number of nodes
  * @param e number of edges
- * @param maxWeight max integer weight for the edges
+ * @param maxWeight max positive integer weight for the edges
+ * @param arg optional argument; for Uniform and Gaussian model is the seed of the random generator, for the Small World
+ * the probability of rewiring
  * @return a random, connected, weighted undirected graph
  */
-UndirectedGraph GraphGen::generate(unsigned long v, unsigned long e, unsigned int maxWeight, unsigned int seed) {
-    unsigned long tree[v], i, j, count;
-    Result res;
-
-    //Initialize random generator
-    if (seed)
-        rg->init(maxWeight, seed);
-    else
-        rg->init(maxWeight);
-
-    UndirectedGraph *g = new UndirectedGraph(v);
-
-    /*  Generate a random permutation in the array tree. */
-    GraphGen::initArray(tree, v);
-    GraphGen::permute(tree, v);
-
-    /*  Next generate a random spanning tree.
-       The algorithm is:
-
-         Assume that vertices tree[ 0 ],...,tree[ i - 1 ] are in
-         the tree.  Add an edge incident on tree[ i ]
-         and a random vertex in the set {tree[ 0 ],...,tree[ i - 1 ]}.
-    */
-    add_edge(vertex(tree[1], *g), vertex(tree[0], *g), Weight(rg->rand()), *g);
-
-    for (i = 2; i < v; i++) {
-        j = (unsigned long) rg->rand((int) i - 1);
-        add_edge(vertex(tree[i], *g), vertex(tree[j], *g), Weight(rg->rand()), *g);
+FastGraph GraphGen::generate(vertex_index_t v, vertex_index_t e, weight_t maxWeight, unsigned int arg, LawType law) {
+    if (law == UNIFORM) {
+        UniformModel uniformModel(v, e, maxWeight, arg);
+        return uniformModel.generate();
+    } else if (law == GAUSSIAN) {
+        GaussianModel gaussianModel(v, e, maxWeight, arg);
+        return gaussianModel.generate();
+    } else if (law == SMALLWORLD) {
+        WattsStrogatzModel wattsStrogatzModel(v, e, maxWeight, arg);
+        return wattsStrogatzModel.generate();
+    } else if (law == SCALEFREE) {
+        BarabasiAlbertModel barabasiAlbertModel(v, e, maxWeight);
+        return barabasiAlbertModel.generate();
+    } else {
+        UniformModel uniformModel(v, e, maxWeight, arg);
+        return uniformModel.generate();
     }
-
-    /* Add additional random edges until achieving at least desired number */
-
-    count = v - 1;
-
-    while (count < e) {
-        i = (unsigned long) rg->rand((int) v - 1);
-        j = (unsigned long) rg->rand((int) v - 1);
-
-        if (i == j)
-            continue;
-
-        /**
-         * res is a pair <Edge, bool> where bool is true iff no edge existed
-         * between i and j, hence a correct insertion has been performed; false otherwise
-         */
-        res = add_edge(vertex(i, *g), vertex(j, *g), Weight(rg->rand()), *g);
-
-        if (res.second)
-            count++;
-
-    }
-
-
-    return *g;
 };
-
-
-/* set a[ i ] = i, for i = 0,...,end - 1 */
-void GraphGen::initArray(unsigned long *a, unsigned long end) {
-    unsigned long i;
-
-    for (i = 0; i < end; i++)
-        *a++ = i;
-}
-
-
-/* randomly permute a[ 0 ],...,a[ n - 1 ] */
-void GraphGen::permute(unsigned long *a, unsigned long n) {
-    unsigned long i;
-
-    for (i = 0; i < n - 1; i++)
-        swap(a + i + rg->rand((int) (n - i - 1)), a + i);
-}
-
-void GraphGen::swap(unsigned long *a, unsigned long *b) {
-    unsigned long temp;
-
-    temp = *a;
-    *a = *b;
-    *b = temp;
-}

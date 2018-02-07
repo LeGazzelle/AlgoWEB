@@ -5,21 +5,12 @@
 #ifndef ALGOWEB_GRAPHGEN_HPP
 #define ALGOWEB_GRAPHGEN_HPP
 
-#include <ctime>
-#include "../AlgoWEB.hpp"
+#include "GraphModel.hpp"
 
-typedef std::pair<Edge, bool> Result;
 
 class GraphGen {
 public:
-    static UndirectedGraph generate(unsigned long, unsigned long, unsigned int, unsigned int);
-
-private:
-    static void swap(unsigned long *, unsigned long *);
-
-    static void permute(unsigned long *, unsigned long);
-
-    static void initArray(unsigned long *, unsigned long);
+    static FastGraph generate(vertex_index_t, vertex_index_t, weight_t, unsigned int, LawType);
 };
 
 #endif //ALGOWEB_GRAPHGEN_HPP
